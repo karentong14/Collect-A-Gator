@@ -97,11 +97,11 @@ export default function Home() {
           Go to nextjs.org →
         </a>
         <>
-        <Link href="/map">map</Link>
+        <Link href="/map/map.tsx">map</Link>
         </>
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="/map"
+          href="/map/map.tsx"
           target="_blank"
           rel="noopener noreferrer"
         >
