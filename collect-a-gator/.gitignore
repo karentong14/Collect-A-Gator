@@ -32,6 +32,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+/mongodb.env
 
 # vercel
 .vercel
@@ -44,5 +45,5 @@ next-env.d.ts
 /.clerk/
 
 # json files
-package-lock.json
-package.json
+/package-lock.json
+/package.json
