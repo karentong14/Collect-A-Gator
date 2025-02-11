@@ -1,36 +1,159 @@
 {
+  
+ "type":"module",
   "name": "collect-a-gator",
+  
+
   "version": "0.1.0",
+  
+
   "private": true,
+  
+
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+  
+
+    
+
+  "dev": "next dev --turbopack",
+  
+
+    
+
+  "build": "next build",
+  
+
+    
+
+  "start": "next start",
+  
+
+    
+
+  "lint": "next lint"
+  
+
   },
+  
+
   "dependencies": {
-    "@clerk/nextjs": "^6.11.1",
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
-    "@mui/icons-material": "^6.4.3",
-    "@mui/material": "^6.4.3",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "mongodb": "^6.13.0",
-    "mongoose": "^8.10.0",
-    "next": "15.1.6",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+  
+
+    
+
+  "@clerk/nextjs": "^6.11.1",
+  
+
+    
+
+  "@emotion/react": "^11.14.0",
+  
+
+    
+
+  "@emotion/styled": "^11.14.0",
+  
+
+    
+
+  "@mui/icons-material": "^6.4.3",
+  
+
+    
+
+  "@mui/material": "^6.4.3",
+  
+
+    
+
+  "cors": "^2.8.5",
+  
+
+    
+
+  "dotenv": "^16.4.7",
+  
+
+    
+
+  "express": "^4.21.2",
+  
+
+    
+
+  "mongodb": "^6.13.0",
+  
+
+    
+
+  "mongoose": "^8.10.0",
+  
+
+    
+
+  "next": "15.1.6",
+  
+
+    
+
+  "react": "^19.0.0",
+  
+
+    
+
+  "react-dom": "^19.0.0"
+  
+
   },
+  
+
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "15.1.6",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+  
+
+    
+
+  "@eslint/eslintrc": "^3",
+  
+
+    
+
+  "@types/node": "^20",
+  
+
+    
+
+  "@types/react": "^19",
+  
+
+    
+
+  "@types/react-dom": "^19",
+  
+
+    
+
+  "eslint": "^9",
+  
+
+    
+
+  "eslint-config-next": "15.1.6",
+  
+
+    
+
+  "postcss": "^8",
+  
+
+    
+
+  "tailwindcss": "^3.4.1",
+  
+
+    
+
+  "typescript": "^5"
+  
+
   }
 }

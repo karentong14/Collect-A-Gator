@@ -1,11 +1,5 @@
-const mongoose = require('mongoose');
 
-/** export interface JournalEntry {
-  id: number;
-  title: string;
-  content: string;
-  date: string;
-}*/
+import mongoose from "mongoose";
 const entrySchema = new mongoose.Schema({
     id: {
         type: Number,
