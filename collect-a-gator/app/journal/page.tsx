@@ -11,6 +11,8 @@ import {
 
 import AddIcon from '@mui/icons-material/Add';
 
+import Link from 'next/link';
+
 export interface JournalEntry {
   id: number;
   title: string;
@@ -70,7 +72,9 @@ export default async function JournalPage({
             <CardHeader title={"Add New Journal Entry"}></CardHeader>
             <CardContent>
               <IconButton>
-                <AddIcon></AddIcon>
+                <Link href={"/journal/newEntry"}>
+                  <AddIcon></AddIcon>
+                </Link>
               </IconButton>
             </CardContent>
           </Card>

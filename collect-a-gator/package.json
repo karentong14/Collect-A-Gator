@@ -13,9 +13,12 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.4.3",
+    "@mui/joy": "^5.0.0-beta.51",
     "@mui/material": "^6.4.3",
+    "@mui/x-date-pickers": "^7.26.0",
     "@react-google-maps/api": "^2.20.5",
     "@vis.gl/react-google-maps": "^1.5.1",
+    "dayjs": "^1.11.13",
     "next": "^15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
