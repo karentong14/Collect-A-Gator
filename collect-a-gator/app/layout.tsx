@@ -1,4 +1,6 @@
+'use client';
 import React from 'react';
+import NavBar from '@/components/navbar';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -6,6 +8,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
       </head>
       <body>
+        <NavBar/>
         {children}
       </body>
     </html>
