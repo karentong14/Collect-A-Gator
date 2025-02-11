@@ -12,7 +12,8 @@ import ListItemText from "@mui/material/ListItemText";
 import {
 	Menu,
 	LibraryBooks,
-	Home
+	Home,
+	Map
 } from "@mui/icons-material";
 
 function NavBar() {
@@ -70,6 +71,12 @@ function NavBar() {
 						{<LibraryBooks />}
 					</ListItemIcon>
 					<ListItemText primary={"Journal"} />
+				</ListItemButton>
+				<ListItemButton sx={{ color: "white" }} href="../map">
+					<ListItemIcon sx={{ color: "white" }}>
+						{<Map />}
+					</ListItemIcon>
+					<ListItemText primary={"Map"} />
 				</ListItemButton>
 			</List>
 			<Divider />
