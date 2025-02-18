@@ -1,9 +1,10 @@
 "use client";
-import React, { useEffect, useState } from 'react'
-import {AdvancedMarker, APIProvider, Map, useMapsLibrary, useMap} from '@vis.gl/react-google-maps';
+import React, { useEffect, useState, useRef } from 'react'
+import {AdvancedMarker, APIProvider, ControlPosition, Map, MapControl, useMapsLibrary, useMap, useAdvancedMarkerRef} from '@vis.gl/react-google-maps';
 
 // https://developers.google.com/maps/documentation/javascript/reference/places-service
 
+//MARKERS??
 const PlacesSearch = () => {
     // this is accessing the specific instance of the map this took me so long to figure out omfg
     const map = useMap();
@@ -46,15 +47,90 @@ const PlacesSearch = () => {
     );
   };
 
+
+//TEENY TINY SEARCH BAR AT THE TOPPPPPP
+  interface PlaceAutocompleteProps {
+    onPlaceSelect: (place: google.maps.places.PlaceResult | null) => void;
+  }
+  
+  const PlaceAutocomplete = ({ onPlaceSelect }: PlaceAutocompleteProps) => {
+    const [placeAutocomplete, setPlaceAutocomplete] =
+      useState<google.maps.places.Autocomplete | null>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
+    const places = useMapsLibrary('places');
+  
+    useEffect(() => {
+      if (!places || !inputRef.current) return;
+  
+      const options = {
+        fields: ['geometry', 'name', 'formatted_address']
+      };
+  
+      setPlaceAutocomplete(new places.Autocomplete(inputRef.current, options));
+    }, [places]);
+  
+    useEffect(() => {
+      if (!placeAutocomplete) return;
+  
+      placeAutocomplete.addListener('place_changed', () => {
+        onPlaceSelect(placeAutocomplete.getPlace());
+      });
+    }, [onPlaceSelect, placeAutocomplete]);
+  
+    return (
+      <div className="autocomplete-container">
+        <input ref={inputRef} />
+      </div>
+    );
+  };
+
+//MARKER FOR SEARCHED PLACE
+// https://developers.google.com/maps/documentation/javascript/examples/rgm-autocomplete#maps_rgm_autocomplete-typescript
+// --- maybe this one too, https://developers.google.com/maps/documentation/javascript/place-autocomplete-new
+interface MapHandlerProps {
+  place: google.maps.places.PlaceResult | null;
+  marker: google.maps.marker.AdvancedMarkerElement | null;
+}
+
+const MapHandler = ({ place, marker }: MapHandlerProps) => {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!map || !place || !marker) return;
+
+    if (place.geometry?.viewport) {
+      map.fitBounds(place.geometry?.viewport);
+    }
+    marker.position = place.geometry?.location;
+  }, [map, place, marker]);
+
+  return null;
+};
+
 const App = () => {
+    const [selectedPlace, setSelectedPlace] =
+    useState<google.maps.places.PlaceResult | null>(null);
+    const [markerRef, marker] = useAdvancedMarkerRef();
+
     const position = { lat: 29.6520, lng: -82.3250 };
     return (
         <APIProvider apiKey={"AIzaSyC-Pip5d3p8_6swFtL_hRosMm2VTpraip4"}>
             <div style={{ width: "100vw", height: "100vh" }}>
                 <Map defaultCenter={position} defaultZoom={15} mapId="5174ed5358f23a3c">
                     <PlacesSearch /> 
+                    <AdvancedMarker ref={markerRef} position={null} />
                 </Map>
             </div>
+            
+            {/* //ADDED TEENY TINY SEARCH BAR */}
+            <MapControl position={ControlPosition.TOP}>
+              <div style={{ fontSize: '30px', color: 'black'}} className="autocomplete-control">
+                <PlaceAutocomplete onPlaceSelect={setSelectedPlace} />
+              </div>
+            </MapControl>
+
+
+            <MapHandler place={selectedPlace} marker={marker} />
         </APIProvider>
     );
 };
