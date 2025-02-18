@@ -84,6 +84,29 @@ const PlacesSearch = () => {
     );
   };
 
+//MARKER FOR SEARCHED PLACE
+// https://developers.google.com/maps/documentation/javascript/examples/rgm-autocomplete#maps_rgm_autocomplete-typescript
+// --- maybe this one too, https://developers.google.com/maps/documentation/javascript/place-autocomplete-new
+interface MapHandlerProps {
+  place: google.maps.places.PlaceResult | null;
+  marker: google.maps.marker.AdvancedMarkerElement | null;
+}
+
+const MapHandler = ({ place, marker }: MapHandlerProps) => {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!map || !place || !marker) return;
+
+    if (place.geometry?.viewport) {
+      map.fitBounds(place.geometry?.viewport);
+    }
+    marker.position = place.geometry?.location;
+  }, [map, place, marker]);
+
+  return null;
+};
+
 const App = () => {
     const [selectedPlace, setSelectedPlace] =
     useState<google.maps.places.PlaceResult | null>(null);
@@ -95,15 +118,19 @@ const App = () => {
             <div style={{ width: "100vw", height: "100vh" }}>
                 <Map defaultCenter={position} defaultZoom={15} mapId="5174ed5358f23a3c">
                     <PlacesSearch /> 
+                    <AdvancedMarker ref={markerRef} position={null} />
                 </Map>
             </div>
             
             {/* //ADDED TEENY TINY SEARCH BAR */}
             <MapControl position={ControlPosition.TOP}>
-              <div className="autocomplete-control">
+              <div style={{ fontSize: '30px', color: 'black'}} className="autocomplete-control">
                 <PlaceAutocomplete onPlaceSelect={setSelectedPlace} />
               </div>
             </MapControl>
+
+
+            <MapHandler place={selectedPlace} marker={marker} />
         </APIProvider>
     );
 };
