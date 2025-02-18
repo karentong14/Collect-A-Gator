@@ -1,9 +1,10 @@
 "use client";
-import React, { useEffect, useState } from 'react'
-import {AdvancedMarker, APIProvider, Map, useMapsLibrary, useMap} from '@vis.gl/react-google-maps';
+import React, { useEffect, useState, useRef } from 'react'
+import {AdvancedMarker, APIProvider, ControlPosition, Map, MapControl, useMapsLibrary, useMap, useAdvancedMarkerRef} from '@vis.gl/react-google-maps';
 
 // https://developers.google.com/maps/documentation/javascript/reference/places-service
 
+//MARKERS??
 const PlacesSearch = () => {
     // this is accessing the specific instance of the map this took me so long to figure out omfg
     const map = useMap();
@@ -46,7 +47,48 @@ const PlacesSearch = () => {
     );
   };
 
+
+//TEENY TINY SEARCH BAR AT THE TOPPPPPP
+  interface PlaceAutocompleteProps {
+    onPlaceSelect: (place: google.maps.places.PlaceResult | null) => void;
+  }
+  
+  const PlaceAutocomplete = ({ onPlaceSelect }: PlaceAutocompleteProps) => {
+    const [placeAutocomplete, setPlaceAutocomplete] =
+      useState<google.maps.places.Autocomplete | null>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
+    const places = useMapsLibrary('places');
+  
+    useEffect(() => {
+      if (!places || !inputRef.current) return;
+  
+      const options = {
+        fields: ['geometry', 'name', 'formatted_address']
+      };
+  
+      setPlaceAutocomplete(new places.Autocomplete(inputRef.current, options));
+    }, [places]);
+  
+    useEffect(() => {
+      if (!placeAutocomplete) return;
+  
+      placeAutocomplete.addListener('place_changed', () => {
+        onPlaceSelect(placeAutocomplete.getPlace());
+      });
+    }, [onPlaceSelect, placeAutocomplete]);
+  
+    return (
+      <div className="autocomplete-container">
+        <input ref={inputRef} />
+      </div>
+    );
+  };
+
 const App = () => {
+    const [selectedPlace, setSelectedPlace] =
+    useState<google.maps.places.PlaceResult | null>(null);
+    const [markerRef, marker] = useAdvancedMarkerRef();
+
     const position = { lat: 29.6520, lng: -82.3250 };
     return (
         <APIProvider apiKey={"AIzaSyC-Pip5d3p8_6swFtL_hRosMm2VTpraip4"}>
@@ -55,6 +97,13 @@ const App = () => {
                     <PlacesSearch /> 
                 </Map>
             </div>
+            
+            {/* //ADDED TEENY TINY SEARCH BAR */}
+            <MapControl position={ControlPosition.TOP}>
+              <div className="autocomplete-control">
+                <PlaceAutocomplete onPlaceSelect={setSelectedPlace} />
+              </div>
+            </MapControl>
         </APIProvider>
     );
 };
