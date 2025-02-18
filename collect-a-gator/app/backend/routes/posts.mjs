@@ -1,7 +1,7 @@
 import express from "express";
 import db from "../db/conn.mjs";
 import { ObjectId } from "mongodb";
-
+import {Entry} from "../schema.mjs";
 const router = express.Router();
 
 // Get a list of 50 posts
@@ -38,9 +38,9 @@ router.get("/:id", async (req, res) => {
 // Add a new document to the collection
 router.post("/", async (req, res) => {
   let collection = await db.collection("Journal");
-  let newDocument = req.body;
-  newDocument.date = new Date();
-  let result = await collection.insertOne(newDocument);
+  const {id, date, title, content} = req.body;
+  const newEntry = await Entry.create(req.body);
+  let result = await collection.insertOne(newEntry);
   res.send(result).status(204);
 });
 
