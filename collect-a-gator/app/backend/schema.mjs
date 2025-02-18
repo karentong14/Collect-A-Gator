@@ -1,22 +1,21 @@
-
 import mongoose from "mongoose";
 
 const entrySchema = new mongoose.Schema({
     id: {
         type: Number,
-        required: [true, "object should have an ID"],
+        required: [true, "Entry should have an ID"],
     },
-    date: {
+    date: { 
         type: String,
-        required: [true, "entry should have a date"],
+        required: false,
     },
     title: {
         type: String,
-        required: [true, "entry should have a title"],
+        required: [true, "Entry should have a title"],
     },
     content: {
         type: String, 
-        required: [true, "emtry should have content"],
+        required: [true, "Entry should have content"],
     }
     
 });

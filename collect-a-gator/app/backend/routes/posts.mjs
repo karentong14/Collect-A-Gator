@@ -38,8 +38,9 @@ router.get("/:id", async (req, res) => {
 // Add a new document to the collection
 router.post("/", async (req, res) => {
   let collection = await db.collection("Journal");
-  const {id, date, title, content} = req.body;
+ // const {id, date, title, content} = req.body;
   const newEntry = await Entry.create(req.body);
+  newEntry.date = new Date(); 
   let result = await collection.insertOne(newEntry);
   res.send(result).status(204);
 });
