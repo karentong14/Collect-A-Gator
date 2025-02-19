@@ -1,6 +1,6 @@
 import express from "express";
 import db from "../db/conn.mjs";
-import { ObjectId } from "mongodb";
+import { ObjectId, ReturnDocument } from "mongodb";
 import {Entry} from "../schema.mjs";
 const router = express.Router();
 
@@ -28,7 +28,7 @@ router.get("/latest", async (req, res) => {
 // Get a single post
 router.get("/:id", async (req, res) => {
   let collection = await db.collection("Journal");
-  let query = {_id: ObjectId(req.params.id)};
+  let query = new ObjectId(req.params.id);
   let result = await collection.findOne(query);
 
   if (!result) res.send("Not found").status(404);
@@ -48,9 +48,9 @@ router.post("/", async (req, res) => {
 
 // Delete an entry
 router.delete("/:id", async (req, res) => {
-  const query = { _id: ObjectId(req.params.id) };
+  let query = ({ _id: req.params.id });
 
-  const collection = db.collection("posts");
+  const collection = db.collection("Journal");
   let result = await collection.deleteOne(query);
 
   res.send(result).status(200);
