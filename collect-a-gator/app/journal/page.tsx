@@ -1,24 +1,26 @@
+"use client";
+
 import React from 'react';
 import { 
   Container, 
   Typography, 
   Grid, 
   Card, 
-  CardHeader, 
   CardContent, 
-  IconButton
+  CardMedia,
+  Button,
+  Box
 } from '@mui/material';
 
-import AddIcon from '@mui/icons-material/Add';
+import {
+  CalendarToday,
+  Add,
+  LocationOn
+} from '@mui/icons-material';
 
-import Link from 'next/link';
+import { JournalEntry } from '@/components/models/models';
 
-export interface JournalEntry {
-  id: number;
-  title: string;
-  content: string;
-  date: string;
-}
+import { useRouter } from "next/navigation";
 /* Uncomment below if children props including in component, instead of the on-page fetch */
 /*interface JournalPageProps {
   entries: JournalEntry[];
@@ -30,17 +32,40 @@ const entries: JournalEntry[] = [
     id: 0,
     title: "My First Entry",
     content: "Welcome to my first entry",
-    date: "01/01/2025"
+    date: "2025-01-05"
   },
   {
     id: 1,
     title: "My Second Entry",
     content: "Welcome to my second entry",
-    date: "01/02/2025"
+    date: "2025-01-06"
+  },
+  {
+    id: 3,
+    title: "My First Entry",
+    content: "Welcome to my first entry",
+    date: "2025-01-07"
+  },
+  {
+    id: 4,
+    title: "My Second Entry",
+    content: "Welcome to my second entry",
+    date: "2025-01-08"
   }
 ];
 
-export default async function JournalPage({
+function reformatDate(s : string) {
+  const currentDate = new Date (s);
+  currentDate.setDate(currentDate.getDate() + 1);
+  const formattedDate = currentDate.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
+  return formattedDate;
+}
+
+export default function JournalPage({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -48,37 +73,114 @@ export default async function JournalPage({
   /* UNCOMMENT BELOW WHEN BACKEND IMPLEMENTED */
   //const response = await fetch("");
   //const entries: JournalEntry[] = await response.json();
+  const router = useRouter();
   return (
-    <Container maxWidth="md" style={{ marginTop: '2rem' }}>
-      <Typography variant="h4" gutterBottom>
-        My Journal
-      </Typography>
+    <Container maxWidth="lg" sx={{
+      paddingTop: "20px"
+    }}>
+      <Grid container direction="row" sx={{
+        display: "flex",
+        justifyContent: "space-between"
+      }}>
+        <Grid item>
+          <Grid container direction="column">
+            <Grid item>
+              <Typography variant="h2" gutterBottom paddingBottom="0px" marginBottom="0px">
+                Your Journal
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="h5" gutterBottom color='gray' padding="10px" paddingLeft="0px" fontWeight="5">
+                Capture and revisit your recent memories
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item> {/* edit for mobile padding later */}
+          <Button variant="contained" href={"/journal/newEntry"}>
+            <Grid container spacing="10px">
+              <Grid item sx={{
+                paddingBottom: "-5px",
+                marginBottom: "-10px"
+              }}>
+                <Add></Add>
+              </Grid>
+              <Grid item>Add New Journal Entry</Grid>
+            </Grid>
+          </Button>
+        </Grid>
+      </Grid>
       <Grid container spacing={2}>
         {entries.map((entry) => (
-          <Grid item xs={12} sm={6} md={4} key={entry.id}>
+          <Grid item xs={12} sm={6} md={4} key={entry.id} sx={{
+            cursor: "pointer",
+            transition: "transform 0.2s ease-in-out, 0.2s ease-in-out",
+            "&:hover": {
+              transform: "scale(1.03)"
+            },
+          }}
+          >
             <Card>
-              <CardHeader 
-                title={entry.title} 
-                subheader={entry.date} 
+            <Box sx={{ position: 'relative' }}>
+              <CardMedia component="img"
+                height="200"
+                image="https://placehold.co/600x400/orange/white"
               />
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: 10,
+                  left: 10,
+                  padding: '5px 20px 5px 5px',
+                  backgroundColor: 'white',
+                  borderRadius: '20px',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}
+              >
+                <LocationOn sx={{
+                  marginRight: 0.5,
+                  scale: 0.9,
+                  color: 'red'
+                }} />
+                <Typography variant="body2">Gainesville, Florida</Typography>
+              </Box>
+            </Box>
               <CardContent>
-                <Typography variant="body2">{entry.content}</Typography>
+                <Grid container direction="column">
+                  <Grid item>
+                    <Grid container direction="row" spacing={1}>
+                      <Grid item>
+                        <CalendarToday sx={{
+                          scale: 0.7,
+                          color: 'gray',
+                          position: 'relative',
+                          bottom: 1.5,
+                          right: 4
+                        }}/>
+                      </Grid>
+                      <Grid item>
+                        <Typography sx={{
+                          fontSize: '12px',
+                          color: 'gray',
+                          position: 'relative',
+                          right: 10,
+                          top: 1.5
+                        }} variant="caption">{reformatDate(entry.date)}</Typography>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="h6">{entry.title} </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="body2">{entry.content}</Typography>
+                  </Grid>
+                </Grid>
               </CardContent>
             </Card>
           </Grid>
         ))}
-        <Grid item xs={12} sm={6} md={4} key={entries.length}>
-          <Card>
-            <CardHeader title={"Add New Journal Entry"}></CardHeader>
-            <CardContent>
-              <IconButton>
-                <Link href={"/journal/newEntry"}>
-                  <AddIcon></AddIcon>
-                </Link>
-              </IconButton>
-            </CardContent>
-          </Card>
-        </Grid>
       </Grid>
     </Container>
   );
