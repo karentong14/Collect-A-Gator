@@ -41,6 +41,7 @@ export default function RootLayout({
             </SignedOut>
             <SignedIn>
               <UserButton />
+              <a href="/profile" className="text-blue-500">Profile</a>
             </SignedIn>
           </header>
         {children}
