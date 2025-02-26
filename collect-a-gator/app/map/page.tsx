@@ -1,7 +1,9 @@
 "use client";
 import React, { useEffect, useState, useRef } from 'react'
 import {AdvancedMarker, APIProvider, ControlPosition, Map, MapControl, useMapsLibrary, useMap, useAdvancedMarkerRef} from '@vis.gl/react-google-maps';
+import dynamic from "next/dynamic";
 
+const App = dynamic(() => Promise.resolve(ClientApp), { ssr: false });
 // https://developers.google.com/maps/documentation/javascript/reference/places-service
 
 //MARKERS??
@@ -107,7 +109,7 @@ const MapHandler = ({ place, marker }: MapHandlerProps) => {
   return null;
 };
 
-const App = () => {
+const ClientApp = () => {
     const [selectedPlace, setSelectedPlace] =
     useState<google.maps.places.PlaceResult | null>(null);
     const [markerRef, marker] = useAdvancedMarkerRef();
@@ -117,14 +119,15 @@ const App = () => {
         <APIProvider apiKey={"AIzaSyC-Pip5d3p8_6swFtL_hRosMm2VTpraip4"}>
             <div style={{ width: "100vw", height: "100vh" }}>
                 <Map defaultCenter={position} defaultZoom={15} mapId="5174ed5358f23a3c">
-                    <PlacesSearch /> 
-                    <AdvancedMarker ref={markerRef} position={null} />
+                    {/*<PlacesSearch /> */}
+                    <AdvancedMarker ref={markerRef} position={{ lat: 29.66006780681899, lng: -82.32755491980954 }} />
+                    <AdvancedMarker ref={markerRef} position={{ lat: 29.64490115272207, lng: -82.32211227378974 }} />
                 </Map>
             </div>
             
             {/* //ADDED TEENY TINY SEARCH BAR */}
             <MapControl position={ControlPosition.TOP}>
-              <div style={{ fontSize: '30px', color: 'black'}} className="autocomplete-control">
+              <div style={{ fontSize: '15px', color: 'black'}} className="autocomplete-control">
                 <PlaceAutocomplete onPlaceSelect={setSelectedPlace} />
               </div>
             </MapControl>
