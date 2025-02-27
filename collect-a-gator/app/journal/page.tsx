@@ -1,6 +1,6 @@
-"use client";
+'use client'
+import React, {useEffect, useState}  from 'react';
 
-import React from 'react';
 import { 
   Container, 
   Typography, 
@@ -9,7 +9,9 @@ import {
   CardContent, 
   CardMedia,
   Button,
-  Box
+  Box,
+  CardHeader,
+  IconButton
 } from '@mui/material';
 
 import {
@@ -17,6 +19,8 @@ import {
   Add,
   LocationOn
 } from '@mui/icons-material';
+
+import Link from 'next/link';
 
 import { JournalEntry } from '@/components/models/models';
 
@@ -26,53 +30,37 @@ import { useRouter } from "next/navigation";
   entries: JournalEntry[];
 }*/
 
-/* COMMENT OUT BELOW WHEN BACKEND IMPLEMENTED */
-const entries: JournalEntry[] = [
-  {
-    id: 0,
-    title: "My First Entry",
-    content: "Welcome to my first entry",
-    date: "2025-01-05"
-  },
-  {
-    id: 1,
-    title: "My Second Entry",
-    content: "Welcome to my second entry",
-    date: "2025-01-06"
-  },
-  {
-    id: 3,
-    title: "My First Entry",
-    content: "Welcome to my first entry",
-    date: "2025-01-07"
-  },
-  {
-    id: 4,
-    title: "My Second Entry",
-    content: "Welcome to my second entry",
-    date: "2025-01-08"
-  }
-];
-
-function reformatDate(s : string) {
-  const currentDate = new Date (s);
-  currentDate.setDate(currentDate.getDate() + 1);
-  const formattedDate = currentDate.toLocaleDateString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  });
-  return formattedDate;
-}
-
 export default function JournalPage({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  /* UNCOMMENT BELOW WHEN BACKEND IMPLEMENTED */
-  //const response = await fetch("");
-  //const entries: JournalEntry[] = await response.json();
+  const [data, setData] = useState<null | any>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("http://localhost:5050/api")
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+        setData(json);
+      })
+      .catch(error => console.error(error));
+    };
+    fetchData();
+  }, []);
+
+  function reformatDate(s : string) {
+    const currentDate = new Date (s);
+    currentDate.setDate(currentDate.getDate() + 1);
+    const formattedDate = currentDate.toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    });
+    return formattedDate;
+  }
+
   const router = useRouter();
   return (
     <Container maxWidth="lg" sx={{
@@ -111,8 +99,8 @@ export default function JournalPage({
         </Grid>
       </Grid>
       <Grid container spacing={2}>
-        {entries.map((entry) => (
-          <Grid item xs={12} sm={6} md={4} key={entry.id} sx={{
+        {data ? data.map((entry : JournalEntry) => (
+          <Grid item xs={12} sm={6} md={4} key={entry._id} sx={{
             cursor: "pointer",
             transition: "transform 0.2s ease-in-out, 0.2s ease-in-out",
             "&:hover": {
@@ -180,7 +168,7 @@ export default function JournalPage({
               </CardContent>
             </Card>
           </Grid>
-        ))}
+        )) : <></>}
       </Grid>
     </Container>
   );
