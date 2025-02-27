@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 // Load the /posts routes
-app.use("/", posts);
+app.use("/api", posts);
 
 // Global error handling
 app.use((err, _req, res, next) => {
