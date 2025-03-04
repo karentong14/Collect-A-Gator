@@ -13,6 +13,10 @@ const entrySchema = new mongoose.Schema({
         type: String,
         required: false,
     },
+    location: {
+        type: String, 
+        required: [true, "Entry should have a location"],  
+    },
     title: {
         type: String,
         required: [true, "Entry should have a title"],
