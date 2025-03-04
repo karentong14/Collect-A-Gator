@@ -12,11 +12,11 @@ const userSchema = new mongoose.Schema({
     },
     lastName: {
         type: String, 
-        required: [true, "Each user must have a first name"],
+        required: [true, "Each user must have a last name"],
     },
     email: {
         type: String, 
-        required: [true, "Each user must have a first name"],
+        required: [true, "Each user must have an email"],
         unique: [true, "Users must have a unique email"]
     }
 });
