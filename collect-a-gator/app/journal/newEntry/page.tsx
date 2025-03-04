@@ -13,8 +13,11 @@ import Textarea from '@mui/joy/Textarea';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { JournalEntry } from '@/components/models/models';
+
+import {AdvancedMarker, APIProvider, ControlPosition, Map, MapControl, useMapsLibrary, useMap, useAdvancedMarkerRef} from '@vis.gl/react-google-maps';
+
 
 export default function EntryPage({
   children,
@@ -25,6 +28,9 @@ export default function EntryPage({
     const [title, setTitle] = React.useState<null | string>();
     const [content, setContent] = React.useState<null | string>();
     const [trigger, setTrigger] = React.useState<boolean>(false);
+    //maps api
+    const [selectedPlace, setSelectedPlace] =
+        useState<google.maps.places.PlaceResult | null>(null);
 
     useEffect(() => {
         setDate(dayjs()); 
@@ -104,7 +110,54 @@ export default function EntryPage({
                         </Grid>
                     </Grid>
                 </Grid>
+
+                <APIProvider apiKey={"AIzaSyC-Pip5d3p8_6swFtL_hRosMm2VTpraip4"}>
+                
+                          {/* //ADDED TEENY TINY SEARCH BAR */}
+                          {/* <MapControl position={ControlPosition.TOP}> */}
+                            <div style={{ fontSize: '30px', color: 'black' }} className="autocomplete-control">
+                              <PlaceAutocomplete onPlaceSelect={setSelectedPlace} />
+                            </div>
+                          {/* </MapControl> */}
+                
+                </APIProvider>
             </Grid>
         </Card>
     );
 }
+
+//TEENY TINY SEARCH BAR AT THE TOPPPPPP
+  interface PlaceAutocompleteProps {
+    onPlaceSelect: (place: google.maps.places.PlaceResult | null) => void;
+  }
+  
+  const PlaceAutocomplete = ({ onPlaceSelect }: PlaceAutocompleteProps) => {
+    const [placeAutocomplete, setPlaceAutocomplete] =
+      useState<google.maps.places.Autocomplete | null>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
+    const places = useMapsLibrary('places');
+  
+    useEffect(() => {
+      if (!places || !inputRef.current) return;
+  
+      const options = {
+        fields: ['geometry', 'name', 'formatted_address']
+      };
+  
+      setPlaceAutocomplete(new places.Autocomplete(inputRef.current, options));
+    }, [places]);
+  
+    useEffect(() => {
+      if (!placeAutocomplete) return;
+  
+      placeAutocomplete.addListener('place_changed', () => {
+        onPlaceSelect(placeAutocomplete.getPlace());
+      });
+    }, [onPlaceSelect, placeAutocomplete]);
+  
+    return (
+      <div className="autocomplete-container">
+        <input ref={inputRef} />
+      </div>
+    );
+  };
