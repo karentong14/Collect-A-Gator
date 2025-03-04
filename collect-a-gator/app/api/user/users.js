@@ -1,3 +1,7 @@
+//This file could be used for user related routes
+//ex: maybe etrieve extended profile information 
+//GET /api/user/:id/journal: If you want to fetch journal entries that belong to a specific user, you could have a route that returns only that user’s entries.
+//unsure if I need this
 import { getAuth } from "@clerk/nextjs/server";
 import { clerkClient } from "@clerk/nextjs";
 
