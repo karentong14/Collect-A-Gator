@@ -1,8 +1,12 @@
 import mongoose from "mongoose";
 
 const entrySchema = new mongoose.Schema({
+    token: {
+        type: String,
+        required: [true, "An entry must be assigned to a specific user"],
+    },
     id: {
-        type: Number,
+        type: String,
         required: [true, "Entry should have an ID"],
     },
     date: { 
