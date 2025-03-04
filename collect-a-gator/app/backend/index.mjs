@@ -2,7 +2,7 @@
 import "./loadEnvironment.mjs";
 import express from "express";
 import cors from "cors";
-import posts from "./routes/posts.mjs";
+import posts from "../api/journal/route.mjs";
 
 const PORT = process.env.PORT || 5050;
 const app = express();
