@@ -4,9 +4,8 @@ import { ObjectId, ReturnDocument } from "mongodb";
 import {Entry} from "../../backend/models/entry.schema.mjs";
 const router = express.Router();
 
-//ALL Journal CRUD Operations in this file
-
 // Get a list of 50 posts
+// ex: GET http://localhost:5050/api/entries
 router.get("/", async (req, res) => {
   try {
     const results = await Entry.find().limit(50);
@@ -17,6 +16,8 @@ router.get("/", async (req, res) => {
 });
 
 // Fetches the latest posts
+//ex: GET http://localhost:5050/api/entries/latest
+//currently it does not seem to work correctly with some dates not ordered correctly
 router.get("/latest", async (req, res) => {
   try {
     const results = await Entry.find({}, "author title tags date") //need to edit the dates bc right now, it seems alphabetical and not working with real dates
@@ -30,6 +31,7 @@ router.get("/latest", async (req, res) => {
 
 
 //Get a single post
+// ex: GET http://localhost:5050/api/entries/67b51d310602399d38e1d3e2
 router.get("/:id", async (req, res) => {
   try {
     const result = await Entry.findById(req.params.id);
@@ -41,6 +43,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Add a new document to the collection
+//ex: POST http://localhost:5050/api/entries with the raw JSON
 router.post("/", async (req, res) => {
   try {
     const newEntry = new Entry(req.body);
@@ -52,6 +55,7 @@ router.post("/", async (req, res) => {
 });
 
 // Delete an entry
+// ex: DELETE http://localhost:5050/api/entries/67c74fdd13df14183bef59ac
 router.delete("/:id", async (req, res) => {
   try {
     const result = await Entry.findByIdAndDelete(req.params.id);
