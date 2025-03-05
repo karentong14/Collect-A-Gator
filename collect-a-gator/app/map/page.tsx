@@ -6,48 +6,16 @@ import dynamic from "next/dynamic";
 const App = dynamic(() => Promise.resolve(ClientApp), { ssr: false });
 // https://developers.google.com/maps/documentation/javascript/reference/places-service
 
-//MARKERS??
-const PlacesSearch = () => {
-    // this is accessing the specific instance of the map this took me so long to figure out omfg
-    const map = useMap();
-    const places = useMapsLibrary("places"); // calling usage for places API
-    let numbers: number[] = [1, 2, 3];
-    const [locations, setLocations] = useState<google.maps.places.PlaceResult[]>([]); // we use useState to be able to setLocations to locations
-  
-    useEffect(() => { // useEffect connects a component to any external service like an API!!
-      if (!map || !places) return; // needed to account for nulls 
-  
-      const service = new google.maps.places.PlacesService(map);
-      // the request to get locations
-      const request = {
-        location: map.getCenter(),
-        radius: 5000,
-        type: "cafe",
-      };
-  
-      // puts the found locations into the setRestaurants
-      service.nearbySearch(request, (results, status) => {
-        if (status == google.maps.places.PlacesServiceStatus.OK && results) {
-          setLocations(results); // automatically sets the results of the request to locations variable
-        }
-      });
-    });
-  
-    return (
-      <>
-        {locations.map((place) => (
-         place.geometry?.location ? (
-          // we can customize the advanced markers I'm pretty sure
-          <AdvancedMarker
-            key={place.place_id}
-            position={{ lat: place.geometry.location.lat(), lng: place.geometry.location.lng() }}
-            title={place.name}
-          />
-        ): null
-        ))}
-      </>
-    );
-  };
+
+const markers = [
+  { lat: 29.644859192414923, lng: -82.32228393500337, category: "park", title: "depot park" },
+  { lat: 29.660039837500698, lng: -82.327608563839, category: "restaurant", title: "germaines" },
+  { lat: 29.636522457001664, lng: -82.37027596013368, category: "museum", title: "butterfly garden" },
+  { lat: 29.652244871720377, lng: -82.33110328896925, category: "cafe", title: "karma cream" },
+  { lat: 29.6494508812314, lng: -82.34363722597145, category: "UF", title: "marston" }
+];
+
+const categories = ["all", "park", "restaurant", "museum", "cafe", "UF"];
 
 
 //TEENY TINY SEARCH BAR AT THE TOPPPPPP
@@ -113,6 +81,7 @@ const ClientApp = () => {
     const [selectedPlace, setSelectedPlace] =
     useState<google.maps.places.PlaceResult | null>(null);
     const [markerRef, marker] = useAdvancedMarkerRef();
+    const [selectedCategory, setSelectedCategory] = useState("all");
 
     const position = { lat: 29.6520, lng: -82.3250 };
     return (
@@ -120,8 +89,18 @@ const ClientApp = () => {
             <div style={{ width: "100vw", height: "100vh" }}>
                 <Map defaultCenter={position} defaultZoom={15} mapId="5174ed5358f23a3c">
                     {/*<PlacesSearch /> */}
-                    <AdvancedMarker ref={markerRef} position={{ lat: 29.66006780681899, lng: -82.32755491980954 }} />
-                    <AdvancedMarker ref={markerRef} position={{ lat: 29.64490115272207, lng: -82.32211227378974 }} />
+                    {markers
+            .filter(
+              (marker) =>
+                selectedCategory === "all" || marker.category === selectedCategory
+            )
+            .map((marker, index) => (
+              <AdvancedMarker
+                key={index}
+                position={{ lat: marker.lat, lng: marker.lng }}
+                title={marker.title}
+              />
+            ))}
                 </Map>
             </div>
             
@@ -131,7 +110,36 @@ const ClientApp = () => {
                 <PlaceAutocomplete onPlaceSelect={setSelectedPlace} />
               </div>
             </MapControl>
-
+            <div
+          style={{
+            position: "absolute",
+            top: 10,
+            left: "50%",
+            transform: "translateX(-50%)",
+            display: "flex",
+            gap: "10px",
+            background: "rgba(255, 255, 255, 0.9)",
+            padding: "8px",
+            borderRadius: "10px",
+          }}
+        >
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              style={{
+                padding: "6px 12px",
+                borderRadius: "5px",
+                border: "none",
+                cursor: "pointer",
+                background: selectedCategory === cat ? "#007bff" : "#ddd",
+                color: selectedCategory === cat ? "#fff" : "#000",
+              }}
+            >
+              {cat}
+            </button>
+          ))}
+          </div>
 
             <MapHandler place={selectedPlace} marker={marker} />
         </APIProvider>
