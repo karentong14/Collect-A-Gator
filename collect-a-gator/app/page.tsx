@@ -1,9 +1,12 @@
-import Image from "next/image";
-import Link from "next/link";
+import { UserGreeting } from "@/components/usergreeting";
+import { ClerkProvider } from "@clerk/nextjs";
+import { ReactNode } from "react";
 
-export default function Home() {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <div>
-    </div>
+    <ClerkProvider>
+      <UserGreeting />
+      {children}
+    </ClerkProvider>
   );
 }

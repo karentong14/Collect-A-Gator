@@ -39,7 +39,7 @@ export default function JournalPage({
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("http://localhost:5050/api")
+      const response = await fetch("http://localhost:5050/api/entries")
       .then(response => response.json())
       .then(json => {
         setData(json);

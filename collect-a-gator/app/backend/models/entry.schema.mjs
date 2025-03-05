@@ -8,6 +8,7 @@ const entrySchema = new mongoose.Schema({
     id: {
         type: String,
         required: [true, "Entry must have an ID"],
+        unique: [true, "Each entry id must have unique"],
     },
     date: { 
         type: String,
