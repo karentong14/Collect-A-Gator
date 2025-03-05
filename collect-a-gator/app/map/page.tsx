@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState, useRef } from 'react'
 import {AdvancedMarker, APIProvider, ControlPosition, Map, MapControl, useMapsLibrary, useMap, useAdvancedMarkerRef} from '@vis.gl/react-google-maps';
+import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/nextjs";
+import { ClerkProvider } from '@clerk/nextjs'
 import dynamic from "next/dynamic";
 
 const App = dynamic(() => Promise.resolve(ClientApp), { ssr: false });
@@ -85,6 +87,8 @@ const ClientApp = () => {
 
     const position = { lat: 29.6520, lng: -82.3250 };
     return (
+      <ClerkProvider>
+      <><SignedIn>
         <APIProvider apiKey={"AIzaSyC-Pip5d3p8_6swFtL_hRosMm2VTpraip4"}>
             <div style={{ width: "100vw", height: "100vh" }}>
                 <Map defaultCenter={position} defaultZoom={15} mapId="5174ed5358f23a3c">
@@ -141,9 +145,13 @@ const ClientApp = () => {
           ))}
           </div>
 
-            <MapHandler place={selectedPlace} marker={marker} />
+          <MapHandler place={selectedPlace} marker={marker} />
         </APIProvider>
-    );
+      </SignedIn><SignedOut>
+          <RedirectToSignIn />
+        </SignedOut></>
+      </ClerkProvider>
+      );
 };
 
 export default App;

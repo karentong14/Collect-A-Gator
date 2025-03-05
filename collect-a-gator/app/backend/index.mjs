@@ -2,7 +2,8 @@
 import "./loadEnvironment.mjs";
 import express from "express";
 import cors from "cors";
-import posts from "./routes/posts.mjs";
+import postRoutes from "../api/journal/route.mjs";
+import userRoutes from "../api/user/route.mjs";
 
 const PORT = process.env.PORT || 5050;
 const app = express();
@@ -12,7 +13,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 // Load the /posts routes
-app.use("/api", posts);
+app.use("/api/entries", postRoutes);
+app.use("/api/users", userRoutes);
 
 // Global error handling
 app.use((err, _req, res, next) => {

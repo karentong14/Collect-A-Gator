@@ -42,7 +42,6 @@ export default function JournalPage({
       const response = await fetch("http://localhost:5050/api")
       .then(response => response.json())
       .then(json => {
-        console.log(json);
         setData(json);
       })
       .catch(error => console.error(error));

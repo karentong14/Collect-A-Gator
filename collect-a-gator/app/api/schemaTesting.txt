@@ -1,0 +1,18 @@
+This file will help us make the entries and users to test for CRUD operations: 
+
+Entry Schema Example
+{
+    "token": "fewfwfwfwef", 
+    "id": "regshehhth" ,
+    "date": "wefwegewg",
+    "title": "newesttest", 
+    "content": "ewffwegwg"
+}
+
+User Schema Example
+{
+    "token": "ffnfneifeinfnf", 
+    "firstName": "effwafewfw" ,
+    "lastName": "lu",
+    "email": "fweffwi@gmail.com"
+}
