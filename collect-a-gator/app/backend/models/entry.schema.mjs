@@ -3,23 +3,24 @@ import mongoose from "mongoose";
 const entrySchema = new mongoose.Schema({
     token: {
         type: String,
-        required: [true, "An entry must be assigned to a specific user"],
+        required: [true, "Entry must be assigned to a specific user"],
     },
     id: {
         type: String,
-        required: [true, "Entry should have an ID"],
+        required: [true, "Entry must have an ID"],
+        unique: [true, "Each entry id must have unique"],
     },
     date: { 
         type: String,
-        required: false,
+        required: [true, "Entry must have a date"],
     },
     location: {
         type: String, 
-        required: [true, "Entry should have a location"],  
+        required: [true, "Entry must have a location"],  
     },
     title: {
         type: String,
-        required: [true, "Entry should have a title"],
+        required: [true, "Entry must have a title"],
     },
     content: {
         type: String, 

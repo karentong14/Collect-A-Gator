@@ -54,12 +54,14 @@ export default function EntryPage({
         }
         else {
             const fetchData = async () => {
-                const response = await fetch("http://localhost:5050/api", {
+                const response = await fetch("http://localhost:5050/api/entries", {
                   method: "POST",
                   body: JSON.stringify({
                       title: title,
                       date: date,
                       content: content,
+                      token: "hardcodedfornow", 
+                      location: selectedPlace?.name || "Unknown location", 
                       id: 0
                   }),
                   headers: {
