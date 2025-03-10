@@ -20,11 +20,9 @@ import {
   LocationOn
 } from '@mui/icons-material';
 
-import Link from 'next/link';
-
 import { JournalEntry } from '@/components/models/models';
 
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 /* Uncomment below if children props including in component, instead of the on-page fetch */
 /*interface JournalPageProps {
   entries: JournalEntry[];
@@ -36,6 +34,7 @@ export default function JournalPage({
   children: React.ReactNode;
 }>) {
   const [data, setData] = useState<null | any>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,7 +59,10 @@ export default function JournalPage({
     return formattedDate;
   }
 
-  const router = useRouter();
+  const goToEntry = (entryId : string) => {
+    router.push(`/journal/${entryId}`);
+  }
+
   return (
     <Container maxWidth="lg" sx={{
       paddingTop: "20px"
@@ -98,8 +100,8 @@ export default function JournalPage({
         </Grid>
       </Grid>
       <Grid container spacing={2}>
-        {data ? data.map((entry : JournalEntry) => (
-          <Grid item xs={12} sm={6} md={4} key={entry._id} sx={{
+        {data ? data.map((entry : JournalEntry, i : number) => (
+          <Grid item xs={12} sm={6} md={4} key={i} onClick={() => goToEntry(entry._id)} sx={{
             cursor: "pointer",
             transition: "transform 0.2s ease-in-out, 0.2s ease-in-out",
             "&:hover": {
