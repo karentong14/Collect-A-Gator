@@ -136,7 +136,7 @@ export default function JournalPage({
                   scale: 0.9,
                   color: 'red'
                 }} />
-                <Typography variant="body2">Gainesville, Florida</Typography>
+                <Typography variant="body2">{entry.location || "No location specified"}</Typography>
               </Box>
             </Box>
               <CardContent>

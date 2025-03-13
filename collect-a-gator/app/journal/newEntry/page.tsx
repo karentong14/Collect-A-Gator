@@ -15,7 +15,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useEffect, useRef, useState } from 'react';
 import { JournalEntry } from '@/components/models/models';
-
+import { ClerkProvider, useUser } from "@clerk/nextjs";
 import {AdvancedMarker, APIProvider, ControlPosition, Map, MapControl, useMapsLibrary, useMap, useAdvancedMarkerRef} from '@vis.gl/react-google-maps';
 
 
@@ -31,6 +31,8 @@ export default function EntryPage({
     //maps api
     const [selectedPlace, setSelectedPlace] =
         useState<google.maps.places.PlaceResult | null>(null);
+    //User information
+    const { user, isSignedIn } = useUser();
 
     useEffect(() => {
         setDate(dayjs()); 
@@ -60,7 +62,7 @@ export default function EntryPage({
                       title: title,
                       date: date,
                       content: content,
-                      token: "hardcodedfornow", 
+                      token: user?.id, 
                       location: selectedPlace?.name || "Unknown location", 
                       id: 0
                   }),
@@ -76,6 +78,7 @@ export default function EntryPage({
       }, [trigger]);
 
     return (
+        <ClerkProvider>
         <Card sx={{
             padding: '20px',
             maxWidth: 'lg',
@@ -125,6 +128,7 @@ export default function EntryPage({
                 </APIProvider>
             </Grid>
         </Card>
+        </ClerkProvider>
     );
 }
 

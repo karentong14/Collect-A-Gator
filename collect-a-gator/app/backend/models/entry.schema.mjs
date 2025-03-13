@@ -24,10 +24,9 @@ const entrySchema = new mongoose.Schema({
     },
     content: {
         type: String, 
-        required: [true, "Entry should have content"],
+        required: [true, "Entry must have content"],
     }
     
 });
-
 
 export const Entry = mongoose.model('Entry', entrySchema);

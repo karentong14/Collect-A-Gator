@@ -8,7 +8,7 @@ const router = express.Router();
 // ex: GET http://localhost:5050/api/entries
 router.get("/", async (req, res) => {
   try {
-    const results = await Entry.find().limit(50);
+    const results = await Entry.find();
     res.status(200).send(results);
   } catch (error) {
     res.status(500).send({ error: "Could not get the posts" }); //Do I need to write an error message

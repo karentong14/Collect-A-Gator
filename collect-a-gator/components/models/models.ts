@@ -3,4 +3,5 @@ export interface JournalEntry {
   title: string;
   content: string;
   date: string;
+  location: string;
 }
