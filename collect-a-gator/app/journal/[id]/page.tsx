@@ -20,30 +20,6 @@ export default function entryPage() {
         console.log(entry);
     }, []);
 
-    // return (
-    //     entry ?
-    //     <Container maxWidth="lg">
-    //         <Card>
-    //             <CardHeader title={entry.title}
-    //             subheader={
-    //                 <Chip 
-    //                     icon={<LocationOnIcon />} 
-    //                     label={entry.location || "No location specified"} 
-    //                     sx={{ backgroundColor: '#f44336', color: 'white' }} 
-    //                 />
-    //             <CardContent>
-    //                 {entry.content}
-    //             </CardContent>
-    //         </Card>
-    //         <Card>
-    //             <CardHeader title={entry.date}/>
-    //             <CardMedia component="img"
-    //                 height="200"
-    //                 image="https://placehold.co/600x400/blue/white"
-    //             />
-    //         </Card>
-    //     </Container> : <></>
-    // );
     return (
         entry ? (
             <Container maxWidth="lg">
