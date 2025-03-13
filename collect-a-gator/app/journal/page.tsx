@@ -1,5 +1,7 @@
 'use client'
 import React, {useEffect, useState}  from 'react';
+import { ClerkProvider } from '@clerk/nextjs';
+import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/nextjs";
 
 import { 
   Container, 
@@ -64,6 +66,8 @@ export default function JournalPage({
   }
 
   return (
+    <ClerkProvider>
+         <><SignedIn>
     <Container maxWidth="lg" sx={{
       paddingTop: "20px"
     }}>
@@ -172,5 +176,9 @@ export default function JournalPage({
         )) : <></>}
       </Grid>
     </Container>
+   </SignedIn><SignedOut>
+             <RedirectToSignIn />
+        </SignedOut></>
+      </ClerkProvider>
   );
 }
