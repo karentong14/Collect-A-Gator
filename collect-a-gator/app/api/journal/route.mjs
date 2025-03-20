@@ -1,16 +1,34 @@
 import express from "express";
 //import db from "../../backend/db/conn.mjs";
 import { ObjectId, ReturnDocument } from "mongodb";
+//import { clerkMiddleware } from "@clerk/nextjs/server"
+import { ClerkExpressWithAuth } from "@clerk/clerk-sdk-node"; // Correct import for Express
 import {Entry} from "../../backend/models/entry.schema.mjs";
 const router = express.Router();
+
+router.use(ClerkExpressWithAuth()); // Authenticate requests using Clerk
 
 // Get a list of 50 posts
 // ex: GET http://localhost:5050/api/entries
 router.get("/", async (req, res) => {
   try {
-    const results = await Entry.find();
+
+     // Ensure the user is authenticated and has a Clerk token
+     const userId = req.auth?.userId; // Adjust based on how Clerk authentication is set up in your backend
+     console.log(req.auth);
+     console.log("Authenticated user ID:", userId); // Debug log
+     if (!userId) {
+       return res.status(401).send({ error: "Unauthorized" });
+     }
+
+    const results = await Entry.find({ token: userId} );
+    console.log("Fetched results:", results); // Debug log
     res.status(200).send(results);
+    if (!Array.isArray(results)) {
+      return res.status(500).send({ error: "Results are not an array" });
+    }
   } catch (error) {
+    console.error(error);  // Log the error to help debug
     res.status(500).send({ error: "Could not get the posts" }); //Do I need to write an error message
   }
 });
