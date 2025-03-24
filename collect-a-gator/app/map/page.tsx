@@ -2,17 +2,18 @@
 import React, { useEffect, useState, useRef } from 'react'
 import {AdvancedMarker, APIProvider, ControlPosition, Map, MapControl, useMapsLibrary, useMap, useAdvancedMarkerRef} from '@vis.gl/react-google-maps';
 import dynamic from "next/dynamic";
+import butterfly_gator from "./../images/butterfly_gator.png"
 
 const App = dynamic(() => Promise.resolve(ClientApp), { ssr: false });
 // https://developers.google.com/maps/documentation/javascript/reference/places-service
 
 
 const markers = [
-  { lat: 29.644859192414923, lng: -82.32228393500337, category: "park", title: "depot park" },
-  { lat: 29.660039837500698, lng: -82.327608563839, category: "restaurant", title: "germaines" },
-  { lat: 29.636522457001664, lng: -82.37027596013368, category: "museum", title: "butterfly garden" },
-  { lat: 29.652244871720377, lng: -82.33110328896925, category: "cafe", title: "karma cream" },
-  { lat: 29.6494508812314, lng: -82.34363722597145, category: "UF", title: "marston" }
+  { lat: 29.644859192414923, lng: -82.32228393500337, category: "park", title: "depot park", image: butterfly_gator },
+  { lat: 29.660039837500698, lng: -82.327608563839, category: "restaurant", title: "germaines", image: butterfly_gator },
+  { lat: 29.636522457001664, lng: -82.37027596013368, category: "museum", title: "butterfly garden", image: butterfly_gator },
+  { lat: 29.652244871720377, lng: -82.33110328896925, category: "cafe", title: "karma cream", image: butterfly_gator },
+  { lat: 29.6494508812314, lng: -82.34363722597145, category: "UF", title: "marston", image: butterfly_gator }
 ];
 
 const categories = ["all", "park", "restaurant", "museum", "cafe", "UF"];
@@ -78,10 +79,11 @@ const MapHandler = ({ place, marker }: MapHandlerProps) => {
 };
 
 const ClientApp = () => {
-    const [selectedPlace, setSelectedPlace] =
-    useState<google.maps.places.PlaceResult | null>(null);
+    const [selectedPlace, setSelectedPlace] = useState<google.maps.places.PlaceResult | null>(null);
     const [markerRef, marker] = useAdvancedMarkerRef();
     const [selectedCategory, setSelectedCategory] = useState("all");
+    const [selectedMarker, setSelectedMarker] = useState<{ lat: number; lng: number } | null>(null);
+
 
     const position = { lat: 29.6520, lng: -82.3250 };
     return (
@@ -99,10 +101,22 @@ const ClientApp = () => {
                 key={index}
                 position={{ lat: marker.lat, lng: marker.lng }}
                 title={marker.title}
+                onClick={() => setSelectedMarker({ lat: marker.lat, lng: marker.lng })}
               />
             ))}
+            {/* just displaying butterfly_gator image when a marker is clicked */}
+            {selectedMarker && (
+            <AdvancedMarker position={selectedMarker}>
+              <img
+                src={butterfly_gator.src}
+                alt="Butterfly Gator"
+                style={{ width: "50px", height: "75px" }}
+              />
+            </AdvancedMarker>
+          )}
                 </Map>
             </div>
+
             
             {/* //ADDED TEENY TINY SEARCH BAR */}
             <MapControl position={ControlPosition.TOP}>
