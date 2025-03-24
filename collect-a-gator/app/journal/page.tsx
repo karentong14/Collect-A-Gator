@@ -1,6 +1,6 @@
 'use client'
 import React, {useEffect, useState}  from 'react';
-import { ClerkProvider } from '@clerk/nextjs';
+import { useUser, ClerkProvider } from '@clerk/nextjs';
 import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/nextjs";
 
 import { 
@@ -38,17 +38,30 @@ export default function JournalPage({
   const [data, setData] = useState<null | any>(null);
   const router = useRouter();
 
+  const user = useUser(); 
+  const userId = user.user?.id
+
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("http://localhost:5050/api/entries")
-      .then(response => response.json())
-      .then(json => {
-        setData(json);
-      })
-      .catch(error => console.error(error));
+      try {
+        const response = await fetch("http://localhost:5050/api/entries");
+        const json = await response.json();
+        
+        if (userId) {
+          const filteredData = json.filter((entry: JournalEntry) => entry.token === userId);
+          setData(filteredData);
+        } else {
+          setData([]);
+        }
+      } catch (error) {
+        console.error(error);
+      }
     };
-    fetchData();
-  }, []);
+  
+    if (userId) {
+      fetchData();
+    }
+  }, [userId]); // Re-run when userId changes
 
   function reformatDate(s : string) {
     const currentDate = new Date (s);
@@ -105,6 +118,7 @@ export default function JournalPage({
       </Grid>
       <Grid container spacing={2}>
         {data ? data.map((entry : JournalEntry, i : number) => (
+
           <Grid item xs={12} sm={6} md={4} key={i} onClick={() => goToEntry(entry._id)} sx={{
             cursor: "pointer",
             transition: "transform 0.2s ease-in-out, 0.2s ease-in-out",
