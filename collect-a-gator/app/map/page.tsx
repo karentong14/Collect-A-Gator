@@ -9,11 +9,11 @@ const App = dynamic(() => Promise.resolve(ClientApp), { ssr: false });
 
 
 const markers = [
-  { lat: 29.644859192414923, lng: -82.32228393500337, category: "park", title: "depot park", image: butterfly_gator },
-  { lat: 29.660039837500698, lng: -82.327608563839, category: "restaurant", title: "germaines", image: butterfly_gator },
-  { lat: 29.636522457001664, lng: -82.37027596013368, category: "museum", title: "butterfly garden", image: butterfly_gator },
-  { lat: 29.652244871720377, lng: -82.33110328896925, category: "cafe", title: "karma cream", image: butterfly_gator },
-  { lat: 29.6494508812314, lng: -82.34363722597145, category: "UF", title: "marston", image: butterfly_gator }
+  { lat: 29.644859192414923, lng: -82.32228393500337, category: "park", title: "depot park", image: butterfly_gator, collected: false },
+  { lat: 29.660039837500698, lng: -82.327608563839, category: "restaurant", title: "germaines", image: butterfly_gator, collected: false },
+  { lat: 29.636522457001664, lng: -82.37027596013368, category: "museum", title: "butterfly garden", image: butterfly_gator, collected: false },
+  { lat: 29.652244871720377, lng: -82.33110328896925, category: "cafe", title: "karma cream", image: butterfly_gator, collected: false },
+  { lat: 29.6494508812314, lng: -82.34363722597145, category: "UF", title: "marston", image: butterfly_gator, collected: false }
 ];
 
 const categories = ["all", "park", "restaurant", "museum", "cafe", "UF"];
@@ -110,7 +110,7 @@ const ClientApp = () => {
               <img
                 src={butterfly_gator.src}
                 alt="Butterfly Gator"
-                style={{ width: "50px", height: "75px" }}
+                style={{ width: "100px", height: "135px" }}
               />
             </AdvancedMarker>
           )}
