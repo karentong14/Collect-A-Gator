@@ -8,6 +8,7 @@ import Divider from "@mui/material/Divider";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import {useUser} from '@clerk/nextjs';
 
 import {
 	Menu,
@@ -37,6 +38,9 @@ function NavBar() {
 
 		setState({ ...state, [anchor]: open });
 	};
+
+	const user = useUser(); 
+	const userId = user.user?.id
 
 	const iemsList = (anchor : DrawerAnchor) => (
 		<Box
@@ -96,7 +100,7 @@ function NavBar() {
 		</Box>
 	);
 
-	return (
+	return userId ? (
 		<Grid container direction="row">
 			<Grid item>
 				<React.Fragment key={"left"}>
@@ -116,7 +120,7 @@ function NavBar() {
 				</Typography>
 			</Grid>
 		</Grid>
-	);
+	) : <></>;
 }
 
 export default NavBar;

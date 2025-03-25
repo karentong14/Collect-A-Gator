@@ -118,7 +118,6 @@ export default function JournalPage({
       </Grid>
       <Grid container spacing={2}>
         {data ? data.map((entry : JournalEntry, i : number) => (
-
           <Grid item xs={12} sm={6} md={4} key={i} onClick={() => goToEntry(entry._id)} sx={{
             cursor: "pointer",
             transition: "transform 0.2s ease-in-out, 0.2s ease-in-out",
