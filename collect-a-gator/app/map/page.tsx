@@ -133,11 +133,11 @@ const ClientApp = () => {
         {/* PLACE OVERVIEW PANEL to the right*/}
         <SplitLayout rowReverse rowLayoutMinWidth={700}>
           <div className="SlotDiv" slot="fixed">
-            <OverlayLayout ref={overlayLayoutRef}>
+            
             <div className="container">
               <PlacePicker placeholder="Enter a place to see its address"  />
             </div>
-            </OverlayLayout>
+            
           </div>
           
           {/* actual map to the left */}
