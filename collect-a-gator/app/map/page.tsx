@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useState, useRef } from 'react'
 import {AdvancedMarker, APIProvider, Pin, ControlPosition, Map, MapControl, useMapsLibrary, useMap, useAdvancedMarkerRef} from '@vis.gl/react-google-maps';
-import {
-  PlaceOverview,
-  SplitLayout,
-  OverlayLayout,
-  PlacePicker
-} from '@googlemaps/extended-component-library/react';
+// import {
+//   PlaceOverview,
+//   SplitLayout,
+//   OverlayLayout,
+//   PlacePicker,
+//   PlaceDirectionsButton
+// } from '@googlemaps/extended-component-library/react';
 import dynamic from "next/dynamic";
 import butterfly_gator from "./../images/butterfly_gator.png"
 import depot_gator from "./../images/depot_gator.png"
@@ -102,36 +103,44 @@ const ClientApp = () => {
     const [selectedMarker, setSelectedMarker] = useState<{ lat: number; lng: number; image: any } | null>(null);
     //below, for place panel overview
     const overlayLayoutRef = useRef<TOverlayLayout>(null);
-    const pickerRef = useRef<TPlacePicker>(null);
-    const [college, setCollege] = useState<google.maps.places.Place | undefined>(undefined);
-    const DEFAULT_CENTER = { lat: 38, lng: -98 };
-    const DEFAULT_ZOOM = 4;
-    const DEFAULT_ZOOM_WITH_LOCATION = 16;
-
+    // const [formattedAddress, setFormattedAddress] = React.useState('');
+    // const handlePlaceChange = (e: any) => {
+    //   setFormattedAddress(e.target.value?.formattedAddress ?? '');
+    // };
+    const SplitLayout = dynamic(
+      () => import('@googlemaps/extended-component-library/react').then(mod => mod.SplitLayout),
+      { ssr: false }
+    );
+    const OverlayLayout = dynamic(
+      () => import('@googlemaps/extended-component-library/react').then(mod => mod.OverlayLayout),
+      { ssr: false }
+    );
+    const PlacePicker = dynamic(
+      () => import('@googlemaps/extended-component-library/react').then(mod => mod.PlacePicker),
+      { ssr: false }
+    );
+    const PlaceOverview = dynamic(
+      () => import('@googlemaps/extended-component-library/react').then(mod => mod.PlaceOverview),
+      { ssr: false }
+    );
+    // see individual elements: https://configure.mapsplatform.google/place-picker
+    
 
     const position = { lat: 29.6520, lng: -82.3250 };
     return (
         <APIProvider apiKey={"AIzaSyC-Pip5d3p8_6swFtL_hRosMm2VTpraip4"}>
 
-        {/* PLACE OVERVIEW PANEL to the left*/}
+        {/* PLACE OVERVIEW PANEL to the right*/}
         <SplitLayout rowReverse rowLayoutMinWidth={700}>
           <div className="SlotDiv" slot="fixed">
             <OverlayLayout ref={overlayLayoutRef}>
-              <div className="SlotDiv" slot="main">
-                <PlacePicker/>
-                <PlaceOverview
-                  size="large"
-                  place={college}
-                  googleLogoAlreadyDisplayed
-                >
-                </PlaceOverview>
-              </div>
-              <div slot="overlay" className="SlotDiv">
-              </div>
+            <div className="container">
+              <PlacePicker placeholder="Enter a place to see its address"  />
+            </div>
             </OverlayLayout>
           </div>
           
-          {/* actual map to the right */}
+          {/* actual map to the left */}
           <div slot="main" style={{ width: "100vw", height: "100vh" }}>
                 <Map defaultCenter={position} defaultZoom={15} mapId="5174ed5358f23a3c">
                     {/*<PlacesSearch /> */}
