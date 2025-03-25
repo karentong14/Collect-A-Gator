@@ -1,6 +1,12 @@
 "use client";
 import React, { useEffect, useState, useRef } from 'react'
-import {AdvancedMarker, APIProvider, ControlPosition, Map, MapControl, useMapsLibrary, useMap, useAdvancedMarkerRef} from '@vis.gl/react-google-maps';
+import {AdvancedMarker, APIProvider, Pin, ControlPosition, Map, MapControl, useMapsLibrary, useMap, useAdvancedMarkerRef} from '@vis.gl/react-google-maps';
+import {
+  PlaceOverview,
+  SplitLayout,
+  OverlayLayout,
+  PlacePicker
+} from '@googlemaps/extended-component-library/react';
 import dynamic from "next/dynamic";
 import butterfly_gator from "./../images/butterfly_gator.png"
 import depot_gator from "./../images/depot_gator.png"
@@ -8,6 +14,11 @@ import germaines_gator from "./../images/germaines_gator.png"
 import karmacream_gator from "./../images/karmacream_gator.png"
 import marston_gator from "./../images/marston_gator.png"
 
+import { OverlayLayout as TOverlayLayout } from '@googlemaps/extended-component-library/overlay_layout.js';
+import { PlacePicker as TPlacePicker } from '@googlemaps/extended-component-library/place_picker.js';
+
+//import all components from extended components library
+<script type="module" src="https://unpkg.com/@googlemaps/extended-component-library"></script>
 
 const App = dynamic(() => Promise.resolve(ClientApp), { ssr: false });
 // https://developers.google.com/maps/documentation/javascript/reference/places-service
@@ -83,17 +94,45 @@ const MapHandler = ({ place, marker }: MapHandlerProps) => {
   return null;
 };
 
+
 const ClientApp = () => {
     const [selectedPlace, setSelectedPlace] = useState<google.maps.places.PlaceResult | null>(null);
     const [markerRef, marker] = useAdvancedMarkerRef();
     const [selectedCategory, setSelectedCategory] = useState("all");
     const [selectedMarker, setSelectedMarker] = useState<{ lat: number; lng: number; image: any } | null>(null);
+    //below, for place panel overview
+    const overlayLayoutRef = useRef<TOverlayLayout>(null);
+    const pickerRef = useRef<TPlacePicker>(null);
+    const [college, setCollege] = useState<google.maps.places.Place | undefined>(undefined);
+    const DEFAULT_CENTER = { lat: 38, lng: -98 };
+    const DEFAULT_ZOOM = 4;
+    const DEFAULT_ZOOM_WITH_LOCATION = 16;
 
 
     const position = { lat: 29.6520, lng: -82.3250 };
     return (
         <APIProvider apiKey={"AIzaSyC-Pip5d3p8_6swFtL_hRosMm2VTpraip4"}>
-            <div style={{ width: "100vw", height: "100vh" }}>
+
+        {/* PLACE OVERVIEW PANEL to the left*/}
+        <SplitLayout rowReverse rowLayoutMinWidth={700}>
+          <div className="SlotDiv" slot="fixed">
+            <OverlayLayout ref={overlayLayoutRef}>
+              <div className="SlotDiv" slot="main">
+                <PlacePicker/>
+                <PlaceOverview
+                  size="large"
+                  place={college}
+                  googleLogoAlreadyDisplayed
+                >
+                </PlaceOverview>
+              </div>
+              <div slot="overlay" className="SlotDiv">
+              </div>
+            </OverlayLayout>
+          </div>
+          
+          {/* actual map to the right */}
+          <div slot="main" style={{ width: "100vw", height: "100vh" }}>
                 <Map defaultCenter={position} defaultZoom={15} mapId="5174ed5358f23a3c">
                     {/*<PlacesSearch /> */}
                     {markers
@@ -120,16 +159,20 @@ const ClientApp = () => {
             </AdvancedMarker>
           )}
                 </Map>
-            </div>
+                
+          </div>
+        </SplitLayout>
 
             
             {/* //ADDED TEENY TINY SEARCH BAR */}
-            <MapControl position={ControlPosition.TOP}>
+            {/* <MapControl position={ControlPosition.TOP}>
               <div style={{ fontSize: '15px', color: 'black'}} className="autocomplete-control">
                 <PlaceAutocomplete onPlaceSelect={setSelectedPlace} />
               </div>
-            </MapControl>
-            <div
+            </MapControl> */}
+
+
+          <div
           style={{
             position: "absolute",
             top: 10,
