@@ -44,9 +44,24 @@ export default function JournalPage({
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Sync user information when they log in
+        if (userId) {
+          await fetch("http://localhost:5050/api/users", { 
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              token: userId,
+              email: user.user?.primaryEmailAddress?.emailAddress,
+              firstName: user.user?.firstName,
+              lastName: user.user?.lastName,
+            }),
+          });
+        }
+  
+        // Fetch journal entries for the logged-in user
         const response = await fetch("http://localhost:5050/api/entries");
         const json = await response.json();
-        
+  
         if (userId) {
           const filteredData = json.filter((entry: JournalEntry) => entry.token === userId);
           setData(filteredData);
@@ -61,7 +76,29 @@ export default function JournalPage({
     if (userId) {
       fetchData();
     }
-  }, [userId]); // Re-run when userId changes
+  }, [userId]); // Runs whenever userId changes
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch("http://localhost:5050/api/entries");
+  //       const json = await response.json();
+        
+  //       if (userId) {
+  //         const filteredData = json.filter((entry: JournalEntry) => entry.token === userId);
+  //         setData(filteredData);
+  //       } else {
+  //         setData([]);
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  
+  //   if (userId) {
+  //     fetchData();
+  //   }
+  // }, [userId]); // Re-run when userId changes
 
   function reformatDate(s : string) {
     const currentDate = new Date (s);
