@@ -103,6 +103,8 @@ const ClientApp = () => {
     const [selectedMarker, setSelectedMarker] = useState<{ lat: number; lng: number; image: any } | null>(null);
     //below, for place panel overview
     const overlayLayoutRef = useRef<TOverlayLayout>(null);
+    const pickerRef = useRef<TPlacePicker>(null);
+    const [place, setPlace] = useState<google.maps.places.Place | undefined>(undefined);
     // const [formattedAddress, setFormattedAddress] = React.useState('');
     // const handlePlaceChange = (e: any) => {
     //   setFormattedAddress(e.target.value?.formattedAddress ?? '');
@@ -123,6 +125,10 @@ const ClientApp = () => {
       () => import('@googlemaps/extended-component-library/react').then(mod => mod.PlaceOverview),
       { ssr: false }
     );
+    const PlaceDirectionsButton = dynamic(
+      () => import('@googlemaps/extended-component-library/react').then(mod => mod.PlaceDirectionsButton),
+      { ssr: false }
+    );
     // see individual elements: https://configure.mapsplatform.google/place-picker
     
 
@@ -135,11 +141,30 @@ const ClientApp = () => {
           <div className="SlotDiv" slot="fixed">
             
             <div className="container">
-              <PlacePicker placeholder="Enter a place to see its address"  />
-            </div>
-            
+              <PlacePicker 
+              ref={pickerRef}
+              placeholder="Enter a place to see its address"  
+              onPlaceChange={() => {
+                if (!pickerRef.current?.value) {
+                  setPlace(undefined);
+                } else {
+                  setPlace(pickerRef.current?.value);
+                }
+              }}
+              />
+              <PlaceOverview
+                  size="large"
+                  place={place}
+                  googleLogoAlreadyDisplayed
+                >
+                  <div slot="action" className="SlotDiv">
+                    <PlaceDirectionsButton slot="action" variant="filled">
+                      Directions
+                    </PlaceDirectionsButton>
+                  </div>
+                </PlaceOverview>
+            </div> 
           </div>
-          
           {/* actual map to the left */}
           <div slot="main" style={{ width: "100vw", height: "100vh" }}>
                 <Map defaultCenter={position} defaultZoom={15} mapId="5174ed5358f23a3c">
@@ -154,7 +179,9 @@ const ClientApp = () => {
                 key={index}
                 position={{ lat: marker.lat, lng: marker.lng }}
                 title={marker.title}
-                onClick={() => setSelectedMarker({ lat: marker.lat, lng: marker.lng, image: marker.image })}
+                onClick={() => {setSelectedMarker({ lat: marker.lat, lng: marker.lng, image: marker.image });
+                
+              }}
               />
             ))}
             {/* just displaying butterfly_gator image when a marker is clicked */}
