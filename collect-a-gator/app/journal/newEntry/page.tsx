@@ -78,7 +78,6 @@ export default function EntryPage({
       }, [trigger]);
 
     return (
-        <ClerkProvider>
         <Card sx={{
             padding: '20px',
             maxWidth: 'lg',
@@ -128,7 +127,6 @@ export default function EntryPage({
                 </APIProvider>
             </Grid>
         </Card>
-        </ClerkProvider>
     );
 }
 
