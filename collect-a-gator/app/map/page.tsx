@@ -1,20 +1,38 @@
 "use client";
 import React, { useEffect, useState, useRef } from 'react'
-import {AdvancedMarker, APIProvider, ControlPosition, Map, MapControl, useMapsLibrary, useMap, useAdvancedMarkerRef} from '@vis.gl/react-google-maps';
+import {AdvancedMarker, APIProvider, Pin, ControlPosition, Map, MapControl, useMapsLibrary, useMap, useAdvancedMarkerRef} from '@vis.gl/react-google-maps';
+// import {
+//   PlaceOverview,
+//   SplitLayout,
+//   OverlayLayout,
+//   PlacePicker,
+//   PlaceDirectionsButton
+// } from '@googlemaps/extended-component-library/react';
 import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/nextjs";
 import { ClerkProvider } from '@clerk/nextjs'
 import dynamic from "next/dynamic";
+import butterfly_gator from "./../images/butterfly_gator.png"
+import depot_gator from "./../images/depot_gator.png"
+import germaines_gator from "./../images/germaines_gator.png"
+import karmacream_gator from "./../images/karmacream_gator.png"
+import marston_gator from "./../images/marston_gator.png"
+
+import { OverlayLayout as TOverlayLayout } from '@googlemaps/extended-component-library/overlay_layout.js';
+import { PlacePicker as TPlacePicker } from '@googlemaps/extended-component-library/place_picker.js';
+
+//import all components from extended components library
+<script type="module" src="https://unpkg.com/@googlemaps/extended-component-library"></script>
 
 const App = dynamic(() => Promise.resolve(ClientApp), { ssr: false });
 // https://developers.google.com/maps/documentation/javascript/reference/places-service
 
 
 const markers = [
-  { lat: 29.644859192414923, lng: -82.32228393500337, category: "park", title: "depot park" },
-  { lat: 29.660039837500698, lng: -82.327608563839, category: "restaurant", title: "germaines" },
-  { lat: 29.636522457001664, lng: -82.37027596013368, category: "museum", title: "butterfly garden" },
-  { lat: 29.652244871720377, lng: -82.33110328896925, category: "cafe", title: "karma cream" },
-  { lat: 29.6494508812314, lng: -82.34363722597145, category: "UF", title: "marston" }
+  { lat: 29.644859192414923, lng: -82.32228393500337, category: "park", title: "depot park", image: depot_gator, collected: false },
+  { lat: 29.660039837500698, lng: -82.327608563839, category: "restaurant", title: "germaines", image: germaines_gator, collected: false },
+  { lat: 29.636522457001664, lng: -82.37027596013368, category: "museum", title: "butterfly garden", image: butterfly_gator, collected: false },
+  { lat: 29.652244871720377, lng: -82.33110328896925, category: "cafe", title: "karma cream", image: karmacream_gator, collected: false },
+  { lat: 29.6494508812314, lng: -82.34363722597145, category: "UF", title: "marston", image: marston_gator, collected: false }
 ];
 
 const categories = ["all", "park", "restaurant", "museum", "cafe", "UF"];
@@ -79,18 +97,80 @@ const MapHandler = ({ place, marker }: MapHandlerProps) => {
   return null;
 };
 
+
 const ClientApp = () => {
-    const [selectedPlace, setSelectedPlace] =
-    useState<google.maps.places.PlaceResult | null>(null);
+    const [selectedPlace, setSelectedPlace] = useState<google.maps.places.PlaceResult | null>(null);
     const [markerRef, marker] = useAdvancedMarkerRef();
     const [selectedCategory, setSelectedCategory] = useState("all");
+    const [selectedMarker, setSelectedMarker] = useState<{ lat: number; lng: number; image: any } | null>(null);
+    //below, for place panel overview
+    const overlayLayoutRef = useRef<TOverlayLayout>(null);
+    const pickerRef = useRef<TPlacePicker>(null);
+    const [place, setPlace] = useState<google.maps.places.Place | undefined>(undefined);
+    // const [formattedAddress, setFormattedAddress] = React.useState('');
+    // const handlePlaceChange = (e: any) => {
+    //   setFormattedAddress(e.target.value?.formattedAddress ?? '');
+    // };
+    const SplitLayout = dynamic(
+      () => import('@googlemaps/extended-component-library/react').then(mod => mod.SplitLayout),
+      { ssr: false }
+    );
+    const OverlayLayout = dynamic(
+      () => import('@googlemaps/extended-component-library/react').then(mod => mod.OverlayLayout),
+      { ssr: false }
+    );
+    const PlacePicker = dynamic(
+      () => import('@googlemaps/extended-component-library/react').then(mod => mod.PlacePicker),
+      { ssr: false }
+    );
+    const PlaceOverview = dynamic(
+      () => import('@googlemaps/extended-component-library/react').then(mod => mod.PlaceOverview),
+      { ssr: false }
+    );
+    const PlaceDirectionsButton = dynamic(
+      () => import('@googlemaps/extended-component-library/react').then(mod => mod.PlaceDirectionsButton),
+      { ssr: false }
+    );
+    // see individual elements: https://configure.mapsplatform.google/place-picker
+    
 
     const position = { lat: 29.6520, lng: -82.3250 };
     return (
       <ClerkProvider>
       <><SignedIn>
         <APIProvider apiKey={"AIzaSyC-Pip5d3p8_6swFtL_hRosMm2VTpraip4"}>
-            <div style={{ width: "100vw", height: "100vh" }}>
+
+        {/* PLACE OVERVIEW PANEL to the right*/}
+        <SplitLayout rowReverse rowLayoutMinWidth={700}>
+          <div className="SlotDiv" slot="fixed">
+            
+            <div className="container">
+              <PlacePicker 
+              ref={pickerRef}
+              placeholder="Enter a place to see its address"  
+              onPlaceChange={() => {
+                if (!pickerRef.current?.value) {
+                  setPlace(undefined);
+                } else {
+                  setPlace(pickerRef.current?.value);
+                }
+              }}
+              />
+              <PlaceOverview
+                  size="large"
+                  place={place}
+                  googleLogoAlreadyDisplayed
+                >
+                  <div slot="action" className="SlotDiv">
+                    <PlaceDirectionsButton slot="action" variant="filled">
+                      Directions
+                    </PlaceDirectionsButton>
+                  </div>
+                </PlaceOverview>
+            </div> 
+          </div>
+          {/* actual map to the left */}
+          <div slot="main" style={{ width: "100vw", height: "100vh" }}>
                 <Map defaultCenter={position} defaultZoom={15} mapId="5174ed5358f23a3c">
                     {/*<PlacesSearch /> */}
                     {markers
@@ -103,18 +183,36 @@ const ClientApp = () => {
                 key={index}
                 position={{ lat: marker.lat, lng: marker.lng }}
                 title={marker.title}
+                onClick={() => {setSelectedMarker({ lat: marker.lat, lng: marker.lng, image: marker.image });
+                
+              }}
               />
             ))}
+            {/* just displaying butterfly_gator image when a marker is clicked */}
+            {selectedMarker && (
+            <AdvancedMarker position={selectedMarker}>
+              <img
+                src={selectedMarker.image.src}
+                alt="Marker Gator"
+                style={{ width: "100px", height: "135px" }}
+              />
+            </AdvancedMarker>
+          )}
                 </Map>
-            </div>
+                
+          </div>
+        </SplitLayout>
+
             
             {/* //ADDED TEENY TINY SEARCH BAR */}
-            <MapControl position={ControlPosition.TOP}>
+            {/* <MapControl position={ControlPosition.TOP}>
               <div style={{ fontSize: '15px', color: 'black'}} className="autocomplete-control">
                 <PlaceAutocomplete onPlaceSelect={setSelectedPlace} />
               </div>
-            </MapControl>
-            <div
+            </MapControl> */}
+
+
+          <div
           style={{
             position: "absolute",
             top: 10,
