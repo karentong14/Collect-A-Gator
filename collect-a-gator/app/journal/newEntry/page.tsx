@@ -9,7 +9,7 @@ import {
     Button
 } from '@mui/material';
 
-import Textarea from '@mui/joy/Textarea';
+import { TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -100,10 +100,10 @@ export default function EntryPage({
                     </LocalizationProvider>
                 </Grid>
                 <Grid item xs={12} sm={10} md={8}>
-                    <Textarea placeholder="Enter a title name..." onChange={(e) => setTitle(e.target.value)}></Textarea>
+                    <TextField placeholder="Enter a title name..." onChange={(e) => setTitle(e.target.value)}></TextField>
                 </Grid>
                 <Grid item xs={12} sm={10} md={8}>
-                    <Textarea placeholder="Type anything…" onChange={(e) => setContent(e.target.value)}></Textarea>
+                    <TextField placeholder="Type anything…" onChange={(e) => setContent(e.target.value)}></TextField>
                 </Grid>
                 <Grid item xs={12} sm={10} md={8}>
                     <Grid container spacing={2}>

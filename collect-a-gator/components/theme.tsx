@@ -46,6 +46,9 @@ export default function AppTheme({children} : {children : ReactNode}) {
         },
         components: {
           MuiButton: {
+            defaultProps: {
+              variant: 'outlined',
+            },
             styleOverrides: {
               root: {
                 borderRadius: 20,
@@ -57,6 +60,15 @@ export default function AppTheme({children} : {children : ReactNode}) {
                 },
               },
             },
+            variants: [
+              {
+                props: { variant: 'outlined' },
+                style: {
+                  borderColor: '#f3c1f1',
+                  color: '#a85cb3',
+                },
+              },
+            ],
           },
           MuiCard: {
             styleOverrides: {
