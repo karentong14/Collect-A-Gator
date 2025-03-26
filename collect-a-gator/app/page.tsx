@@ -133,7 +133,7 @@ export default function RootLayout() {
               </Grid>
               <Grid item>
                 <Button href="./login"
-                  sx={{backgroundColor: 'purple', color: 'cornsilk'}}>
+                  variant="outlined">
                   Sign In
                 </Button>
               </Grid>
