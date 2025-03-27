@@ -25,8 +25,15 @@ const entrySchema = new mongoose.Schema({
     content: {
         type: String, 
         required: [true, "Entry must have content"],
+    },
+    longitude: {
+        type: Number,
+        required: [true, "Entry must have a longitude"],
+    },
+    latitude: {
+        type: Number,
+        required: [true, "Entry must have a latitude"],
     }
-    
 });
 
 export const Entry = mongoose.model('Entry', entrySchema);
