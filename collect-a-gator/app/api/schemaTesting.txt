@@ -8,6 +8,8 @@ Entry Schema Example
     "title": "newesttest", 
     "content": "ewffwegwg"
     "location": "weefwef"
+    "longitude": 22, 
+    "latitude": 25
 }
 
 User Schema Example
