@@ -38,44 +38,9 @@ const markers = [
 const categories = ["all", "park", "restaurant", "museum", "cafe", "UF"];
 
 
-//TEENY TINY SEARCH BAR AT THE TOPPPPPP
-  interface PlaceAutocompleteProps {
-    onPlaceSelect: (place: google.maps.places.PlaceResult | null) => void;
-  }
-  
-  const PlaceAutocomplete = ({ onPlaceSelect }: PlaceAutocompleteProps) => {
-    const [placeAutocomplete, setPlaceAutocomplete] =
-      useState<google.maps.places.Autocomplete | null>(null);
-    const inputRef = useRef<HTMLInputElement>(null);
-    const places = useMapsLibrary('places');
-  
-    useEffect(() => {
-      if (!places || !inputRef.current) return;
-  
-      const options = {
-        fields: ['geometry', 'name', 'formatted_address']
-      };
-  
-      setPlaceAutocomplete(new places.Autocomplete(inputRef.current, options));
-    }, [places]);
-  
-    useEffect(() => {
-      if (!placeAutocomplete) return;
-  
-      placeAutocomplete.addListener('place_changed', () => {
-        onPlaceSelect(placeAutocomplete.getPlace());
-      });
-    }, [onPlaceSelect, placeAutocomplete]);
-  
-    return (
-      <div className="autocomplete-container">
-        <input ref={inputRef} />
-      </div>
-    );
-  };
-
-//MARKER FOR SEARCHED PLACE
+//resources:
 // https://developers.google.com/maps/documentation/javascript/examples/rgm-autocomplete#maps_rgm_autocomplete-typescript
+// see individual elements: https://configure.mapsplatform.google/place-picker
 // --- maybe this one too, https://developers.google.com/maps/documentation/javascript/place-autocomplete-new
 interface MapHandlerProps {
   place: google.maps.places.PlaceResult | null;
@@ -131,7 +96,6 @@ const ClientApp = () => {
       () => import('@googlemaps/extended-component-library/react').then(mod => mod.PlaceDirectionsButton),
       { ssr: false }
     );
-    // see individual elements: https://configure.mapsplatform.google/place-picker
     
 
     const position = { lat: 29.6520, lng: -82.3250 };
