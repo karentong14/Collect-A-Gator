@@ -17,6 +17,8 @@ import germaines_gator from "./../images/germaines_gator.png"
 import karmacream_gator from "./../images/karmacream_gator.png"
 import marston_gator from "./../images/marston_gator.png"
 
+// testing out org
+
 import { OverlayLayout as TOverlayLayout } from '@googlemaps/extended-component-library/overlay_layout.js';
 import { PlacePicker as TPlacePicker } from '@googlemaps/extended-component-library/place_picker.js';
 
@@ -99,10 +101,11 @@ const ClientApp = () => {
     
 
     const position = { lat: 29.6520, lng: -82.3250 };
+    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!;
     return (
       <ClerkProvider>
       <><SignedIn>
-        <APIProvider apiKey={"AIzaSyC-Pip5d3p8_6swFtL_hRosMm2VTpraip4"}>
+        <APIProvider apiKey={apiKey}>
 
         {/* PLACE OVERVIEW PANEL to the right*/}
         <SplitLayout rowReverse rowLayoutMinWidth={700}>
