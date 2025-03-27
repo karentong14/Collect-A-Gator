@@ -1,4 +1,6 @@
+'use client';
 import React from 'react';
+import {useEffect, useState} from 'react';
 import NavBar from '@/components/navbar';
 import AppTheme from '@/components/theme';
 import {ClerkProvider} from '@clerk/nextjs';
