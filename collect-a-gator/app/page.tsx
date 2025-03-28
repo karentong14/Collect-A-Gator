@@ -22,20 +22,6 @@ export default function RootLayout() {
     setHydrated(true);
   }, []);
 
-  if (!hydrated || !isLoaded) {
-    return (
-      <Box sx={{ 
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '100vh',
-        scale: '4'
-      }}>
-        <CircularProgress />
-      </Box> 
-    );
-  }
-
   return (
     <ClerkProvider>
       {isLoaded && isSignedIn && hydrated ? <>

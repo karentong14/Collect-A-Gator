@@ -1,9 +1,9 @@
 'use client';
 import React from 'react';
-import {useEffect, useState} from 'react';
 import NavBar from '@/components/navbar';
 import AppTheme from '@/components/theme';
 import {ClerkProvider} from '@clerk/nextjs';
+import LoadingBar from '@/components/loading';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -14,7 +14,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <body>
           <AppTheme>
             <NavBar/>
-            {children}
+            <LoadingBar>
+              {children}
+            </LoadingBar>
           </AppTheme>
         </body>
       </html>
