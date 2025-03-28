@@ -49,6 +49,7 @@ export default function EntryPage({
     };
 
     const isFirstRender = useRef(true);
+    const googleApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
 
     useEffect(() => {
         if (isFirstRender.current) {
@@ -115,7 +116,7 @@ export default function EntryPage({
                     </Grid>
                 </Grid>
 
-                <APIProvider apiKey={"AIzaSyC-Pip5d3p8_6swFtL_hRosMm2VTpraip4"}>
+                <APIProvider apiKey={googleApiKey}>
                 
                           {/* //ADDED TEENY TINY SEARCH BAR */}
                           {/* <MapControl position={ControlPosition.TOP}> */}
