@@ -65,7 +65,8 @@ export default function EntryPage({
                       content: content,
                       token: user?.id, 
                       location: selectedPlace?.name || "Unknown location", 
-                      id: 0
+                      latitude: selectedPlace?.geometry?.location?.lat() || 0,
+                      longitude: selectedPlace?.geometry?.location?.lng() || 0,
                   }),
                   headers: {
                       "Content-type": "application/json; charset=UTF-8"
