@@ -41,6 +41,9 @@ export default function JournalPage({
   const user = useUser(); 
   const userId = user.user?.id
 
+  const googleApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
+  console.log("Google API Key: ", googleApiKey);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -77,28 +80,6 @@ export default function JournalPage({
       fetchData();
     }
   }, [userId]); // Runs whenever userId changes
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch("http://localhost:5050/api/entries");
-  //       const json = await response.json();
-        
-  //       if (userId) {
-  //         const filteredData = json.filter((entry: JournalEntry) => entry.token === userId);
-  //         setData(filteredData);
-  //       } else {
-  //         setData([]);
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  
-  //   if (userId) {
-  //     fetchData();
-  //   }
-  // }, [userId]); // Re-run when userId changes
 
   function reformatDate(s : string) {
     const currentDate = new Date (s);
@@ -165,28 +146,32 @@ export default function JournalPage({
           >
             <Card>
             <Box sx={{ position: 'relative' }}>
-              <CardMedia component="img"
-                height="200"
-                image="https://placehold.co/600x400/orange/white"
+              <CardMedia
+              component="img"
+              height="200"
+              image={`https://maps.googleapis.com/maps/api/staticmap?center=${entry.latitude},${entry.longitude}&zoom=14&size=600x400&maptype=roadmap&markers=color:red%7C${entry.latitude},${entry.longitude}&key=${googleApiKey}`}
+              alt="Location Map"
               />
               <Box
-                sx={{
-                  position: 'absolute',
-                  top: 10,
-                  left: 10,
-                  padding: '5px 20px 5px 5px',
-                  backgroundColor: 'white',
-                  borderRadius: '20px',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}
+              sx={{
+                position: 'absolute',
+                top: 10,
+                left: 10,
+                padding: '5px 20px 5px 5px',
+                backgroundColor: 'white',
+                borderRadius: '20px',
+                display: 'flex',
+                alignItems: 'center'
+              }}
               >
-                <LocationOn sx={{
-                  marginRight: 0.5,
-                  scale: 0.9,
-                  color: 'red'
-                }} />
-                <Typography variant="body2">{entry.location || "No location specified"}</Typography>
+              <LocationOn
+                sx={{
+                marginRight: 0.5,
+                scale: 0.9,
+                color: 'red'
+                }}
+              />
+              <Typography variant="body2">{entry.location || "No location specified"}</Typography>
               </Box>
             </Box>
               <CardContent>

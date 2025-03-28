@@ -14,8 +14,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useEffect, useRef, useState } from 'react';
-import { JournalEntry } from '@/components/models/models';
-import { ClerkProvider, useUser } from "@clerk/nextjs";
 import {AdvancedMarker, APIProvider, ControlPosition, Map, MapControl, useMapsLibrary, useMap, useAdvancedMarkerRef} from '@vis.gl/react-google-maps';
 
 
@@ -32,7 +30,6 @@ export default function EntryPage({
     const [selectedPlace, setSelectedPlace] =
         useState<google.maps.places.PlaceResult | null>(null);
     //User information
-    const { user, isSignedIn } = useUser();
 
     useEffect(() => {
         setDate(dayjs()); 
@@ -67,6 +64,7 @@ export default function EntryPage({
                       location: selectedPlace?.name || "Unknown location", 
                       latitude: selectedPlace?.geometry?.location?.lat() || 0,
                       longitude: selectedPlace?.geometry?.location?.lng() || 0,
+                      id: 0 // id should likely be generated somewhere else
                   }),
                   headers: {
                       "Content-type": "application/json; charset=UTF-8"
