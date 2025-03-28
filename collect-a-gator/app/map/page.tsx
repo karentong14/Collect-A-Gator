@@ -133,12 +133,13 @@ const ClientApp = () => {
     );
     // see individual elements: https://configure.mapsplatform.google/place-picker
     
+    const googleApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
 
     const position = { lat: 29.6520, lng: -82.3250 };
     return (
       <ClerkProvider>
       <><SignedIn>
-        <APIProvider apiKey={"AIzaSyC-Pip5d3p8_6swFtL_hRosMm2VTpraip4"}>
+        <APIProvider apiKey={googleApiKey}>
 
         {/* PLACE OVERVIEW PANEL to the right*/}
         <SplitLayout rowReverse rowLayoutMinWidth={700}>
