@@ -15,7 +15,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useEffect, useRef, useState } from 'react';
 import {AdvancedMarker, APIProvider, ControlPosition, Map, MapControl, useMapsLibrary, useMap, useAdvancedMarkerRef} from '@vis.gl/react-google-maps';
-
+import { useUser } from '@clerk/nextjs';
 
 export default function EntryPage({
   children,
@@ -30,6 +30,7 @@ export default function EntryPage({
     const [selectedPlace, setSelectedPlace] =
         useState<google.maps.places.PlaceResult | null>(null);
     //User information
+    const { user, isSignedIn } = useUser();
 
     useEffect(() => {
         setDate(dayjs()); 
