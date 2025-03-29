@@ -1,15 +1,112 @@
 'use client';
 import { useUser, ClerkProvider } from '@clerk/nextjs';
-import { Button, Card, CardMedia, Grid, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 import {Map, AutoStories, Bookmark} from '@mui/icons-material';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useEffect, useState } from 'react';
 
 export default function RootLayout() {
-  const user = useUser(); 
-  const userId = user.user?.id
+  const {isLoaded, isSignedIn, user} = useUser(); 
+  const userId = user?.id
+  
+  const formatName = (name : string | null | undefined) => {
+    if (name && name.length > 0) { //how to use name as a type instead of a reference here? potential console error
+      return name.charAt(0).toUpperCase() + name.slice(1);
+    }
+    else return '';
+  };
+
+  const [hydrated, setHydrated] = useState<Boolean>(false);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
   return (
     <ClerkProvider>
-      {userId ? <>
-        
+      {isLoaded && isSignedIn && hydrated ? <>
+        <Grid container spacing={5} padding='50px 100px'>
+          <Grid item xs={12}>
+            <Typography variant='h1'>
+              Welcome, {formatName(user?.firstName)}!
+            </Typography>
+          </Grid>
+          <Grid item xs={12} md={7}>
+            <Card sx={{
+              flexDirection: 'column',
+              backgroundColor: 'white',
+              borderRadius: '20px',
+              display: 'flex',
+              alignItems: 'center',
+            }}>
+              <CardContent>
+                <Typography variant='h2'>
+                  Gainesville SpotLight
+                </Typography>
+                <Typography variant='body1'>
+                  Everyday, we will post a hidden Gainesville gem you've probably never seen. Check it out!
+                </Typography>
+              </CardContent>
+              <CardMedia component="img"
+                image="https://placehold.co/50x50/orange/white"
+                sx={{
+                  maxHeight: '50px',
+                  maxWidth: '500px'
+                }}>
+              </CardMedia>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={5}>
+            <Card sx={{
+              flexDirection: 'row',
+              backgroundColor: 'white',
+              borderRadius: '20px',
+              display: 'flex',
+              alignItems: 'center',
+            }}>
+              <CardContent>
+                <Typography variant='h2'>
+                  Sticker Collection
+                </Typography>
+                <Typography variant='body1'>
+                  View all the adorable collectible friends you've made along the way.
+                </Typography>
+              </CardContent>
+              <CardMedia component="img"
+                image="https://placehold.co/50x50/orange/white"
+                sx={{
+                  maxHeight: '50px',
+                  maxWidth: '500px'
+                }}>
+              </CardMedia>
+            </Card>
+          </Grid>
+          <Grid item xs={12}>
+            <Card sx={{
+              flexDirection: 'row',
+              backgroundColor: 'white',
+              borderRadius: '20px',
+              display: 'flex',
+              alignItems: 'center',
+            }}>
+              <CardContent>
+                <Typography variant='h2'>
+                  Map
+                </Typography>
+                <Typography variant='body1'>
+                  What Gainesville would look like if Gator's had wings.
+                </Typography>
+              </CardContent>
+              <CardMedia component="img"
+                image="https://placehold.co/50x50/orange/white"
+                sx={{
+                  maxHeight: '50px',
+                  maxWidth: '500px'
+                }}>
+              </CardMedia>
+            </Card>
+          </Grid>
+        </Grid>
       </> : <>
         <Grid container direction="column" spacing={5} sx={{
           padding: "100px"
@@ -141,7 +238,8 @@ export default function RootLayout() {
             </Card>
           </Grid>
         </Grid>
-      </>}
+      </>
+      }
     </ClerkProvider>
   );
 }
