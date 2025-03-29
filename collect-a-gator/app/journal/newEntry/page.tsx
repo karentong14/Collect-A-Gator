@@ -14,10 +14,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useEffect, useRef, useState } from 'react';
-import { JournalEntry } from '@/components/models/models';
-import { ClerkProvider, useUser } from "@clerk/nextjs";
 import {AdvancedMarker, APIProvider, ControlPosition, Map, MapControl, useMapsLibrary, useMap, useAdvancedMarkerRef} from '@vis.gl/react-google-maps';
-
+import { useUser } from '@clerk/nextjs';
 
 export default function EntryPage({
   children,
@@ -65,7 +63,9 @@ export default function EntryPage({
                       content: content,
                       token: user?.id, 
                       location: selectedPlace?.name || "Unknown location", 
-                      id: 0
+                      latitude: selectedPlace?.geometry?.location?.lat() || 0,
+                      longitude: selectedPlace?.geometry?.location?.lng() || 0,
+                      id: 0 // id should likely be generated somewhere else
                   }),
                   headers: {
                       "Content-type": "application/json; charset=UTF-8"

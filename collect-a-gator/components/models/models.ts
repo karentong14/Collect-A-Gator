@@ -5,4 +5,6 @@ export interface JournalEntry {
   content: string;
   date: string;
   location: string;
+  latitude: number;
+  longitude:number
 }
