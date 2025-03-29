@@ -16,6 +16,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useEffect, useRef, useState } from 'react';
 import {AdvancedMarker, APIProvider, ControlPosition, Map, MapControl, useMapsLibrary, useMap, useAdvancedMarkerRef} from '@vis.gl/react-google-maps';
 import { useUser } from '@clerk/nextjs';
+import { useRouter } from 'next/navigation';
 
 export default function EntryPage({
   children,
@@ -31,6 +32,7 @@ export default function EntryPage({
         useState<google.maps.places.PlaceResult | null>(null);
     //User information
     const { user, isSignedIn } = useUser();
+    const router = useRouter();
 
     useEffect(() => {
         setDate(dayjs()); 
@@ -78,6 +80,10 @@ export default function EntryPage({
         }
       }, [trigger]);
 
+      const goToEntry = () => {
+        router.push(`/journal`);
+      }
+
     return (
         <Card sx={{
             padding: '20px',
@@ -108,7 +114,10 @@ export default function EntryPage({
                 <Grid item xs={12} sm={10} md={8}>
                     <Grid container spacing={2}>
                         <Grid item>
-                            <Button variant="contained" onClick={submitEntry}>Submit</Button>
+                            <Button variant="contained" onClick={() => {
+                              submitEntry();
+                              goToEntry();
+                            }}>Submit</Button>
                         </Grid>
                         <Grid item>
                             <Button variant="contained" color="error">Remove</Button>
