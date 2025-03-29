@@ -64,20 +64,20 @@ function NavBar() {
 			</List>
 			<Divider />
 			<List>
-				<ListItemButton sx={{ color: "white" }} href="../">
-					<ListItemIcon sx={{ color: "white" }}>
+				<ListItemButton href="../">
+					<ListItemIcon>
 						{<Home />}
 					</ListItemIcon>
 					<ListItemText primary={"Home"} />
 				</ListItemButton>
-				<ListItemButton sx={{ color: "white" }} href="../journal">
-					<ListItemIcon sx={{ color: "white" }}>
+				<ListItemButton href="../journal">
+					<ListItemIcon >
 						{<LibraryBooks />}
 					</ListItemIcon>
 					<ListItemText primary={"Journal"} />
 				</ListItemButton>
-				<ListItemButton sx={{ color: "white" }} href="../map">
-					<ListItemIcon sx={{ color: "white" }}>
+				<ListItemButton href="../map">
+					<ListItemIcon>
 						{<Map />}
 					</ListItemIcon>
 					<ListItemText primary={"Map"} />
@@ -88,14 +88,13 @@ function NavBar() {
 			</List>
 			<Typography
 				sx={{
-					backgroundColor: "white",
 					borderRadius: 10,
 					textAlign: "center",
 					padding: 1,
 					margin: 2,
 				}}
 			>
-				<Button href="../login" sx={{color: "purple"}}>Sign In</Button>
+				<Button href="../login">Sign In</Button>
 			</Typography>
 		</Box>
 	);
