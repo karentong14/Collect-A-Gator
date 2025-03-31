@@ -1,6 +1,5 @@
 import express from "express";
-//import db from "../../backend/db/conn.mjs";
-import { ObjectId, ReturnDocument } from "mongodb";
+// NEW FILE 
 import {Entry} from "../../backend/models/entry.schema.mjs";
 const router = express.Router();
 
@@ -10,10 +9,16 @@ router.get("/", async (req, res) => {
   try {
     const results = await Entry.find();
     res.status(200).send(results);
-  } catch (error) {
-    res.status(500).send({ error: "Could not get the posts" }); //Do I need to write an error message
   }
-});
+  catch(e){
+    result = e.message; // error under useUnknownInCatchVariables 
+    if (typeof e === "string") {
+        res.status(200).send(e.toUpperCase()); // works, `e` narrowed to string
+    } else if (e instanceof Error) {
+        res.status(200).send(e.message);
+         // works, `e` narrowed to Error
+    }
+}});
 
 // Fetches the latest posts
 //ex: GET http://localhost:5050/api/entries/latest
@@ -24,10 +29,15 @@ router.get("/latest", async (req, res) => {
       .sort({ date: -1 }) 
       .limit(3);
     res.status(200).send(results);
-  } catch (error) {
-    res.status(500).send({ error: error.message });
-  }
-});
+  } catch(e){
+    result = e.message; // error under useUnknownInCatchVariables 
+    if (typeof e === "string") {
+        res.status(200).send(e.toUpperCase()); // works, `e` narrowed to string
+    } else if (e instanceof Error) {
+        res.status(200).send(e.message);
+         // works, `e` narrowed to Error
+    }
+}});
 
 
 //Get a single post
@@ -37,10 +47,15 @@ router.get("/:id", async (req, res) => {
     const result = await Entry.findById(req.params.id);
     if (!result) return res.status(404).send("Not found");
     res.status(200).send(result);
-  } catch (error) {
-    res.status(400).send({ error: "Invalid ID format" });
-  }
-});
+  } catch(e){
+    result = e.message; // error under useUnknownInCatchVariables 
+    if (typeof e === "string") {
+        res.status(200).send(e.toUpperCase()); // works, `e` narrowed to string
+    } else if (e instanceof Error) {
+        res.status(200).send(e.message);
+         // works, `e` narrowed to Error
+    }
+}});
 
 // Add a new document to the collection
 //ex: POST http://localhost:5050/api/entries with the raw JSON
@@ -49,10 +64,17 @@ router.post("/", async (req, res) => {
     const newEntry = new Entry(req.body);
     await newEntry.save(); 
     res.status(201).send(newEntry);
-  } catch (error) {
-    res.status(400).send({ error: error.message });
-  }
-});
+  } catch(e){
+    result = e.message; // error under useUnknownInCatchVariables 
+    if (typeof e === "string") {
+        res.status(200).send(e.toUpperCase()); // works, `e` narrowed to string
+    } else if (e instanceof Error) {
+        res.status(200).send(e.message);
+         // works, `e` narrowed to Error
+    }
+}
+}
+);
 
 // Delete an entry
 // ex: DELETE http://localhost:5050/api/entries/67c74fdd13df14183bef59ac
@@ -61,9 +83,15 @@ router.delete("/:id", async (req, res) => {
     const result = await Entry.findByIdAndDelete(req.params.id);
     if (!result) return res.status(404).send("Not deleted properly");
     res.status(200).send("Deleted properly");
-  } catch (error) {
-    res.status(400).send({ error: "Invalid ID format" });
-  }
+  } catch(e){
+    result = e.message; // error under useUnknownInCatchVariables 
+    if (typeof e === "string") {
+        res.status(200).send(e.toUpperCase()); // works, `e` narrowed to string
+    } else if (e instanceof Error) {
+        res.status(200).send(e.message);
+         // works, `e` narrowed to Error
+    }
+}
 });
 
 export default router;
