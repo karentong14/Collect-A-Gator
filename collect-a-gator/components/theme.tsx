@@ -79,6 +79,39 @@ export default function AppTheme({children} : {children : ReactNode}) {
               },
             },
           },
+          MuiPaper: {
+            styleOverrides: {
+              outlined: {
+                border: 'none',
+              },
+            },
+            variants: [
+              {
+                props: { variant: 'outlined' },
+                style: {
+                  '& > *': {
+                    border: '2px solid #f3c1f1',
+                    color: '#a85cb3',
+                    borderRadius: 20,
+                    padding: '10px 20px',
+                    fontWeight: 600,
+                    fontSize: '1rem',
+                    backgroundColor: 'transparent',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    fontFamily: 'inherit',
+                    textAlign: 'center',
+                    display: 'inline-block',
+                    textDecoration: 'none',
+                  },
+                  '& > *:hover': {
+                    transform: 'scale(1.03)',
+                    boxShadow: '0px 4px 10px rgba(208, 163, 240, 0.3)',
+                  },
+                },
+              },
+            ],
+          }    
         },
       });
 
