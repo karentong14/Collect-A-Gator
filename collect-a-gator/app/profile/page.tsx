@@ -1,25 +1,28 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import {
+  SignOutButton,
+  SignedIn,
+  UserButton,
+} from '@clerk/nextjs';
+import "../globals.css";
+import { Grid, Paper } from '@mui/material';
 
-export default function ProfilePage() {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    fetch("/api/user")
-      .then((res) => res.json())
-      .then((data) => setUser(data))
-      .catch((err) => console.error("Error fetching user:", err));
-  }, []);
-
+export default function RootLayout() {
   return (
-    <div className="max-w-lg mx-auto p-6">
-      <h1 className="text-2xl font-bold">User Profile</h1>
-      {user ? (
-        <pre className="bg-gray-100 p-4 rounded">{JSON.stringify(user, null, 2)}</pre>
-      ) : (
-        <p>Loading...</p>
-      )}
-    </div>
+      <Grid container padding="50px 100px" spacing={2}>
+        <Grid item>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+        </Grid>
+        <Grid item>
+          <Paper variant="outlined">
+            <SignedIn>
+              <SignOutButton/>
+            </SignedIn>
+          </Paper>
+        </Grid>
+      </Grid>
   );
 }

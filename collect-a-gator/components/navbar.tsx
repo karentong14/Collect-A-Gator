@@ -1,6 +1,7 @@
 'use client';
 import React from "react";
-import { Typography, Grid, IconButton, Button } from "@mui/material";
+import { Typography, Grid, IconButton } from "@mui/material";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -82,20 +83,14 @@ function NavBar() {
 					</ListItemIcon>
 					<ListItemText primary={"Map"} />
 				</ListItemButton>
+				<ListItemButton href="../profile">
+					<ListItemIcon>
+						{<AccountCircleIcon />}
+					</ListItemIcon>
+					<ListItemText primary={"Profile"} />
+				</ListItemButton>
 			</List>
 			<Divider />
-			<List>
-			</List>
-			<Typography
-				sx={{
-					borderRadius: 10,
-					textAlign: "center",
-					padding: 1,
-					margin: 2,
-				}}
-			>
-				<Button href="../login">Sign In</Button>
-			</Typography>
 		</Box>
 	);
 

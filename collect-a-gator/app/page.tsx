@@ -1,9 +1,17 @@
 'use client';
-import { useUser, ClerkProvider } from '@clerk/nextjs';
-import { Box, Button, Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
+import { useUser, SignedOut } from '@clerk/nextjs';
+import { Card, CardContent, CardMedia, Grid, Paper, Typography } from "@mui/material";
 import {Map, AutoStories, Bookmark} from '@mui/icons-material';
-import CircularProgress from '@mui/material/CircularProgress';
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+import './globals.css';
+
+const SignInButton = dynamic(() => import('@clerk/nextjs').then(mod => mod.SignInButton), {
+  ssr: false,
+});
+const SignUpButton = dynamic(() => import('@clerk/nextjs').then(mod => mod.SignUpButton), {
+  ssr: false,
+});
 
 export default function RootLayout() {
   const {isLoaded, isSignedIn, user} = useUser(); 
@@ -23,7 +31,7 @@ export default function RootLayout() {
   }, []);
 
   return (
-    <ClerkProvider>
+    <>
       {isLoaded && isSignedIn && hydrated ? <>
         <Grid container spacing={5} padding='50px 100px'>
           <Grid item xs={12}>
@@ -229,10 +237,22 @@ export default function RootLayout() {
                 <Typography>Start your journey here:</Typography>
               </Grid>
               <Grid item>
-                <Button href="./login"
-                  variant="outlined">
-                  Sign In
-                </Button>
+                <Grid container direction="row" spacing={2}>
+                  <Grid item>
+                    <Paper variant="outlined">
+                      <SignedOut>
+                        <SignInButton/>
+                      </SignedOut>
+                    </Paper>
+                  </Grid>
+                  <Grid item>
+                    <Paper variant="outlined">
+                      <SignedOut>
+                        <SignUpButton />
+                      </SignedOut>
+                    </Paper>
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
             </Card>
@@ -240,6 +260,6 @@ export default function RootLayout() {
         </Grid>
       </>
       }
-    </ClerkProvider>
+    </>
   );
 }
