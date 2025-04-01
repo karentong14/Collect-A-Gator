@@ -45,6 +45,7 @@ router.get("/:id", async (req, res) => {
 // Add a new document to the collection
 //ex: POST http://localhost:5050/api/entries with the raw JSON
 router.post("/", async (req, res) => {
+  console.log(req.body); // Log the request body to see the incoming data
   try {
     const newEntry = new Entry(req.body);
     await newEntry.save(); 

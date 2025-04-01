@@ -44,6 +44,11 @@ const userSchema = new mongoose.Schema({
         required: [true, "Each user must have a uf counter"],
         default: 0
     },
+    miscellaneousCounter: {
+        type: Number,
+        required: [true, "Each user must have a miscellaneous counter"],
+        default: 0
+    },
     germainesBool: {
         type: Boolean,
         required: [true, "Each user must have a germainesBool"],

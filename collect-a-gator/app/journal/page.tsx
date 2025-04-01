@@ -83,7 +83,7 @@ export default function JournalPage({
 
   function reformatDate(s : string) {
     const currentDate = new Date (s);
-    currentDate.setDate(currentDate.getDate() + 1);
+    currentDate.setDate(currentDate.getDate());
     const formattedDate = currentDate.toLocaleDateString('en-US', {
       month: 'long',
       day: 'numeric',

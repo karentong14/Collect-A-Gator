@@ -6,10 +6,11 @@ Entry Schema Example
     "id": "regshehhth" ,
     "date": "wefwegewg",
     "title": "newesttest", 
-    "content": "ewffwegwg"
-    "location": "weefwef"
+    "content": "ewffwegwg",
+    "location": "weefwef",
     "longitude": 22, 
-    "latitude": 25
+    "latitude": 25,
+    "placeID": 122344
 }
 
 User Schema Example

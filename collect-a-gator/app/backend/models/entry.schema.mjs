@@ -18,6 +18,10 @@ const entrySchema = new mongoose.Schema({
         type: String, 
         required: [true, "Entry must have a location"],  
     },
+    placeID: {
+        type: String,
+        required: [true, "Entry must have a place ID"],
+    },
     title: {
         type: String,
         required: [true, "Entry must have a title"],
