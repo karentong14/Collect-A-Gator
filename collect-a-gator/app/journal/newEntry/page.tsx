@@ -56,7 +56,6 @@ export default function EntryPage({
 
     const isFirstRender = useRef(true);
     const googleApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
-    //console.log("selectedPlace" + JSON.stringify(selectedPlace));
 
     useEffect(() => {
         if (isFirstRender.current) {
@@ -64,7 +63,7 @@ export default function EntryPage({
         }
         else {
           
-          console.log("selectedPlaceId:" + selectedPlace?.place_id);
+          //console.log("selectedPlaceId:" + selectedPlace?.place_id);
             const fetchData = async () => {
               const response = await fetch("http://localhost:5050/api/entries", {
                   method: "POST",
@@ -106,110 +105,53 @@ export default function EntryPage({
                 }
             };
 
-            const fetchUserData = async () => {
-              const myUserData =  await getUserCounters();
-              return myUserData
+            // const fetchUserData = async () => {
+            //   const myUserData =  await getUserCounters();
+            //   return myUserData
+            // };
+
+
+            const fetchAndLogUserData = async () => {
+                const userData = await getUserCounters();
+                console.log("userData: ", userData);
+            };
+            fetchAndLogUserData();
+
+            const adjustCounters = async () => {
+              const userData = await getUserCounters();
+              if (!userData) return;
+
+              const updatedCounters = { ...userData.counters }; //i don't think I have a userData.counters I can call but this would be a good object
+
+              if (selectedPlace?.place_id) {
+                if (ufSet.has(selectedPlace.place_id)) {
+                  updatedCounters.ufCounter = (updatedCounters.ufCounter || 0) + 1;
+                } else if (restaurantSet.has(selectedPlace.place_id)) {
+                  updatedCounters.restaurantCounter = (updatedCounters.restaurantCounter || 0) + 1;
+                } else if (cafeSet.has(selectedPlace.place_id)) {
+                  updatedCounters.cafeCounter = (updatedCounters.cafeCounter || 0) + 1;
+                } else if (natureSet.has(selectedPlace.place_id)) {
+                  updatedCounters.natureCounter = (updatedCounters.natureCounter || 0) + 1;
+                } else if (artSet.has(selectedPlace.place_id)) {
+                  updatedCounters.artCounter = (updatedCounters.artCounter || 0) + 1;
+                }
+              }
+
+              try {
+                await fetch(`http://localhost:5050/api/users/${user?.id}/counters`, {
+                  method: "PUT",
+                  body: JSON.stringify({ counters: updatedCounters }),
+                  headers: {
+                    "Content-Type": "application/json; charset=UTF-8"
+                  }
+                });
+                console.log("Counters updated successfully");
+              } catch (error) {
+                console.error("Error updating counters:", error);
+              }
             };
 
-          
-            const userData = fetchUserData();
-            console.log("userData: " + userData); 
-
-
-            //  if(selectedPlace?.place_id) {
-            //     if (restaurantSet.has(selectedPlace?.place_id)) {
-            //     const updateCounter = async () => {
-            //       const response = await fetch(`http://localhost:5050/api/users/${user?.id}/restaurantCounter`, {
-            //       method: "PUT",
-            //       headers: {
-            //         "Content-type": "application/json; charset=UTF-8"
-            //       }
-            //       });
-            //       if (!response.ok) {
-            //       console.error("Failed to update restaurant counter");
-            //       }
-            //     };
-            //     updateCounter();
-            //     } else if (cafeSet.has(selectedPlace?.place_id)) {
-            //     const updateCounter = async () => {
-            //       const response = await fetch(`http://localhost:5050/api/users/${user?.id}/cafeCounter`, {
-            //       method: "PUT",
-            //       headers: {
-            //         "Content-type": "application/json; charset=UTF-8"
-            //       }
-            //       });
-            //       if (!response.ok) {
-            //       console.error("Failed to update cafe counter");
-            //       }
-            //     };
-            //     updateCounter();
-            //     } else if (natureSet.has(selectedPlace?.place_id)) {
-            //     const updateCounter = async () => {
-            //       const response = await fetch(`http://localhost:5050/api/users/${user?.id}/natureCounter`, {
-            //       method: "PUT",
-            //       headers: {
-            //         "Content-type": "application/json; charset=UTF-8"
-            //       }
-            //       });
-            //       if (!response.ok) {
-            //       console.error("Failed to update nature counter");
-            //       }
-            //     };
-            //     updateCounter();
-            //     } else if (artSet.has(selectedPlace?.place_id)) {
-            //     const updateCounter = async () => {
-            //       const response = await fetch(`http://localhost:5050/api/users/${user?.id}/artCounter`, {
-            //       method: "PUT",
-            //       headers: {
-            //         "Content-type": "application/json; charset=UTF-8"
-            //       }
-            //       });
-            //       if (!response.ok) {
-            //       console.error("Failed to update art counter");
-            //       }
-            //     };
-            //     updateCounter();
-            //     } else if (ufSet.has(selectedPlace?.place_id)) {
-            //     const updateCounter = async () => {
-            //       const response = await fetch(`http://localhost:5050/api/users/${user?.id}/ufCounter`, {
-            //       method: "PUT",
-            //       headers: {
-            //         "Content-type": "application/json; charset=UTF-8"
-            //       }
-            //       });
-            //       if (!response.ok) {
-            //       console.error("Failed to update UF counter");
-            //       }
-            //     };
-            //     updateCounter();
-            //     } else {
-            //     console.log("not in set");
-            //     }
-            //  }
-
-              // const updateCollectibleCounter = async () => {
-              //   const response = await fetch("http://localhost:5050/api/users/" + user?.id, {
-              //       method: "PUT",
-              //       body: JSON.stringify({
-              //           title: title,
-              //           date: date,
-              //           content: content,
-              //           token: user?.id, 
-              //           location: selectedPlace?.name || "Unknown location", 
-              //           latitude: selectedPlace?.geometry?.location?.lat() || 0,
-              //           longitude: selectedPlace?.geometry?.location?.lng() || 0,
-              //           id: 0,// id should likely be generated somewhere else
-              //           placeID: selectedPlace?.place_id || "Unknown place ID",
-              //       }),
-              //       headers: {
-              //           "Content-type": "application/json; charset=UTF-8"
-              //       }
-              //     })
-              //     .then(response => response.json())
-              //     .catch(error => console.error(error));
-              //   };
-              //   updateCollectibleCounter();
-
+            adjustCounters();
 
         }
       }, [trigger]);

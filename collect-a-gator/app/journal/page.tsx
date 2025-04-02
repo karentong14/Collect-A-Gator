@@ -42,7 +42,6 @@ export default function JournalPage({
   const userId = user.user?.id
 
   const googleApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
-  console.log("Google API Key: ", googleApiKey);
 
   useEffect(() => {
     const fetchData = async () => {
