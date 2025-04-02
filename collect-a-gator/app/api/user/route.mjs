@@ -1,6 +1,7 @@
 import express from "express";
 import db from "../../backend/db/conn.mjs";
 import { User } from "../../backend/models/user.schema.mjs";
+import { MongoMissingCredentialsError } from "mongodb";
 
 const router = express.Router();
 
@@ -46,15 +47,26 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Update a user's details
-//ex: PUT http://localhost:5050/api/users/ffnfneifeinfnf with only the fields (you only need the ony you want to change)
+// Update a user's details, including individual counters
+//ex: PUT http://localhost:5050/api/users/ffnfneifeinfnf with only the fields (you only need the ones you want to change)
 router.put("/:token", async (req, res) => {
   try {
-    const { firstName, lastName, email } = req.body;
+    const { firstName, lastName, email, ufCounter, restaurantCounter, natureCounter } = req.body;
+
+    const updateFields = {};
+    if (firstName !== undefined) updateFields.firstName = firstName;
+    if (lastName !== undefined) updateFields.lastName = lastName;
+    if (email !== undefined) updateFields.email = email;
+    if (ufCounter !== undefined) updateFields.ufCounter = ufCounter; //isUfCounter the old or new one though
+    if (restaurantCounter !== undefined) updateFields.restaurantCounter = restaurantCounter;
+    if (natureCounter !== undefined) updateFields.natureCounter = natureCounter;
+    if (artCounter !== undefined) updateFields.artCounter = artCounter;
+    if (cafeCounter !== undefined) updateFields.cafeCounter = cafeCounter;
+    if( miscellaneousCounter !== undefined) updateFields.miscellaneousCounter = miscellaneousCounter;
 
     const updatedUser = await User.findOneAndUpdate(
       { token: req.params.token },
-      { firstName, lastName, email },
+      { $set: updateFields },
       { new: true }
     );
 
@@ -64,6 +76,7 @@ router.put("/:token", async (req, res) => {
     res.status(400).send({ error: error.message });
   }
 });
+
 
 // Delete a user and their journal entries
 //This one still is a work in progress

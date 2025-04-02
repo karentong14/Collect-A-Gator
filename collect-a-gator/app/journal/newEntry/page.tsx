@@ -20,7 +20,7 @@ import { useRouter } from 'next/navigation';
 
 const restaurantSet = new Set(['ChIJIZBCHZ6j6IgRcKC_Bqug8AQ']); //germaines
 const cafeSet = new Set(['ChIJU66uvIWj6IgR_T3rKgn_tGY']); //starbucks
-const natureSet = new Set(['ChIJG4zJ_T6j6IgRgMdxRPpp5-M']); //butterfly
+const natureSet = new Set(['ChIJG4zJ_T6j6IgRgMdxRPpp5-M', 'ChIJ_aHU15Kj6IgROdcp7P7ZODI']); //butterfly
 const artSet = new Set(['ChIJV1saDj-j6IgRCzNOsYSBymw']); //harn
 const ufSet = new Set(['ChIJTxlXV4Kj6IgRSJ-tmdH0chA']); //library west
 
@@ -121,31 +121,44 @@ export default function EntryPage({
               const userData = await getUserCounters();
               if (!userData) return;
 
-              const updatedCounters = { ...userData.counters }; //i don't think I have a userData.counters I can call but this would be a good object
-
               if (selectedPlace?.place_id) {
                 if (ufSet.has(selectedPlace.place_id)) {
-                  updatedCounters.ufCounter = (updatedCounters.ufCounter || 0) + 1;
+                  userData.ufCounter = (userData.ufCounter || 0) + 1;
+                  console.log("UF Counter: ", userData.ufCounter);
                 } else if (restaurantSet.has(selectedPlace.place_id)) {
-                  updatedCounters.restaurantCounter = (updatedCounters.restaurantCounter || 0) + 1;
+                  userData.restaurantCounter = (userData.restaurantCounter || 0) + 1;
+                  console.log("Restaurant Counter: ", userData.restaurantCounter);
                 } else if (cafeSet.has(selectedPlace.place_id)) {
-                  updatedCounters.cafeCounter = (updatedCounters.cafeCounter || 0) + 1;
+                  userData.cafeCounter = (userData.cafeCounter || 0) + 1;
+                  console.log("Cafe Counter: ", userData.cafeCounter);
                 } else if (natureSet.has(selectedPlace.place_id)) {
-                  updatedCounters.natureCounter = (updatedCounters.natureCounter || 0) + 1;
+                  userData.natureCounter = (userData.natureCounter || 0) + 1;
+                  console.log("Nature Counter: ", userData.natureCounter);
                 } else if (artSet.has(selectedPlace.place_id)) {
-                  updatedCounters.artCounter = (updatedCounters.artCounter || 0) + 1;
+                  userData.artCounter = (userData.artCounter || 0) + 1;
+                  console.log("Art Counter: ", userData.artCounter);
+                } else {
+                  console.log("Place ID not found in any set.");
+                  userData.miscellaneousCounter = (userData.miscellaneousCounter || 0) + 1;
                 }
               }
 
               try {
-                await fetch(`http://localhost:5050/api/users/${user?.id}/counters`, {
-                  method: "PUT",
-                  body: JSON.stringify({ counters: updatedCounters }),
+                await fetch(`http://localhost:5050/api/users/${user?.id}`, {
+                  method: "PUT", //idk if this is being put correctly cause I don't really see it incremented?
+                  body: JSON.stringify({
+                  ufCounter: userData.ufCounter,
+                  restaurantCounter: userData.restaurantCounter,
+                  cafeCounter: userData.cafeCounter,
+                  natureCounter: userData.natureCounter,
+                  artCounter: userData.artCounter,
+                  miscellaneousCounter: userData.miscellaneousCounter
+                  }),
                   headers: {
-                    "Content-Type": "application/json; charset=UTF-8"
+                  "Content-Type": "application/json; charset=UTF-8"
                   }
                 });
-                console.log("Counters updated successfully");
+                console.log("Counters updated successfully"); //it says it updated sucessfully but I don't think so?
               } catch (error) {
                 console.error("Error updating counters:", error);
               }
