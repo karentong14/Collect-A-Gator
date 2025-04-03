@@ -19,7 +19,7 @@ import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 
 const restaurantSet = new Set(['ChIJIZBCHZ6j6IgRcKC_Bqug8AQ']); //germaines
-const cafeSet = new Set(['ChIJU66uvIWj6IgR_T3rKgn_tGY']); //starbucks
+const cafeSet = new Set(['ChIJU66uvIWj6IgR_T3rKgn_tGY']); //karma cream
 const natureSet = new Set(['ChIJG4zJ_T6j6IgRgMdxRPpp5-M', 'ChIJ_aHU15Kj6IgROdcp7P7ZODI']); //butterfly
 const artSet = new Set(['ChIJV1saDj-j6IgRCzNOsYSBymw']); //harn
 const ufSet = new Set(['ChIJTxlXV4Kj6IgRSJ-tmdH0chA']); //library west
@@ -63,7 +63,6 @@ export default function EntryPage({
         }
         else {
           
-          //console.log("selectedPlaceId:" + selectedPlace?.place_id);
             const fetchData = async () => {
               const response = await fetch("http://localhost:5050/api/entries", {
                   method: "POST",
@@ -105,17 +104,12 @@ export default function EntryPage({
                 }
             };
 
-            // const fetchUserData = async () => {
-            //   const myUserData =  await getUserCounters();
-            //   return myUserData
-            // };
-
-
+    
             const fetchAndLogUserData = async () => {
                 const userData = await getUserCounters();
-                console.log("userData: ", userData);
+               // console.log("userData: ", userData);
             };
-            fetchAndLogUserData();
+           // fetchAndLogUserData();
 
             const adjustCounters = async () => {
               const userData = await getUserCounters();
@@ -144,20 +138,24 @@ export default function EntryPage({
               }
 
               try {
-                await fetch(`http://localhost:5050/api/users/${user?.id}`, {
-                  method: "PUT", //idk if this is being put correctly cause I don't really see it incremented?
+                console.log("Updated userData before PUT request:", userData); // Log userData to verify its structure and values
+                await fetch(`http://localhost:5050/api/users/` + user?.id, {
+                  method: "PUT",
                   body: JSON.stringify({
-                  ufCounter: userData.ufCounter,
-                  restaurantCounter: userData.restaurantCounter,
-                  cafeCounter: userData.cafeCounter,
-                  natureCounter: userData.natureCounter,
-                  artCounter: userData.artCounter,
-                  miscellaneousCounter: userData.miscellaneousCounter
+                    id: user?.id, // Include the user ID if required by the server
+                    ufCounter: userData.ufCounter,
+                    restaurantCounter: userData.restaurantCounter,
+                    natureCounter: userData.natureCounter, // Ensure userData is updated correctly
+                    artCounter: userData.artCounter,
+                    cafeCounter: userData.cafeCounter,
+                    miscellaneousCounter: userData.miscellaneousCounter
                   }),
                   headers: {
                   "Content-Type": "application/json; charset=UTF-8"
                   }
                 });
+                console.log("user.id" + user?.id);
+                console.log("userData.natureCounter" + userData.natureCounter);
                 console.log("Counters updated successfully"); //it says it updated sucessfully but I don't think so?
               } catch (error) {
                 console.error("Error updating counters:", error);
@@ -165,6 +163,7 @@ export default function EntryPage({
             };
 
             adjustCounters();
+       //     fetchAndLogUserData(); //want user data to print in console again
 
         }
       }, [trigger]);

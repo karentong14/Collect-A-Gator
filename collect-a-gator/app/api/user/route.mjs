@@ -51,7 +51,7 @@ router.post("/", async (req, res) => {
 //ex: PUT http://localhost:5050/api/users/ffnfneifeinfnf with only the fields (you only need the ones you want to change)
 router.put("/:token", async (req, res) => {
   try {
-    const { firstName, lastName, email, ufCounter, restaurantCounter, natureCounter } = req.body;
+    const { firstName, lastName, email, ufCounter, restaurantCounter, natureCounter, artCounter, cafeCounter, miscellaneousCounter } = req.body;
 
     const updateFields = {};
     if (firstName !== undefined) updateFields.firstName = firstName;
@@ -59,7 +59,7 @@ router.put("/:token", async (req, res) => {
     if (email !== undefined) updateFields.email = email;
     if (ufCounter !== undefined) updateFields.ufCounter = ufCounter; //isUfCounter the old or new one though
     if (restaurantCounter !== undefined) updateFields.restaurantCounter = restaurantCounter;
-    if (natureCounter !== undefined) updateFields.natureCounter = natureCounter;
+    if (natureCounter !== undefined) updateFields.natureCounter = natureCounter; //this is where it's changing?
     if (artCounter !== undefined) updateFields.artCounter = artCounter;
     if (cafeCounter !== undefined) updateFields.cafeCounter = cafeCounter;
     if( miscellaneousCounter !== undefined) updateFields.miscellaneousCounter = miscellaneousCounter;
