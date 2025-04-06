@@ -1,19 +1,50 @@
 ﻿# Collect-A-Gator
-to run the project on ur own device, 
-1) clone the repo
-2) cd into collect-a-gator folder within the project
 
-Dependencies to download 
-4) run command to install next.js ` npm install next@latest react@latest react-dom@latest `
-5) run command to install clerk ` npm install @clerk/nextjs `
-6) run command to install mui materials ` npm install @mui/icons-material @mui/material @emotion/styled @emotion/react ` `npm install @mui/joy @emotion/react @emotion/styled`
-7) run command to install backend frameworks `npm install express` `npm install cors` `npm install dotenv`
-8) run command to install google maps library ` npm install @vis.gl/react-google-maps ` or ` npm install --save google-maps-react `
+A location-based journaling application for University of Florida students to explore Gainesville, collect virtual Gator badges, and record their experiences.
 
-To test the front-end and maps section 
-Run ` npm run dev ` in the collect-a-gator folder  
-You should be able to view it on http://localhost:3000/. 
+## Project Overview
 
-To test the back-end section
-Run ` node index.mjs ` in the collect-a-gator\app\backend folder
-You should be able to test on http://localhost:5050/ on your browser or on Postman. 
+Collect-A-Gator helps UF students discover notable locations around Gainesville while creating a personalized journal of their college experience. Visit locations, collect unique Gator badges, and build a digital scrapbook of your adventures.
+
+## Features
+
+- *Interactive Map*: Explore Gainesville with markers for notable locations
+- *Digital Collection*: Collect unique Gator badges by visiting locations
+- *Journaling*: Create entries about your experiences tied to locations
+- *User Profiles*: Track your collection and journal in one place
+
+## Quick Start
+
+### Option 1: Local Setup
+
+1. Clone the repository
+   
+   git clone https://github.com/karentong14/Collect-A-Gator.git
+   
+
+2. Navigate to the project directory
+   
+   cd Collect-a-Gator/collect-a-gator
+   
+
+3. Install dependencies
+   
+   npm install
+   
+
+4. The .env file is already set up with all the necessary API keys and configuration:
+   - MongoDB connection string
+   - Google Maps API key
+   - Clerk authentication keys
+
+5. Start the frontend
+   
+   npm run dev
+   
+
+6. Start the backend (in a separate terminal)
+   
+   cd app/backend
+   node index.mjs
+   
+
