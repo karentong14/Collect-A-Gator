@@ -8,3 +8,17 @@ export interface JournalEntry {
   latitude: number;
   longitude:number
 }
+
+export interface Collectibles{
+  restaurantCounter: number;
+  cafeCounter: number;
+  natureCounter: number;
+  artCounter: number;
+  ufCounter: number;
+  germainesBool: boolean;
+  depotParkBool: boolean;
+  karmaCreamBool: boolean;
+  butterflyGardenBool: boolean;
+  marstonBool: boolean;
+
+}
