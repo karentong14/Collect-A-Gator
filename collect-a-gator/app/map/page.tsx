@@ -76,7 +76,7 @@ const markers = [
 
 ];
 
-const categories = ["all", "park", "restaurant", "museum", "cafe", "UF"];
+const categories = ["all", "nature", "restaurant", "museum", "cafe", "UF"];
 
 
 //TEENY TINY SEARCH BAR AT THE TOPPPPPP

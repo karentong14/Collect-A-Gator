@@ -11,6 +11,8 @@ import {
     Typography
 } from '@mui/material';
 
+//import Image from 'next/image';
+
 import { useEffect, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { Collectibles } from '@/components/models/models';
@@ -19,7 +21,7 @@ import depot_gator from "./../images/depot_gator.png";
 import germaines_gator from "./../images/germaines_gator.png"
 import karmacream_gator from "./../images/karmacream_gator.png"
 import marston_gator from "./../images/marston_gator.png"
-import { StaticImageData } from 'next/image';
+//import { StaticImageData } from 'next/image';
 
 export default function CollectiblePage({
   children,
@@ -35,8 +37,14 @@ export default function CollectiblePage({
           try {
             const response = await fetch(`http://localhost:5050/api/users/${userId}`);
             const json = await response.json();
-            console.log(json);
-            setData(json);
+            console.log("json: ", json);
+
+            if (userId) {
+              setData(json);
+            } else {
+              setData(null);
+            }
+            //console.log("inner data: ", data)
       
           } catch (error) {
             console.error(error);
@@ -45,10 +53,14 @@ export default function CollectiblePage({
 
         if (userId) {
             fetchData();
-            console.log("data: ", data);
+            //console.log("data: ", data);
         }
       
       }, []);
+
+      useEffect(() => {
+        console.log("Updated data: ", data);
+      }, [data]);
    
     return (
         <Container maxWidth="lg" sx={{
@@ -74,6 +86,7 @@ export default function CollectiblePage({
         </Grid>
         <Grid item>
         <Grid container spacing={2}>
+            
             {data?.artCounter && data?.artCounter > 0 ? <Grid item>
                 <img ></img>
             </Grid> : null}
@@ -90,19 +103,39 @@ export default function CollectiblePage({
                 <img ></img>
             </Grid> : null}
             {data?.germainesBool && data?.germainesBool === true ? <Grid item>
-                <img src="./../images/germaines_gator.png"></img>
+              <img
+                src={germaines_gator.src}
+                alt="Marker Gator"
+                style={{ width: "100px", height: "135px" }}
+              />
             </Grid> : null}
             {data?.depotParkBool && data?.depotParkBool === true ? <Grid item>
-                <img src="./../images/depot_gator.png"></img>
+              <img
+                src={depot_gator.src}
+                alt="Marker Gator"
+                style={{ width: "100px", height: "135px" }}
+              />
             </Grid> : null}
             {data?.karmaCreamBool && data?.karmaCreamBool === true ? <Grid item>
-                <img src="./../images/karmacream_gator.png"></img>
+              <img
+                src={karmacream_gator.src}
+                alt="Marker Gator"
+                style={{ width: "100px", height: "135px" }}
+              />
             </Grid> : null}
             {data?.butterflyGardenBool && data?.butterflyGardenBool === true ? <Grid item>
-                <img src="./../images/butterfly_gator.png"></img>
+              <img
+                src={butterfly_gator.src}
+                alt="Marker Gator"
+                style={{ width: "100px", height: "135px" }}
+              />
             </Grid> : null}
             {data?.marstonBool && data?.marstonBool === true ? <Grid item>
-                <img src="./../images/marston_gator.png"></img>
+              <img
+                src={marston_gator.src}
+                alt="Marker Gator"
+                style={{ width: "100px", height: "135px" }}
+              />
             </Grid> : null}
        
         </Grid>
