@@ -58,9 +58,9 @@ export default function CollectiblePage({
       
       }, []);
 
-      useEffect(() => {
-        console.log("Updated data: ", data);
-      }, [data]);
+      // useEffect(() => {
+      //   console.log("Updated data: ", data);
+      // }, [data]);
    
     return (
         <Container maxWidth="lg" sx={{
@@ -87,56 +87,191 @@ export default function CollectiblePage({
         <Grid item>
         <Grid container spacing={2}>
             
-            {data?.artCounter && data?.artCounter > 0 ? <Grid item>
-                <img ></img>
-            </Grid> : null}
-            {data?.natureCounter && data?.natureCounter > 0 ? <Grid item>
-                <img ></img>
-            </Grid> : null}
-            {data?.ufCounter && data?.ufCounter > 0 ? <Grid item>
-                <img ></img>
-            </Grid> : null}
-            {data?.restaurantCounter && data?.restaurantCounter > 0 ? <Grid item>
-                <img ></img>
-            </Grid> : null}
-            {data?.cafeCounter && data?.cafeCounter > 0 ? <Grid item>
-                <img ></img>
-            </Grid> : null}
-            {data?.germainesBool && data?.germainesBool === true ? <Grid item>
+            {data?.artCounter !== undefined && (
+              <Grid item>
+                <img
+                  src={butterfly_gator.src}
+                  alt="Butterfly Garden Gator"
+                  width={100}
+                  height={135}
+                  style={{
+                    opacity: data.artCounter >= 3 ? 1 : 0.3,
+                    filter: data.artCounter >= 3 ? 'none' : 'grayscale(100%)',
+                  }}
+                />
+                {data?.artCounter < 3 ? 
+                  <Grid container direction="column">
+                    <Typography variant="body2">{"visit " + (3 - data.artCounter) +" more art locations"}</Typography>
+                  </Grid> :   
+                  <Grid container direction="column">
+                    <Typography variant="body2">{"art locations: " +  data.artCounter}</Typography>
+                  </Grid>}
+              </Grid>
+            )}
+            {data?.natureCounter !== undefined && (
+              <Grid item>
+                <img
+                  src={depot_gator.src}
+                  alt="Depot Park Gator"
+                  width={100}
+                  height={135}
+                  style={{
+                    opacity: data.natureCounter >= 3 ? 1 : 0.3,
+                    filter: data.natureCounter >= 3 ? 'none' : 'grayscale(100%)',
+                  }}
+                />
+                {data?.natureCounter < 3 ? 
+                  <Grid container direction="column">
+                    <Typography variant="body2">{"visit " + (3 - data.natureCounter) +" more nature locations"}</Typography>
+                  </Grid> :   
+                  <Grid container direction="column">
+                    <Typography variant="body2">{"nature locations: " +  data.natureCounter}</Typography>
+                  </Grid>}
+              </Grid>
+            )}
+            {data?.ufCounter !== undefined && (
+              <Grid item>
+                <img
+                  src={marston_gator.src}
+                  alt="Marston Gator"
+                  width={100}
+                  height={135}
+                  style={{
+                    opacity: data.ufCounter >= 3 ? 1 : 0.3,
+                    filter: data.ufCounter >= 3 ? 'none' : 'grayscale(100%)',
+                  }}
+                />
+                {data?.ufCounter < 3 ? 
+                  <Grid container direction="column">
+                    <Typography variant="body2">{"visit " + (3 - data.ufCounter) +" more UF locations"}</Typography>
+                  </Grid> :   
+                  <Grid container direction="column">
+                    <Typography variant="body2">{"UF locations: " +  data.ufCounter}</Typography>
+                  </Grid>}
+              </Grid>
+            )}
+            {data?.restaurantCounter !== undefined && (
+              <Grid item>
+                <img
+                  src={germaines_gator.src}
+                  alt="Germaines Gator"
+                  width={100}
+                  height={135}
+                  style={{
+                    opacity: data.restaurantCounter >= 3 ? 1 : 0.3,
+                    filter: data.restaurantCounter >= 3 ? 'none' : 'grayscale(100%)',
+                  }}
+                />
+                {data?.restaurantCounter < 3 ? 
+                  <Grid container direction="column">
+                    <Typography variant="body2">{"visit " + (3 - data.restaurantCounter) +" more restaurant locations"}</Typography>
+                  </Grid> :   
+                  <Grid container direction="column">
+                    <Typography variant="body2">{"restaurant locations: " +  data.restaurantCounter}</Typography>
+                  </Grid>}
+              </Grid>
+            )}
+            
+            {data?.cafeCounter !== undefined && (
+              <Grid item>
+                <img
+                  src={karmacream_gator.src}
+                  alt="Cafe Gator"
+                  width={100}
+                  height={135}
+                  style={{
+                    opacity: data.cafeCounter >= 3 ? 1 : 0.3,
+                    filter: data.cafeCounter >= 3 ? 'none' : 'grayscale(100%)',
+                  }}
+                />
+                {data?.cafeCounter < 3 ? 
+                  <Grid container direction="column">
+                    <Typography variant="body2">{"visit " + (3 - data.cafeCounter) +" more cafe locations"}</Typography>
+                  </Grid> :   
+                  <Grid container direction="column">
+                    <Typography variant="body2">{"cafe locations: " +  data.cafeCounter}</Typography>
+                  </Grid>}
+              </Grid>
+            )}
+            {data?.germainesBool !== undefined && (<Grid item>
               <img
                 src={germaines_gator.src}
                 alt="Marker Gator"
-                style={{ width: "100px", height: "135px" }}
+                width={100}
+                height={135}
+                style={{ 
+                  opacity: data.germainesBool === true ? 1: 0.3,
+                  filter: data.germainesBool === true ? 'none' : 'grayscale(100%)',
+                 }}
               />
-            </Grid> : null}
-            {data?.depotParkBool && data?.depotParkBool === true ? <Grid item>
+              <Grid container direction="column">
+                    <Typography variant="body2">{"germaine's!!"}</Typography>
+                  </Grid>
+            </Grid>
+            )}
+            {data?.depotParkBool !== undefined && (<Grid item>
               <img
                 src={depot_gator.src}
                 alt="Marker Gator"
-                style={{ width: "100px", height: "135px" }}
+                width={100}
+                height={135}
+                style={{ 
+                  opacity: data.depotParkBool === true ? 1: 0.3,
+                  filter: data.depotParkBool === true ? 'none' : 'grayscale(100%)',
+                 }}
               />
-            </Grid> : null}
-            {data?.karmaCreamBool && data?.karmaCreamBool === true ? <Grid item>
+              <Grid container direction="column">
+                    <Typography variant="body2">{"depot park!!"}</Typography>
+                  </Grid>
+            </Grid>)}
+
+            {data?.karmaCreamBool !== undefined && (<Grid item>
               <img
                 src={karmacream_gator.src}
                 alt="Marker Gator"
-                style={{ width: "100px", height: "135px" }}
+                width={100}
+                height={135}
+                style={{ 
+                  opacity: data.karmaCreamBool === true ? 1: 0.3,
+                  filter: data.karmaCreamBool === true ? 'none' : 'grayscale(100%)',
+                 }}
               />
-            </Grid> : null}
-            {data?.butterflyGardenBool && data?.butterflyGardenBool === true ? <Grid item>
+              <Grid container direction="column">
+                    <Typography variant="body2">{"karma cream!!"}</Typography>
+                  </Grid>
+            </Grid>)}
+            
+            {data?.butterflyGardenBool !== undefined && (<Grid item>
               <img
                 src={butterfly_gator.src}
                 alt="Marker Gator"
-                style={{ width: "100px", height: "135px" }}
+                width={100}
+                height={135}
+                style={{ 
+                  opacity: data.butterflyGardenBool === true ? 1: 0.3,
+                  filter: data.butterflyGardenBool === true ? 'none' : 'grayscale(100%)',
+                 }}
               />
-            </Grid> : null}
-            {data?.marstonBool && data?.marstonBool === true ? <Grid item>
+              <Grid container direction="column">
+                    <Typography variant="body2">{"butterfly garden!! "}</Typography>
+                  </Grid>
+            </Grid>)}
+
+            {data?.marstonBool !== undefined && (<Grid item>
               <img
                 src={marston_gator.src}
                 alt="Marker Gator"
-                style={{ width: "100px", height: "135px" }}
+                width={100}
+                height={135}
+                style={{ 
+                  opacity: data.marstonBool === true ? 1: 0.3,
+                  filter: data.marstonBool === true ? 'none' : 'grayscale(100%)',
+                 }}
               />
-            </Grid> : null}
+              <Grid container direction="column">
+                    <Typography variant="body2">{"marston!!"}</Typography>
+                  </Grid>
+            </Grid>)}
        
         </Grid>
         </Grid>

@@ -74,9 +74,24 @@ const markers = [
   { lat: 29.65417552217933, lng:  -82.38849639274189 , category: "nature", title: "john mahon nature park", image: depot_gator },
   { lat: 29.620301155731035, lng: -82.3333365609661, category: "nature", title: "bivens arm nature park", image: depot_gator },
 
+  { lat: 29.651634, lng: -82.324826, category: "culture", title: "Bo Diddley Plaza" },
+  { lat: 29.648556, lng: -82.325473, category: "culture", title: "Heartwood Soundstage" },
+  { lat: 29.650232, lng: -82.325745, category: "culture", title: "High Dive" },
+  { lat: 29.650457, lng: -82.325918, category: "culture", title: "The Wooly" },
+  { lat: 29.648741, lng: -82.325278, category: "culture", title: "Vivid Music Hall" },
+  { lat: 29.643633, lng: -82.345978, category: "culture", title: "Harn Museum of Art" },
+  { lat: 29.651193, lng: -82.325048, category: "culture", title: "Artisans' Guild Gallery" },
+  { lat: 29.652066, lng: -82.325881, category: "culture", title: "Gainesville Fine Arts Association" },
+  { lat: 29.659067, lng: -82.325982, category: "culture", title: "The Historic Thomas Center" },
+  { lat: 29.661118, lng: -82.330031, category: "culture", title: "Cotton Club Museum and Cultural Center" },
+  { lat: 29.657750, lng: -82.323600, category: "culture", title: "A. Quinn Jones Museum and Cultural Center" },
+  { lat: 29.657291, lng: -82.321818, category: "culture", title: "Wilhelmina Johnson Resource Center" },
+  { lat: 29.651088, lng: -82.325480, category: "culture", title: "Civic Media Center" },
+  { lat: 29.639707, lng: -82.322909, category: "culture", title: "Cade Museum for Creativity and Invention" },
+  { lat: 29.651139, lng: -82.325297, category: "culture", title: "Hippodrome Theatre" }
 ];
 
-const categories = ["all", "nature", "restaurant", "museum", "cafe", "UF"];
+const categories = ["all", "nature", "restaurant", "culture", "cafe", "UF"];
 
 
 //TEENY TINY SEARCH BAR AT THE TOPPPPPP
