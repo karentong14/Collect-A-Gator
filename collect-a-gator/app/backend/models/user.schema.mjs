@@ -19,61 +19,65 @@ const userSchema = new mongoose.Schema({
         required: [true, "Each user must have an email"],
         unique: [true, "Users must have a unique email"]
     },
-    restaurantCounter: {
-        type: Number,
-        required: [true, "Each user must have a restaurant counter"],
-        default: 0
+    counters: {
+        restaurant: {
+            type: Number,
+            required: [true, "Each user must have a restaurant counter"],
+            default: 0
+        },
+        cafe: {
+            type: Number,
+            required: [true, "Each user must have a cafe counter"],
+            default: 0
+        },
+        nature: {
+            type: Number,
+            required: [true, "Each user must have a nature counter"],
+            default: 0
+        },
+        art: {
+            type: Number,
+            required: [true, "Each user must have an art counter"],
+            default: 0
+        },
+        uf: {
+            type: Number,
+            required: [true, "Each user must have a uf counter"],
+            default: 0
+        },
+        miscellaneous: {
+            type: Number,
+            required: [true, "Each user must have a miscellaneous counter"],
+            default: 0
+        }
     },
-    cafeCounter: {
-        type: Number,
-        required: [true, "Each user must have a cafe counter"],
-        default: 0
-    },
-    natureCounter: {
-        type: Number,
-        required: [true, "Each user must have a nature counter"],
-        default: 0
-    },
-    artCounter: {
-        type: Number,
-        required: [true, "Each user must have a art counter"],
-        default: 0
-    },
-    ufCounter: {
-        type: Number,
-        required: [true, "Each user must have a uf counter"],
-        default: 0
-    },
-    miscellaneousCounter: {
-        type: Number,
-        required: [true, "Each user must have a miscellaneous counter"],
-        default: 0
-    },
-    germainesBool: {
-        type: Boolean,
-        required: [true, "Each user must have a germainesBool"],
-        default: false
-    }, 
-    depotParkBool: {
-        type: Boolean,
-        required: [true, "Each user must have a depotParkBool"],
-        default: false
-    },
-    karmaCreamBool: {
-        type: Boolean,
-        required: [true, "Each user must have a karmaCreamBool"],
-        default: false
-    },
-    butterflyGardenBool: {
-        type: Boolean,
-        required: [true, "Each user must have a butterflyGardenBool"],
-        default: false
-    },
-    marstonBool: {
-        type: Boolean,
-        required: [true, "Each user must have a marstonBool"],
-        default: false
-    },
+    booleans: {
+        germaines: {
+            type: Boolean,
+            required: [true, "Each user must have a germainesBool"],
+            default: false
+        }, 
+        depotPark: {
+            type: Boolean,
+            required: [true, "Each user must have a depotParkBool"],
+            default: false
+        },
+        karmaCream: {
+            type: Boolean,
+            required: [true, "Each user must have a karmaCreamBool"],
+            default: false
+        },
+        butterflyGarden: {
+            type: Boolean,
+            required: [true, "Each user must have a butterflyGardenBool"],
+            default: false
+        },
+        marston: {
+            type: Boolean,
+            required: [true, "Each user must have a marstonBool"],
+            default: false
+        }
+    }
 });
 
 export const User = mongoose.model('User', userSchema);

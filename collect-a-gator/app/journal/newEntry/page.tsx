@@ -18,11 +18,11 @@ import {AdvancedMarker, APIProvider, ControlPosition, Map, MapControl, useMapsLi
 import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 
-const restaurantSet = new Set(['ChIJIZBCHZ6j6IgRcKC_Bqug8AQ']); //germaines
-const cafeSet = new Set(['ChIJU66uvIWj6IgR_T3rKgn_tGY']); //karma cream
-const natureSet = new Set(['ChIJG4zJ_T6j6IgRgMdxRPpp5-M', 'ChIJ_aHU15Kj6IgROdcp7P7ZODI']); //butterfly
+const restaurantSet = new Set(['ChIJIZBCHZ6j6IgRcKC_Bqug8AQ', 'ChIJSzMhnySj6IgRC8Io5CIREWY', 'ChIJcX6NVGCj6IgRdlAyMcGLNec', 'ChIJ4x5rF9Kj6IgR2TfWxa9yYJQ', 'ChIJh0SCBIqj6IgREMeJkYwseg4', 'ChIJabeoVaGj6IgRW-3TgvRlGYg', 'ChIJxav7fgWj6IgR-g8xGWTUUkw', 'ChIJC2p8EbKj6IgRKUUx8t8-8L0', 'ChIJ0eY99h2k6IgRILAjo-PIX0U','ChIJ684yQIKj6IgRE3Q5qi8nVIE', 'ChIJMe3peL6j6IgRUTeILkOipRI']); //11 total
+const cafeSet = new Set(['ChIJU66uvIWj6IgR_T3rKgn_tGY', 'ChIJgVFTjXij6IgRx274YeWh8aU', 'ChIJTbgFM42j6IgR_PZ-IHnxMb8', 'ChIJ-XytOIKj6IgRro9gmn8G7ok', 'ChIJkVxb3Uqj6IgRZzneANZ2dGA', 'ChIJSY-p-I2j6IgR32n1JzbU0vU', 'ChIJi5XRv-6j6IgRPGVVy8qc4xQ', 'ChIJf7451LKj6IgRt4Qk4-EwdAk', 'ChIJ33rkOm6k6IgR-wIFhi48Ahs', 'ChIJ0x1ZLACj6IgRHW3Eyr2MmyY', 'ChIJj11Iydij6IgRSdi5XJWl3Ck']); //11 total
+const natureSet = new Set(['ChIJ_aHU15Kj6IgROdcp7P7ZODI', 'ChIJKW06x2Gj6IgR-iSbJWm73Ko', 'ChIJOcvRfCaf6IgRBNn_MkPaShI', 'ChIJk-Ena8yj6IgRd4uM_AVWZsQ', 'ChIJrcWqzlKj6IgRRwRnMA9WvEo', 'ChIJbZXnxrGj6IgRPxxOq-v7gDY', 'ChIJG4zJ_T6j6IgRgMdxRPpp5-M']); //7 total
+const ufSet = new Set(['ChIJd71aR52j6IgRHko1BL93Tag', 'ChIJTxlXV4Kj6IgRSJ-tmdH0chA', 'ChIJz_GUjsyY6IgREFi9ssJFKxU', 'ChIJVzpbxXmj6IgRoj4rV3XQcPg', 'ChIJDecmVXaj6IgRYG4b1yi5zgo', 'ChIJfcc954Kj6IgRo01stEhIbT4', 'ChIJF3ENmG2j6IgRzlCRE5ou3Ek', 'ChIJn18R4Guj6IgRuMZobqHdvy8', 'ChIJOYPqxoaj6IgRoBCY9Zz4x7M', 'ChIJn5WOFnij6IgR3MvHCwrOpEA', 'ChIJe816_j-j6IgR3taUoqekpuw' ]); //11 total
 const artSet = new Set(['ChIJV1saDj-j6IgRCzNOsYSBymw']); //harn
-const ufSet = new Set(['ChIJTxlXV4Kj6IgRSJ-tmdH0chA']); //library west
 
 export default function EntryPage({
   children,
@@ -86,7 +86,7 @@ export default function EntryPage({
               };
               fetchData();
 
-              const getUserCounters = async () => {
+              const getUserData = async () => {
                 try {
                     const response = await fetch("http://localhost:5050/api/users/" + user?.id, {
                         method: "GET",
@@ -104,66 +104,98 @@ export default function EntryPage({
                 }
             };
 
-    
-            const fetchAndLogUserData = async () => {
-                const userData = await getUserCounters();
-               // console.log("userData: ", userData);
-            };
-           // fetchAndLogUserData();
-
             const adjustCounters = async () => {
-              const userData = await getUserCounters();
+              const userData = await getUserData();
               if (!userData) return;
+              const myCounters = userData.counters || {};
 
               if (selectedPlace?.place_id) {
                 if (ufSet.has(selectedPlace.place_id)) {
-                  userData.ufCounter = (userData.ufCounter || 0) + 1;
-                  console.log("UF Counter: ", userData.ufCounter);
+                  myCounters.uf = (myCounters.uf || 0) + 1;
+                  console.log("UF Counter: ", myCounters.uf);
                 } else if (restaurantSet.has(selectedPlace.place_id)) {
-                  userData.restaurantCounter = (userData.restaurantCounter || 0) + 1;
-                  console.log("Restaurant Counter: ", userData.restaurantCounter);
+                  myCounters.restaurant = (myCounters.restaurant || 0) + 1;
+                  console.log("Restaurant Counter: ", myCounters.restaurant);
                 } else if (cafeSet.has(selectedPlace.place_id)) {
-                  userData.cafeCounter = (userData.cafeCounter || 0) + 1;
-                  console.log("Cafe Counter: ", userData.cafeCounter);
+                  myCounters.cafe = (myCounters.cafe || 0) + 1;
+                  console.log("Cafe Counter: ", myCounters.cafe);
                 } else if (natureSet.has(selectedPlace.place_id)) {
-                  userData.natureCounter = (userData.natureCounter || 0) + 1;
-                  console.log("Nature Counter: ", userData.natureCounter);
+                  myCounters.nature = (myCounters.nature || 0) + 1;
+                  console.log("Nature Counter: ", myCounters.nature);
                 } else if (artSet.has(selectedPlace.place_id)) {
-                  userData.artCounter = (userData.artCounter || 0) + 1;
-                  console.log("Art Counter: ", userData.artCounter);
+                  myCounters.art = (myCounters.art || 0) + 1;
+                  console.log("Art Counter: ", myCounters.art);
                 } else {
                   console.log("Place ID not found in any set.");
-                  userData.miscellaneousCounter = (userData.miscellaneousCounter || 0) + 1;
+                  myCounters.miscellaneous = (myCounters.miscellaneous || 0) + 1;
                 }
               }
 
-              try {
+              try { //idk if this is right and works because I changed the nested object and i dont think ufCounter is valid anymore
                 console.log("Updated userData before PUT request:", userData); // Log userData to verify its structure and values
                 await fetch(`http://localhost:5050/api/users/` + user?.id, {
                   method: "PUT",
                   body: JSON.stringify({
-                    id: user?.id, // Include the user ID if required by the server
-                    ufCounter: userData.ufCounter,
-                    restaurantCounter: userData.restaurantCounter,
-                    natureCounter: userData.natureCounter, // Ensure userData is updated correctly
-                    artCounter: userData.artCounter,
-                    cafeCounter: userData.cafeCounter,
-                    miscellaneousCounter: userData.miscellaneousCounter
+                    id: user?.id, //Unsure if I need this id here
+                    uf: myCounters.uf, //do I need to tell it that it is from counters object or can it tell
+                    restaurant: myCounters.restaurant,
+                    nature: myCounters.nature, // Ensure userData is updated correctly
+                    art: myCounters.art, //idk if this is 
+                    cafe: myCounters.cafe,
+                    miscellanous: myCounters.miscellanous
                   }),
                   headers: {
                   "Content-Type": "application/json; charset=UTF-8"
                   }
                 });
-                console.log("user.id" + user?.id);
-                console.log("userData.natureCounter" + userData.natureCounter);
+               // console.log("user.id" + user?.id);
+             //   console.log("userData.natureCounter" + userData.natureCounter);
                 console.log("Counters updated successfully"); //it says it updated sucessfully but I don't think so?
               } catch (error) {
                 console.error("Error updating counters:", error);
               }
             };
 
+            const adjustBooleans = async () => {
+                const userData = await getUserData();
+                if (!userData) return;
+                const booleans = userData.booleans || {};
+
+                if (selectedPlace?.place_id === 'ChIJIZBCHZ6j6IgRcKC_Bqug8AQ') {
+                  booleans.germaines = true;
+                } else if (selectedPlace?.place_id === 'ChIJ_aHU15Kj6IgROdcp7P7ZODI') {
+                  booleans.depotPark = true;
+                } else if (selectedPlace?.place_id === 'ChIJU66uvIWj6IgR_T3rKgn_tGY') {
+                  booleans.karmaCream = true; 
+                } else if (selectedPlace?.place_id === 'ChIJG4zJ_T6j6IgRgMdxRPpp5-M') {
+                  booleans.butterflyGarden = true; 
+                } else if (selectedPlace?.place_id === 'ChIJd71aR52j6IgRHko1BL93Tag') {
+                  booleans.marston = true; 
+                }
+
+                try {
+                await fetch(`http://localhost:5050/api/users/` + user?.id, {
+                  method: "PUT",
+                  body: JSON.stringify({
+                  id: user?.id, // Unsure if I need the id here
+                  germaines:  booleans.germaines,
+                  depotPark: booleans.depotPark,
+                  karmaCream: booleans.karmaCream,
+                  butterflyGarden: booleans.butterflyGarden,
+                  marston: booleans.marston
+                  }),
+                  headers: {
+                  "Content-Type": "application/json; charset=UTF-8"
+                  }
+                });
+                console.log("Boolean field updated successfully");
+                } catch (error) {
+                console.error("Error updating boolean field:", error);
+                }
+              
+            }
             adjustCounters();
-       //     fetchAndLogUserData(); //want user data to print in console again
+            adjustBooleans();
 
         }
       }, [trigger]);
