@@ -26,7 +26,7 @@ import { PlacePicker as TPlacePicker } from '@googlemaps/extended-component-libr
 const App = dynamic(() => Promise.resolve(ClientApp), { ssr: false });
 // https://developers.google.com/maps/documentation/javascript/reference/places-service
 
-
+//little update
 const markers = [
   //{ lat: 29.644859192414923, lng: -82.32228393500337, category: "park", title: "depot park", image: depot_gator},
   { lat: 29.660039837500698, lng: -82.327608563839, category: "restaurant", title: "germaines", image: germaines_gator},
