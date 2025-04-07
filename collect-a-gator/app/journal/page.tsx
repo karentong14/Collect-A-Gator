@@ -82,13 +82,20 @@ export default function JournalPage({
   }, [userId]); // Runs whenever userId changes
 
   function reformatDate(s : string) {
-    const currentDate = new Date (s);
-    currentDate.setDate(currentDate.getDate() + 1);
-    const formattedDate = currentDate.toLocaleDateString('en-US', {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric',
-    });
+    const [formattedDate, setFormattedDate] = useState<string>('');
+
+    useEffect(() => {
+      const d = new Date(s);
+      d.setDate(d.getDate() + 1);
+      setFormattedDate(
+        d.toLocaleDateString('en-US', {
+          month: 'long',
+          day: 'numeric',
+          year: 'numeric',
+        })
+      );
+    }, [s]);
+
     return formattedDate;
   }
 
