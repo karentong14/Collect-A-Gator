@@ -59,20 +59,20 @@ router.put("/:token", async (req, res) => {
     if (email !== undefined) updateFields.email = email;
     if (counters !== undefined) {
       updateFields.counters = {};
-      if (counters.ufCounter !== undefined) updateFields.counters.ufCounter = counters.ufCounter;
-      if (counters.restaurantCounter !== undefined) updateFields.counters.restaurantCounter = counters.restaurantCounter;
-      if (counters.natureCounter !== undefined) updateFields.counters.natureCounter = counters.natureCounter;
-      if (counters.artCounter !== undefined) updateFields.counters.artCounter = counters.artCounter;
-      if (counters.cafeCounter !== undefined) updateFields.counters.cafeCounter = counters.cafeCounter;
-      if (counters.miscellaneousCounter !== undefined) updateFields.counters.miscellaneousCounter = counters.miscellaneousCounter;
+      if (counters.uf !== undefined) updateFields.counters.uf = counters.uf;
+      if (counters.restaurant !== undefined) updateFields.counters.restaurant = counters.restaurant;
+      if (counters.nature !== undefined) updateFields.counters.nature = counters.nature;
+      if (counters.art !== undefined) updateFields.counters.art = counters.art;
+      if (counters.cafe !== undefined) updateFields.counters.cafe = counters.cafe;
+      if (counters.miscellaneous !== undefined) updateFields.counters.miscellaneous = counters.miscellaneous;
     }
     if(booleans !== undefined) {
       updateFields.booleans = {};
-      if (booleans.germainesBool !== undefined) updateFields.booleans.germainesBool = booleans.germainesBool;
-      if (booleans.depotParkBool !== undefined) updateFields.booleans.depotParkBool = booleans.depotParkBool;
-      if (booleans.karmaCreamBool !== undefined) updateFields.booleans.karmaCreamBool = booleans.karmaCreamBool;
-      if (booleans.butterflyGardenBool !== undefined) updateFields.booleans.butterflyGardenBool = booleans.butterflyGardenBool;
-      if (booleans.marstonBool !== undefined) updateFields.booleans.marstonBool = booleans.marstonBool;
+      if (booleans.germaines !== undefined) updateFields.booleans.germaines = booleans.germaines;
+      if (booleans.depotPark !== undefined) updateFields.booleans.depotPark = booleans.depotPark;
+      if (booleans.karmaCream !== undefined) updateFields.booleans.karmaCream = booleans.karmaCream;
+      if (booleans.butterflyGarden !== undefined) updateFields.booleans.butterflyGarden = booleans.butterflyGarden;
+      if (booleans.marston !== undefined) updateFields.booleans.marston = booleans.marston;
     }
 
     const updatedUser = await User.findOneAndUpdate(
