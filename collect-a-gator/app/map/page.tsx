@@ -26,7 +26,6 @@ import { PlacePicker as TPlacePicker } from '@googlemaps/extended-component-libr
 const App = dynamic(() => Promise.resolve(ClientApp), { ssr: false });
 // https://developers.google.com/maps/documentation/javascript/reference/places-service
 
-//little update
 const markers = [
   //{ lat: 29.644859192414923, lng: -82.32228393500337, category: "park", title: "depot park", image: depot_gator},
   { lat: 29.660039837500698, lng: -82.327608563839, category: "restaurant", title: "germaines", image: germaines_gator},
@@ -79,69 +78,8 @@ const markers = [
 const categories = ["all", "park", "restaurant", "museum", "cafe", "UF"];
 
 
-//TEENY TINY SEARCH BAR AT THE TOPPPPPP
-  interface PlaceAutocompleteProps {
-    onPlaceSelect: (place: google.maps.places.PlaceResult | null) => void;
-  }
-  
-  const PlaceAutocomplete = ({ onPlaceSelect }: PlaceAutocompleteProps) => {
-    const [placeAutocomplete, setPlaceAutocomplete] =
-      useState<google.maps.places.Autocomplete | null>(null);
-    const inputRef = useRef<HTMLInputElement>(null);
-    const places = useMapsLibrary('places');
-  
-    useEffect(() => {
-      if (!places || !inputRef.current) return;
-  
-      const options = {
-        fields: ['geometry', 'name', 'formatted_address']
-      };
-  
-      setPlaceAutocomplete(new places.Autocomplete(inputRef.current, options));
-    }, [places]);
-  
-    useEffect(() => {
-      if (!placeAutocomplete) return;
-  
-      placeAutocomplete.addListener('place_changed', () => {
-        onPlaceSelect(placeAutocomplete.getPlace());
-      });
-    }, [onPlaceSelect, placeAutocomplete]);
-  
-    return (
-      <div className="autocomplete-container">
-        <input ref={inputRef} />
-      </div>
-    );
-  };
-
-//MARKER FOR SEARCHED PLACE
-// https://developers.google.com/maps/documentation/javascript/examples/rgm-autocomplete#maps_rgm_autocomplete-typescript
-// --- maybe this one too, https://developers.google.com/maps/documentation/javascript/place-autocomplete-new
-interface MapHandlerProps {
-  place: google.maps.places.PlaceResult | null;
-  marker: google.maps.marker.AdvancedMarkerElement | null;
-}
-
-const MapHandler = ({ place, marker }: MapHandlerProps) => {
-  const map = useMap();
-
-  useEffect(() => {
-    if (!map || !place || !marker) return;
-
-    if (place.geometry?.viewport) {
-      map.fitBounds(place.geometry?.viewport);
-    }
-    marker.position = place.geometry?.location;
-  }, [map, place, marker]);
-
-  return null;
-};
-
-
 const ClientApp = () => {
-    const [selectedPlace, setSelectedPlace] = useState<google.maps.places.PlaceResult | null>(null);
-    const [markerRef, marker] = useAdvancedMarkerRef();
+
     const [selectedCategory, setSelectedCategory] = useState("all");
     const [selectedMarker, setSelectedMarker] = useState<{ lat: number; lng: number; image: any } | null>(null);
     //below, for place panel overview
@@ -245,14 +183,6 @@ const ClientApp = () => {
           </div>
         </SplitLayout>
 
-            
-            {/* //ADDED TEENY TINY SEARCH BAR */}
-            {/* <MapControl position={ControlPosition.TOP}>
-              <div style={{ fontSize: '15px', color: 'black'}} className="autocomplete-control">
-                <PlaceAutocomplete onPlaceSelect={setSelectedPlace} />
-              </div>
-            </MapControl> */}
-
 
           <div
           style={{
@@ -285,7 +215,6 @@ const ClientApp = () => {
           ))}
           </div>
 
-          <MapHandler place={selectedPlace} marker={marker} />
         </APIProvider>
       </SignedIn><SignedOut>
           <RedirectToSignIn />
