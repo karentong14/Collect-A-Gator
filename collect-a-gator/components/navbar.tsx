@@ -83,6 +83,12 @@ function NavBar() {
 					</ListItemIcon>
 					<ListItemText primary={"Map"} />
 				</ListItemButton>
+				<ListItemButton href="../collectibles">
+					<ListItemIcon >
+						{<LibraryBooks />}
+					</ListItemIcon>
+					<ListItemText primary={"Collectibles"} />
+				</ListItemButton>
 				<ListItemButton href="../profile">
 					<ListItemIcon>
 						{<AccountCircleIcon />}

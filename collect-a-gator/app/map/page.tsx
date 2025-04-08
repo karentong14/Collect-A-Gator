@@ -28,7 +28,10 @@ const App = dynamic(() => Promise.resolve(ClientApp), { ssr: false });
 
 
 const markers = [
-  //UF category
+  //{ lat: 29.644859192414923, lng: -82.32228393500337, category: "park", title: "depot park", image: depot_gator},
+  { lat: 29.660039837500698, lng: -82.327608563839, category: "restaurant", title: "germaines", image: germaines_gator},
+  { lat: 29.636522457001664, lng: -82.37027596013368, category: "museum", title: "butterfly garden", image: butterfly_gator},
+  //{ lat: 29.652244871720377, lng: -82.33110328896925, category: "cafe", title: "karma cream", image: karmacream_gator},
   { lat: 29.6494508812314, lng: -82.34363722597145, category: "UF", title: "Marston Science Library", image: marston_gator },
   { lat: 29.65144695774138, lng: -82.34292632002683, category: "UF", title: "Library West Humanities & Social Sciences", image: marston_gator },
   { lat: 29.534656973659317, lng: -82.30503743167344, category: "UF", title: "UF Lake Wauburg North Shore", image: depot_gator },
@@ -41,8 +44,6 @@ const markers = [
   { lat: 29.650144154077438, lng: -82.34658796270031, category: "UF", title: "Student Recreation & Fitness Center", image: butterfly_gator},
   { lat: 29.638503951810275, lng: -82.36781963590806, category: "UF", title: "Southwest Recreation Center", image: butterfly_gator},
 
-  //Restaurant category
-  { lat: 29.660039837500698, lng: -82.327608563839, category: "restaurant", title: "germaines", image: germaines_gator},
   { lat: 29.6359013329591, lng: -82.33983966558394, category: "restaurant", title: "Momoyaki", image: germaines_gator },
   { lat: 29.650388203434332, lng: -82.37597347537441, category: "restaurant", title: "Las Carretas", image: germaines_gator },
   { lat: 29.623332841423434, lng: -82.37538518531986, category: "restaurant", title: "Red Rice Kitchen", image: germaines_gator },
@@ -54,7 +55,6 @@ const markers = [
   { lat: 29.64827160463296, lng: -82.32877184838945, category: "restaurant", title: "Muneca’s Taco Garden", image: germaines_gator },
   { lat: 29.646546190047477, lng: -82.32472713991532, category: "restaurant", title: "Luke’s Bagels", image: germaines_gator },
 
-  //Cafe Category
   { lat:29.65213764748871, lng:-82.33118911968197, category: "cafe", title: "Karma Cream", image: karmacream_gator },
   { lat:29.650741676560994,lng:-82.32274468698614, category: "cafe", title: "Wyatt’s", image: karmacream_gator },
   { lat:29.649753684225075, lng:-82.3233989122677, category: "cafe", title: "Maude’s Cafe", image: karmacream_gator },
@@ -67,19 +67,31 @@ const markers = [
   { lat:29.6515812409414, lng:-82.32686819870852, category: "cafe", title: "Cafe Voltaire", image: karmacream_gator },
   { lat:29.626740910821987,  lng:-82.37466244955165, category: "cafe", title: "Foxtail Coffee Co.", image: karmacream_gator },
 
-  //Nature Category
   { lat: 29.644859192414923, lng: -82.32228393500337, category: "nature", title: "depot park", image: depot_gator },
   { lat: 29.655389621677706, lng:  -82.37101621796064, category: "nature", title: "loblolly woods", image: depot_gator },
   { lat: 29.570736081864148, lng:  -82.3002600044909, category: "nature", title: "paynes prairie", image: depot_gator },
   { lat:29.620103399869375, lng: -82.32963132467265, category: "nature", title: "sweetwater wetlands park", image: depot_gator },
   { lat: 29.65417552217933, lng:  -82.38849639274189 , category: "nature", title: "john mahon nature park", image: depot_gator },
   { lat: 29.620301155731035, lng: -82.3333365609661, category: "nature", title: "bivens arm nature park", image: depot_gator },
-  { lat: 29.636522457001664, lng: -82.37027596013368, category: "nature", title: "butterfly rainforest", image: butterfly_gator},
 
-  //Art Category
+  { lat: 29.651634, lng: -82.324826, category: "culture", title: "Bo Diddley Plaza" },
+  { lat: 29.648556, lng: -82.325473, category: "culture", title: "Heartwood Soundstage" },
+  { lat: 29.650232, lng: -82.325745, category: "culture", title: "High Dive" },
+  { lat: 29.650457, lng: -82.325918, category: "culture", title: "The Wooly" },
+  { lat: 29.648741, lng: -82.325278, category: "culture", title: "Vivid Music Hall" },
+  { lat: 29.643633, lng: -82.345978, category: "culture", title: "Harn Museum of Art" },
+  { lat: 29.651193, lng: -82.325048, category: "culture", title: "Artisans' Guild Gallery" },
+  { lat: 29.652066, lng: -82.325881, category: "culture", title: "Gainesville Fine Arts Association" },
+  { lat: 29.659067, lng: -82.325982, category: "culture", title: "The Historic Thomas Center" },
+  { lat: 29.661118, lng: -82.330031, category: "culture", title: "Cotton Club Museum and Cultural Center" },
+  { lat: 29.657750, lng: -82.323600, category: "culture", title: "A. Quinn Jones Museum and Cultural Center" },
+  { lat: 29.657291, lng: -82.321818, category: "culture", title: "Wilhelmina Johnson Resource Center" },
+  { lat: 29.651088, lng: -82.325480, category: "culture", title: "Civic Media Center" },
+  { lat: 29.639707, lng: -82.322909, category: "culture", title: "Cade Museum for Creativity and Invention" },
+  { lat: 29.651139, lng: -82.325297, category: "culture", title: "Hippodrome Theatre" }
 ];
 
-const categories = ["all", "nature", "restaurant", "art", "cafe", "UF"];
+const categories = ["all", "park", "restaurant", "museum", "cafe", "UF"];
 
 
 //TEENY TINY SEARCH BAR AT THE TOPPPPPP
