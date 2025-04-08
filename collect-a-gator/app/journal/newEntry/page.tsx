@@ -22,7 +22,7 @@ const restaurantSet = new Set(['ChIJIZBCHZ6j6IgRcKC_Bqug8AQ', 'ChIJSzMhnySj6IgRC
 const cafeSet = new Set(['ChIJU66uvIWj6IgR_T3rKgn_tGY', 'ChIJgVFTjXij6IgRx274YeWh8aU', 'ChIJTbgFM42j6IgR_PZ-IHnxMb8', 'ChIJ-XytOIKj6IgRro9gmn8G7ok', 'ChIJkVxb3Uqj6IgRZzneANZ2dGA', 'ChIJSY-p-I2j6IgR32n1JzbU0vU', 'ChIJi5XRv-6j6IgRPGVVy8qc4xQ', 'ChIJf7451LKj6IgRt4Qk4-EwdAk', 'ChIJ33rkOm6k6IgR-wIFhi48Ahs', 'ChIJ0x1ZLACj6IgRHW3Eyr2MmyY', 'ChIJj11Iydij6IgRSdi5XJWl3Ck']); //11 total
 const natureSet = new Set(['ChIJ_aHU15Kj6IgROdcp7P7ZODI', 'ChIJKW06x2Gj6IgR-iSbJWm73Ko', 'ChIJOcvRfCaf6IgRBNn_MkPaShI', 'ChIJk-Ena8yj6IgRd4uM_AVWZsQ', 'ChIJrcWqzlKj6IgRRwRnMA9WvEo', 'ChIJbZXnxrGj6IgRPxxOq-v7gDY', 'ChIJG4zJ_T6j6IgRgMdxRPpp5-M']); //7 total
 const ufSet = new Set(['ChIJd71aR52j6IgRHko1BL93Tag', 'ChIJTxlXV4Kj6IgRSJ-tmdH0chA', 'ChIJz_GUjsyY6IgREFi9ssJFKxU', 'ChIJVzpbxXmj6IgRoj4rV3XQcPg', 'ChIJDecmVXaj6IgRYG4b1yi5zgo', 'ChIJfcc954Kj6IgRo01stEhIbT4', 'ChIJF3ENmG2j6IgRzlCRE5ou3Ek', 'ChIJn18R4Guj6IgRuMZobqHdvy8', 'ChIJOYPqxoaj6IgRoBCY9Zz4x7M', 'ChIJn5WOFnij6IgR3MvHCwrOpEA', 'ChIJe816_j-j6IgR3taUoqekpuw' ]); //11 total
-const artSet = new Set(['ChIJV1saDj-j6IgRCzNOsYSBymw']); //harn
+const artSet = new Set(['ChIJcRYsM_Oj6IgRWocTBP6Idsg', 'ChIJwcIl25Kj6IgRmhvuFDY2jig', 'ChIJpRSBsY2j6IgRugXoTUGeRIc', 'ChIJgWr2k4yj6IgROMScZaum5k0', 'ChIJXzqBxxSj6IgRU2IaUzNKHgc', 'ChIJV1saDj-j6IgRCzNOsYSBymw', 'ChIJMZ0YT62k6IgRnOeuCVJmzqg', 'ChIJ9RbCvZWj6IgRn7PysJWYZvA', 'ChIJqdK3FfWj6IgRWutG7CpuNy4', 'ChIJkwUtSe6j6IgRvVPNiMab8HY', 'ChIJ05pRW2yj6IgRjcpeXaq3yA8', 'ChIJ9QUvBoaj6IgR1PX_eh9mF5M', 'ChIJs1C1o5Kj6IgRpOftpLlXVxE', 'ChIJCxgEbpOj6IgRX2GBPVg5Xik', 'ChIJTfruNo2j6IgRVxCVkN7eI0k']); //15 total
 
 export default function EntryPage({
   children,
