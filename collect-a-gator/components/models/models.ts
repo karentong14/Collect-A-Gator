@@ -1,5 +1,5 @@
 export interface JournalEntry {
- // _id: string; //do I need this? idk
+  _id: string; 
   token: string;
   title: string;
   content: string;
