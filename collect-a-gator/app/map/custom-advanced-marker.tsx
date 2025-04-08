@@ -11,6 +11,7 @@ import {RealEstateIcon} from './real-estate-icon';
 import './custom-advanced-marker.css';
 import { devNull } from 'os';
 
+import marston_gator from "./../images/marston_gator.png"
 
 // interface Props {
 //   realEstateListing: RealEstateListing;
@@ -39,9 +40,18 @@ export const CustomAdvancedMarker = ({
           </button>
 
           <div className="image-container">
-            <RealEstateGallery
+            {/* <RealEstateGallery
               isExtended={clicked}
-            />
+            /> */}
+
+
+            <img
+                src={marston_gator.src}
+                alt="Marker Gator"
+                style={{ width: "100px", height: "135px" }}
+              />
+
+
             <span className="icon">
               <RealEstateIcon />
             </span>
