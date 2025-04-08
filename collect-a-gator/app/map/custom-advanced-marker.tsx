@@ -12,26 +12,33 @@ import './custom-advanced-marker.css';
 import { devNull } from 'os';
 
 import marston_gator from "./../images/marston_gator.png"
+import dynamic from "next/dynamic";
+
 
 // interface Props {
 //   realEstateListing: RealEstateListing;
 // }
+
+
 
 export const CustomAdvancedMarker = ({
 }) => {
   const [clicked, setClicked] = useState(false);
   const [hovered, setHovered] = useState(false);
   const position = {
-    //norman
-    lat: 29.64748892609758,
-    lng: -82.33794261307803
+    //marston
+    lat: 29.64840833267358, 
+    lng: -82.34354772086701
   };
 
+
+
+//  CUSTOM PIN !!!
   const renderCustomPin = () => {
 
     const [selectedMarker, setSelectedMarker] =
     useState<google.maps.marker.AdvancedMarkerElement | null>(null);
-
+    
     return (
       <>
         <div className="custom-pin">
@@ -43,25 +50,25 @@ export const CustomAdvancedMarker = ({
             {/* <RealEstateGallery
               isExtended={clicked}
             /> */}
-
-
             <img
                 src={marston_gator.src}
                 alt="Marker Gator"
                 style={{ width: "100px", height: "135px" }}
               />
 
-
             <span className="icon">
               <RealEstateIcon />
             </span>
-          </div>
 
-          {/* <RealEstateListingDetails /> */}
+          </div>            
+
+          <RealEstateListingDetails />
         </div>
+        
 
         <div className="tip" />
       </>
+      
     );
   };
 
