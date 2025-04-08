@@ -20,6 +20,8 @@ import marston_gator from "./../images/marston_gator.png"
 import { OverlayLayout as TOverlayLayout } from '@googlemaps/extended-component-library/overlay_layout.js';
 import { PlacePicker as TPlacePicker } from '@googlemaps/extended-component-library/place_picker.js';
 
+import {CustomAdvancedMarker} from './custom-advanced-marker';
+
 //import all components from extended components library
 <script type="module" src="https://unpkg.com/@googlemaps/extended-component-library"></script>
 
@@ -83,7 +85,6 @@ const ClientApp = () => {
     const [selectedCategory, setSelectedCategory] = useState("all");
     const [selectedMarker, setSelectedMarker] = useState<{ lat: number; lng: number; image: any } | null>(null);
     //below, for place panel overview
-    const overlayLayoutRef = useRef<TOverlayLayout>(null);
     const pickerRef = useRef<TPlacePicker>(null);
     const [place, setPlace] = useState<google.maps.places.Place | undefined>(undefined);
     // const [formattedAddress, setFormattedAddress] = React.useState('');
@@ -94,10 +95,7 @@ const ClientApp = () => {
       () => import('@googlemaps/extended-component-library/react').then(mod => mod.SplitLayout),
       { ssr: false }
     );
-    const OverlayLayout = dynamic(
-      () => import('@googlemaps/extended-component-library/react').then(mod => mod.OverlayLayout),
-      { ssr: false }
-    );
+
     const PlacePicker = dynamic(
       () => import('@googlemaps/extended-component-library/react').then(mod => mod.PlacePicker),
       { ssr: false }
@@ -149,6 +147,8 @@ const ClientApp = () => {
                 </PlaceOverview>
             </div> 
           </div>
+
+
           {/* actual map to the left */}
           <div slot="main" style={{ width: "100vw", height: "100vh" }}>
                 <Map defaultCenter={position} defaultZoom={15} mapId="5174ed5358f23a3c">
@@ -168,7 +168,7 @@ const ClientApp = () => {
               }}
               />
             ))}
-            {/* just displaying butterfly_gator image when a marker is clicked */}
+            {/* display image when marker is clicked */}
             {selectedMarker && (
             <AdvancedMarker position={selectedMarker}>
               <img
@@ -178,6 +178,8 @@ const ClientApp = () => {
               />
             </AdvancedMarker>
           )}
+
+                  <CustomAdvancedMarker />
                 </Map>
                 
           </div>
