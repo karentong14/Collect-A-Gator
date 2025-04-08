@@ -51,7 +51,7 @@ export const RealEstateListingDetails= ({
                     </PlaceDirectionsButton>
                   </div>
         </PlaceOverview>
-      <div className="listing-content">
+      {/* <div className="listing-content">
         <h2>ur mom</h2>
         <p>ur mom</p>
         <div className="details">
@@ -61,7 +61,7 @@ export const RealEstateListingDetails= ({
         <p className="description">ur mom</p>
 
         <p className="price">ur mom</p>
-      </div>
+      </div> */}
     </div>
   );
 };
