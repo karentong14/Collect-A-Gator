@@ -106,52 +106,51 @@ export default function EntryPage({
             const adjustCounters = async () => {
               const userData = await getUserData();
               if (!userData) return;
-              const myCounters = userData.counters || {};
+              const counters = userData.counters || {};
 
               if (selectedPlace?.place_id) {
-                if (ufSet.has(selectedPlace.place_id)) {
-                  myCounters.uf = (myCounters.uf || 0) + 1;
-                  console.log("UF Counter: ", myCounters.uf);
-                } else if (restaurantSet.has(selectedPlace.place_id)) {
-                  myCounters.restaurant = (myCounters.restaurant || 0) + 1;
-                  console.log("Restaurant Counter: ", myCounters.restaurant);
-                } else if (cafeSet.has(selectedPlace.place_id)) {
-                  myCounters.cafe = (myCounters.cafe || 0) + 1;
-                  console.log("Cafe Counter: ", myCounters.cafe);
-                } else if (natureSet.has(selectedPlace.place_id)) {
-                  myCounters.nature = (myCounters.nature || 0) + 1;
-                  console.log("Nature Counter: ", myCounters.nature);
-                } else if (artSet.has(selectedPlace.place_id)) {
-                  myCounters.art = (myCounters.art || 0) + 1;
-                  console.log("Art Counter: ", myCounters.art);
-                } else {
-                  console.log("Place ID not found in any set.");
-                  myCounters.miscellaneous = (myCounters.miscellaneous || 0) + 1;
-                }
+              if (ufSet.has(selectedPlace.place_id)) {
+                counters.uf = (counters.uf || 0) + 1;
+             //   console.log("UF Counter: ", counters.uf);
+              } else if (restaurantSet.has(selectedPlace.place_id)) {
+                counters.restaurant = (counters.restaurant || 0) + 1;
+             //   console.log("Restaurant Counter: ", counters.restaurant);
+              } else if (cafeSet.has(selectedPlace.place_id)) {
+                counters.cafe = (counters.cafe || 0) + 1;
+             //   console.log("Cafe Counter: ", counters.cafe);
+              } else if (natureSet.has(selectedPlace.place_id)) {
+                counters.nature = (counters.nature || 0) + 1;
+              //  console.log("Nature Counter: ", counters.nature);
+              } else if (artSet.has(selectedPlace.place_id)) {
+                counters.art = (counters.art || 0) + 1;
+              //  console.log("Art Counter: ", counters.art);
+              } else {
+                counters.miscellaneous = (counters.miscellaneous || 0) + 1;
+                // console.log("Place ID not found in any set.");
+              }
               }
 
-              try { //idk if this is right and works because I changed the nested object and i dont think ufCounter is valid anymore
-                console.log("Updated userData before PUT request:", userData); // Log userData to verify its structure and values
-                await fetch(`http://localhost:5050/api/users/` + user?.id, {
-                  method: "PUT",
-                  body: JSON.stringify({
-                    token: user?.id, //Unsure if I need this id here
-                    uf: myCounters.uf, //do I need to tell it that it is from counters object or can it tell
-                    restaurant: myCounters.restaurant,
-                    nature: myCounters.nature, // Ensure userData is updated correctly
-                    art: myCounters.art, //idk if this is 
-                    cafe: myCounters.cafe,
-                    miscellanous: myCounters.miscellanous
-                  }),
-                  headers: {
-                  "Content-Type": "application/json; charset=UTF-8"
-                  }
-                });
-               // console.log("user.id" + user?.id);
-             //   console.log("userData.natureCounter" + userData.natureCounter);
-                console.log("Counters updated successfully"); //it says it updated sucessfully but I don't think so?
+              try {
+              console.log("Updated counters before PUT request:", counters);
+              await fetch(`http://localhost:5050/api/users/` + user?.id, {
+                method: "PUT",
+                body: JSON.stringify({
+                counters: {
+                  uf: counters.uf,
+                  restaurant: counters.restaurant,
+                  cafe: counters.cafe,
+                  nature: counters.nature,
+                  art: counters.art,
+                  miscellaneous: counters.miscellaneous
+                }
+                }),
+                headers: {
+                "Content-Type": "application/json; charset=UTF-8"
+                }
+              });
+              console.log("Counters updated successfully");
               } catch (error) {
-                console.error("Error updating counters:", error);
+              console.error("Error updating counters:", error);
               }
             };
 
@@ -176,12 +175,13 @@ export default function EntryPage({
                 await fetch(`http://localhost:5050/api/users/` + user?.id, {
                   method: "PUT",
                   body: JSON.stringify({
-                  token: user?.id, // Unsure if I need the id here
-                  germaines:  booleans.germaines,
+                  booleans: {
+                  germaines: booleans.germaines,
                   depotPark: booleans.depotPark,
                   karmaCream: booleans.karmaCream,
                   butterflyGarden: booleans.butterflyGarden,
                   marston: booleans.marston
+                  }
                   }),
                   headers: {
                   "Content-Type": "application/json; charset=UTF-8"
@@ -191,7 +191,6 @@ export default function EntryPage({
                 } catch (error) {
                 console.error("Error updating boolean field:", error);
                 }
-              
             }
             adjustCounters();
             adjustBooleans();
