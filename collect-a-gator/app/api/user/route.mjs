@@ -1,6 +1,7 @@
 import express from "express";
 import db from "../../backend/db/conn.mjs";
 import { User } from "../../backend/models/user.schema.mjs";
+import { MongoMissingCredentialsError } from "mongodb";
 
 const router = express.Router();
 
@@ -46,15 +47,41 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Update a user's details
-//ex: PUT http://localhost:5050/api/users/ffnfneifeinfnf with only the fields (you only need the ony you want to change)
+// Update a user's details, including individual counters
+//ex: PUT http://localhost:5050/api/users/ffnfneifeinfnf with only the fields (you only need the ones you want to change)
 router.put("/:token", async (req, res) => {
   try {
-    const { firstName, lastName, email } = req.body;
+    const { firstName, lastName, email, counters, booleans} = req.body;
+
+    const updateFields = {};
+    if (firstName !== undefined) updateFields.firstName = firstName;
+    if (lastName !== undefined) updateFields.lastName = lastName;
+    if (email !== undefined) updateFields.email = email;
+    if (counters !== undefined) {
+      updateFields.counters = {};
+      if (counters.uf !== undefined) updateFields.counters.uf = counters.uf;
+      if (counters.restaurant !== undefined) updateFields.counters.restaurant = counters.restaurant;
+      if (counters.nature !== undefined) updateFields.counters.nature = counters.nature;
+      if (counters.art !== undefined) updateFields.counters.art = counters.art;
+      if (counters.cafe !== undefined) updateFields.counters.cafe = counters.cafe;
+      if (counters.miscellaneous !== undefined) updateFields.counters.miscellaneous = counters.miscellaneous;
+
+      console.log("Counters updated:", updateFields.counters);
+    }
+    if(booleans !== undefined) {
+      updateFields.booleans = {};
+      if (booleans.germaines !== undefined) updateFields.booleans.germaines = booleans.germaines;
+      if (booleans.depotPark !== undefined) updateFields.booleans.depotPark = booleans.depotPark;
+      if (booleans.karmaCream !== undefined) updateFields.booleans.karmaCream = booleans.karmaCream;
+      if (booleans.butterflyGarden !== undefined) updateFields.booleans.butterflyGarden = booleans.butterflyGarden;
+      if (booleans.marston !== undefined) updateFields.booleans.marston = booleans.marston;
+
+      console.log("Booleans updated:", updateFields.booleans);
+    }
 
     const updatedUser = await User.findOneAndUpdate(
       { token: req.params.token },
-      { firstName, lastName, email },
+      { $set: updateFields },
       { new: true }
     );
 

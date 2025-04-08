@@ -94,7 +94,7 @@ const markers = [
   { lat: 29.651139, lng: -82.325297, category: "culture", title: "Hippodrome Theatre", image: culture_gator }
 ];
 
-const categories = ["all", "nature", "restaurant", "culture", "cafe", "UF"];
+const categories = ["all", "park", "restaurant", "museum", "cafe", "UF"];
 
 
 //TEENY TINY SEARCH BAR AT THE TOPPPPPP
