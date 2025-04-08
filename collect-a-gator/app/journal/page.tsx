@@ -42,14 +42,13 @@ export default function JournalPage({
   const userId = user.user?.id
 
   const googleApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
-  console.log("Google API Key: ", googleApiKey);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Sync user information when they log in
         if (userId) {
-          await fetch("http://localhost:5050/api/users", { 
+          await fetch("http://localhost:5050/api/users", {  
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -82,20 +81,13 @@ export default function JournalPage({
   }, [userId]); // Runs whenever userId changes
 
   function reformatDate(s : string) {
-    const [formattedDate, setFormattedDate] = useState<string>('');
-
-    useEffect(() => {
-      const d = new Date(s);
-      d.setDate(d.getDate() + 1);
-      setFormattedDate(
-        d.toLocaleDateString('en-US', {
-          month: 'long',
-          day: 'numeric',
-          year: 'numeric',
-        })
-      );
-    }, [s]);
-
+    const currentDate = new Date (s);
+    currentDate.setDate(currentDate.getDate());
+    const formattedDate = currentDate.toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    });
     return formattedDate;
   }
 

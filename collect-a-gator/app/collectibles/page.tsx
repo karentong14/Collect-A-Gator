@@ -11,6 +11,8 @@ import {
     Typography
 } from '@mui/material';
 
+//import Image from 'next/image';
+
 import { useEffect, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { Collectibles } from '@/components/models/models';
@@ -19,7 +21,10 @@ import depot_gator from "./../images/depot_gator.png";
 import germaines_gator from "./../images/germaines_gator.png"
 import karmacream_gator from "./../images/karmacream_gator.png"
 import marston_gator from "./../images/marston_gator.png"
-import { StaticImageData } from 'next/image';
+import culture_gator from "./../images/culture_gator.png"
+import nature_gator from "./../images/nature_gator.png"
+import { AlignVerticalCenter } from '@mui/icons-material';
+//import { StaticImageData } from 'next/image';
 
 export default function CollectiblePage({
   children,
@@ -35,8 +40,14 @@ export default function CollectiblePage({
           try {
             const response = await fetch(`http://localhost:5050/api/users/${userId}`);
             const json = await response.json();
-            console.log(json);
-            setData(json);
+            console.log("json: ", json);
+
+            if (userId) {
+              setData(json);
+            } else {
+              setData(null);
+            }
+            //console.log("inner data: ", data)
       
           } catch (error) {
             console.error(error);
@@ -45,10 +56,14 @@ export default function CollectiblePage({
 
         if (userId) {
             fetchData();
-            console.log("data: ", data);
+            //console.log("data: ", data);
         }
       
       }, []);
+
+      // useEffect(() => {
+      //   console.log("Updated data: ", data);
+      // }, [data]);
    
     return (
         <Container maxWidth="lg" sx={{
@@ -74,37 +89,227 @@ export default function CollectiblePage({
         </Grid>
         <Grid item>
         <Grid container spacing={2}>
-            {data?.artCounter && data?.artCounter > 0 ? <Grid item>
-                <img ></img>
-            </Grid> : null}
-            {data?.natureCounter && data?.natureCounter > 0 ? <Grid item>
-                <img ></img>
-            </Grid> : null}
-            {data?.ufCounter && data?.ufCounter > 0 ? <Grid item>
-                <img ></img>
-            </Grid> : null}
-            {data?.restaurantCounter && data?.restaurantCounter > 0 ? <Grid item>
-                <img ></img>
-            </Grid> : null}
-            {data?.cafeCounter && data?.cafeCounter > 0 ? <Grid item>
-                <img ></img>
-            </Grid> : null}
-            {data?.germainesBool && data?.germainesBool === true ? <Grid item>
-                <img src="./../images/germaines_gator.png"></img>
-            </Grid> : null}
-            {data?.depotParkBool && data?.depotParkBool === true ? <Grid item>
-                <img src="./../images/depot_gator.png"></img>
-            </Grid> : null}
-            {data?.karmaCreamBool && data?.karmaCreamBool === true ? <Grid item>
-                <img src="./../images/karmacream_gator.png"></img>
-            </Grid> : null}
-            {data?.butterflyGardenBool && data?.butterflyGardenBool === true ? <Grid item>
-                <img src="./../images/butterfly_gator.png"></img>
-            </Grid> : null}
-            {data?.marstonBool && data?.marstonBool === true ? <Grid item>
-                <img src="./../images/marston_gator.png"></img>
-            </Grid> : null}
-       
+            
+            {data?.artCounter !== undefined && (
+              <Grid item>
+                <Grid container direction="column" alignItems="center" justifyContent="center">
+                <img
+                  src={culture_gator.src}
+                  alt="Culture Gator"
+                  width={100}
+                  height={135}
+                  style={{
+                    opacity: data.artCounter >= 3 ? 1 : 0.3,
+                    filter: data.artCounter >= 3 ? 'none' : 'grayscale(100%)',
+                    alignItems: 'center',
+                    justifyItems: 'center'
+                  }}
+                />
+                {data?.artCounter < 3 ? 
+                  <Grid container direction="column">
+                    <Typography variant="body2">{"visit " + (3 - data.artCounter) +" more culture locations"}</Typography>
+                  </Grid> :   
+                  <Grid container direction="column">
+                    <Typography variant="body2">{"culture locations: " +  data.artCounter}</Typography>
+                  </Grid>}
+                  </Grid>
+              </Grid>
+            )}
+            {data?.natureCounter !== undefined && (
+              <Grid item>
+                <Grid container direction="column" alignItems="center" justifyContent="center">
+                <img
+                  src={nature_gator.src}
+                  alt="Nature Gator"
+                  width={100}
+                  height={135}
+                  style={{
+                    opacity: data.natureCounter >= 3 ? 1 : 0.3,
+                    filter: data.natureCounter >= 3 ? 'none' : 'grayscale(100%)',
+                    alignItems: 'center',
+                    justifyItems: 'center'
+                  }}
+                />
+                {data?.natureCounter < 3 ? 
+                  <Grid container direction="column">
+                    <Typography variant="body2">{"visit " + (3 - data.natureCounter) +" more nature locations"}</Typography>
+                  </Grid> :   
+                  <Grid container direction="column">
+                    <Typography variant="body2">{"nature locations: " +  data.natureCounter}</Typography>
+                  </Grid>}
+                  </Grid>
+              </Grid>
+            )}
+
+            {data?.ufCounter !== undefined && (
+              <Grid item>
+                <Grid container direction="column" alignItems="center" justifyContent="center">
+                <img
+                  src={marston_gator.src}
+                  alt="Marston Gator"
+                  width={100}
+                  height={135}
+                  style={{
+                    opacity: data.ufCounter >= 3 ? 1 : 0.3,
+                    filter: data.ufCounter >= 3 ? 'none' : 'grayscale(100%)',
+                    alignItems: 'center',
+                    justifyItems: 'center'
+                  }}
+                />
+                {data?.ufCounter < 3 ? 
+                  <Grid container direction="column">
+                    <Typography variant="body2">{"visit " + (3 - data.ufCounter) +" more UF locations"}</Typography>
+                  </Grid> :   
+                  <Grid container direction="column">
+                    <Typography variant="body2">{"UF locations: " +  data.ufCounter}</Typography>
+                  </Grid>}
+              </Grid>
+              </Grid>
+            )}
+            {data?.restaurantCounter !== undefined && (
+              <Grid item>
+                <Grid container direction="column" alignItems="center" justifyContent="center">
+                <img
+                  src={germaines_gator.src}
+                  alt="Germaines Gator"
+                  width={100}
+                  height={135}
+                  style={{
+                    opacity: data.restaurantCounter >= 3 ? 1 : 0.3,
+                    filter: data.restaurantCounter >= 3 ? 'none' : 'grayscale(100%)',
+                    alignItems: 'center',
+                    justifyItems: 'center'
+                  }}
+                />
+                {data?.restaurantCounter < 3 ? 
+                  <Grid container direction="column">
+                    <Typography variant="body2">{"visit " + (3 - data.restaurantCounter) +" more restaurant locations"}</Typography>
+                  </Grid> :   
+                  <Grid container direction="column">
+                    <Typography variant="body2">{"restaurant locations: " +  data.restaurantCounter}</Typography>
+                  </Grid>}
+              </Grid>
+              </Grid>
+            )}
+            
+            {data?.cafeCounter !== undefined && (
+              <Grid item>
+                <Grid container direction="column" alignItems="center" justifyContent="center">
+                <img
+                  src={karmacream_gator.src}
+                  alt="Cafe Gator"
+                  width={100}
+                  height={135}
+                  style={{
+                    opacity: data.cafeCounter >= 3 ? 1 : 0.3,
+                    filter: data.cafeCounter >= 3 ? 'none' : 'grayscale(100%)',
+                    alignItems: 'center',
+                    justifyItems: 'center'
+                  }}
+                />
+                {data?.cafeCounter < 3 ? 
+                  <Grid container direction="column">
+                    <Typography variant="body2">{"visit " + (3 - data.cafeCounter) +" more cafe locations"}</Typography>
+                  </Grid> :   
+                  <Grid container direction="column">
+                    <Typography variant="body2">{"cafe locations: " +  data.cafeCounter}</Typography>
+                  </Grid>}
+                  </Grid>
+              </Grid>
+            )}
+
+            {data?.germainesBool !== undefined && (
+            <Grid item>
+              <Grid container direction="column" alignItems="center" justifyContent="center">
+              <img
+                src={germaines_gator.src}
+                alt="Marker Gator"
+                width={100}
+                height={135}
+                style={{ 
+                  opacity: data.germainesBool === true ? 1: 0.3,
+                  filter: data.germainesBool === true ? 'none' : 'grayscale(100%)',
+                  alignItems: 'center',
+                  justifyItems: 'center'
+                 }}
+              />
+                  <Typography variant="body2">{"germaine's!!"}</Typography>
+                </Grid>
+            </Grid>
+            )}
+
+            {data?.depotParkBool !== undefined && (<Grid item>
+              <Grid container direction="column" alignItems="center" justifyContent="center">
+              <img
+                src={depot_gator.src}
+                alt="Marker Gator"
+                width={100}
+                height={135}
+                style={{ 
+                  opacity: data.depotParkBool === true ? 1: 0.3,
+                  filter: data.depotParkBool === true ? 'none' : 'grayscale(100%)',
+                  alignItems: 'center',
+                  justifyItems: 'center'
+                 }}
+              />
+                    <Typography variant="body2">{"depot park!!"}</Typography>
+                </Grid>
+            </Grid>)}
+
+            {data?.karmaCreamBool !== undefined && (<Grid item>
+              <Grid container direction="column" alignItems="center" justifyContent="center">
+              <img
+                src={karmacream_gator.src}
+                alt="Marker Gator"
+                width={100}
+                height={135}
+                style={{ 
+                  opacity: data.karmaCreamBool === true ? 1: 0.3,
+                  filter: data.karmaCreamBool === true ? 'none' : 'grayscale(100%)',
+                  alignItems: 'center',
+                  justifyItems: 'center'
+                 }}
+              />
+                    <Typography variant="body2">{"karma cream!!"}</Typography>
+                </Grid>
+            </Grid>)}
+            
+            {data?.butterflyGardenBool !== undefined && (<Grid item>
+              <Grid container direction="column" alignItems="center" justifyContent="center">
+              <img
+                src={butterfly_gator.src}
+                alt="Marker Gator"
+                width={100}
+                height={135}
+                style={{ 
+                  opacity: data.butterflyGardenBool === true ? 1: 0.3,
+                  filter: data.butterflyGardenBool === true ? 'none' : 'grayscale(100%)',
+                  alignItems: 'center',
+                  justifyItems: 'center'
+                 }}
+              />
+                    <Typography variant="body2">{"butterfly garden!! "}</Typography>
+                </Grid>
+            </Grid>)}
+
+            {data?.marstonBool !== undefined && (<Grid item>
+              <Grid container direction="column" alignItems="center" justifyContent="center">
+              <img
+                src={marston_gator.src}
+                alt="Marker Gator"
+                width={100}
+                height={135}
+                style={{ 
+                  opacity: data.marstonBool === true ? 1: 0.3,
+                  filter: data.marstonBool === true ? 'none' : 'grayscale(100%)',
+                  alignItems: 'center',
+                  justifyItems: 'center'
+                 }}
+              />
+                    <Typography variant="body2">{"marston!!"}</Typography>
+                </Grid>
+            </Grid>)}
+              
         </Grid>
         </Grid>
         

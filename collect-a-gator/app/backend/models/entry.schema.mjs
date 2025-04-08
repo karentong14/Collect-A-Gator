@@ -5,11 +5,6 @@ const entrySchema = new mongoose.Schema({
         type: String,
         required: [true, "Entry must be assigned to a specific user"],
     },
-    id: {
-        type: String,
-        required: [true, "Entry must have an ID"],
-        unique: [true, "Each entry id must have unique"],
-    },
     date: { 
         type: String,
         required: [true, "Entry must have a date"],
@@ -17,6 +12,10 @@ const entrySchema = new mongoose.Schema({
     location: {
         type: String, 
         required: [true, "Entry must have a location"],  
+    },
+    placeID: {
+        type: String,
+        required: [true, "Entry must have a place ID"],
     },
     title: {
         type: String,
