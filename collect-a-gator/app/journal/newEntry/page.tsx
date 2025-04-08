@@ -74,7 +74,6 @@ export default function EntryPage({
                       location: selectedPlace?.name || "Unknown location", 
                       latitude: selectedPlace?.geometry?.location?.lat() || 0,
                       longitude: selectedPlace?.geometry?.location?.lng() || 0,
-                      id: 0,// id should likely be generated somewhere else
                       placeID: selectedPlace?.place_id,
                   }),
                   headers: {
@@ -136,7 +135,7 @@ export default function EntryPage({
                 await fetch(`http://localhost:5050/api/users/` + user?.id, {
                   method: "PUT",
                   body: JSON.stringify({
-                    id: user?.id, //Unsure if I need this id here
+                    token: user?.id, //Unsure if I need this id here
                     uf: myCounters.uf, //do I need to tell it that it is from counters object or can it tell
                     restaurant: myCounters.restaurant,
                     nature: myCounters.nature, // Ensure userData is updated correctly
@@ -177,7 +176,7 @@ export default function EntryPage({
                 await fetch(`http://localhost:5050/api/users/` + user?.id, {
                   method: "PUT",
                   body: JSON.stringify({
-                  id: user?.id, // Unsure if I need the id here
+                  token: user?.id, // Unsure if I need the id here
                   germaines:  booleans.germaines,
                   depotPark: booleans.depotPark,
                   karmaCream: booleans.karmaCream,

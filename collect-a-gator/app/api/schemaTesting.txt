@@ -3,7 +3,6 @@ This file will help us make the entries and users to test for CRUD operations:
 Entry Schema Example
 {
     "token": "fewfwfwfwef", 
-    "id": "regshehhth" ,
     "date": "wefwegewg",
     "title": "newesttest", 
     "content": "ewffwegwg",
@@ -11,6 +10,17 @@ Entry Schema Example
     "longitude": 22, 
     "latitude": 25,
     "placeID": 122344
+}
+
+Entry Schema 
+{ "title": 'Working',
+  "date": '2025-04-08T02:39:32.335Z',
+  "content": 'test',
+  "token": 'user_2uly74fSc0v8SpEu1SOTlm0LEP9',
+  "location": "Germain's Chicken Sandwiches",
+  "latitude": 29.6598534,
+  "longitude": -82.327512,
+  "placeID": 'ChIJIZBCHZ6j6IgRcKC_Bqug8AQ'
 }
 
 User Schema Example

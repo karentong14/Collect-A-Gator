@@ -65,6 +65,8 @@ router.put("/:token", async (req, res) => {
       if (counters.art !== undefined) updateFields.counters.art = counters.art;
       if (counters.cafe !== undefined) updateFields.counters.cafe = counters.cafe;
       if (counters.miscellaneous !== undefined) updateFields.counters.miscellaneous = counters.miscellaneous;
+
+      console.log("Counters updated:", updateFields.counters);
     }
     if(booleans !== undefined) {
       updateFields.booleans = {};
@@ -73,6 +75,8 @@ router.put("/:token", async (req, res) => {
       if (booleans.karmaCream !== undefined) updateFields.booleans.karmaCream = booleans.karmaCream;
       if (booleans.butterflyGarden !== undefined) updateFields.booleans.butterflyGarden = booleans.butterflyGarden;
       if (booleans.marston !== undefined) updateFields.booleans.marston = booleans.marston;
+
+      console.log("Booleans updated:", updateFields.booleans);
     }
 
     const updatedUser = await User.findOneAndUpdate(
