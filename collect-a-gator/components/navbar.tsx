@@ -1,6 +1,7 @@
 'use client';
 import React from "react";
-import { Typography, Grid, IconButton, Button } from "@mui/material";
+import { Typography, Grid, IconButton } from "@mui/material";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -8,6 +9,7 @@ import Divider from "@mui/material/Divider";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import {useUser} from '@clerk/nextjs';
 
 import {
 	Menu,
@@ -38,6 +40,9 @@ function NavBar() {
 		setState({ ...state, [anchor]: open });
 	};
 
+	const user = useUser(); 
+	const userId = user.user?.id
+
 	const iemsList = (anchor : DrawerAnchor) => (
 		<Box
 			sx={{
@@ -60,43 +65,42 @@ function NavBar() {
 			</List>
 			<Divider />
 			<List>
-				<ListItemButton sx={{ color: "white" }} href="../">
-					<ListItemIcon sx={{ color: "white" }}>
+				<ListItemButton href="../">
+					<ListItemIcon>
 						{<Home />}
 					</ListItemIcon>
 					<ListItemText primary={"Home"} />
 				</ListItemButton>
-				<ListItemButton sx={{ color: "white" }} href="../journal">
-					<ListItemIcon sx={{ color: "white" }}>
+				<ListItemButton href="../journal">
+					<ListItemIcon >
 						{<LibraryBooks />}
 					</ListItemIcon>
 					<ListItemText primary={"Journal"} />
 				</ListItemButton>
-				<ListItemButton sx={{ color: "white" }} href="../map">
-					<ListItemIcon sx={{ color: "white" }}>
+				<ListItemButton href="../map">
+					<ListItemIcon>
 						{<Map />}
 					</ListItemIcon>
 					<ListItemText primary={"Map"} />
 				</ListItemButton>
+				<ListItemButton href="../collectibles">
+					<ListItemIcon >
+						{<LibraryBooks />}
+					</ListItemIcon>
+					<ListItemText primary={"Collectibles"} />
+				</ListItemButton>
+				<ListItemButton href="../profile">
+					<ListItemIcon>
+						{<AccountCircleIcon />}
+					</ListItemIcon>
+					<ListItemText primary={"Profile"} />
+				</ListItemButton>
 			</List>
 			<Divider />
-			<List>
-			</List>
-			<Typography
-				sx={{
-					backgroundColor: "white",
-					borderRadius: 10,
-					textAlign: "center",
-					padding: 1,
-					margin: 2,
-				}}
-			>
-				<Button href="../login" sx={{color: "purple"}}>Sign In</Button>
-			</Typography>
 		</Box>
 	);
 
-	return (
+	return userId ? (
 		<Grid container direction="row">
 			<Grid item>
 				<React.Fragment key={"left"}>
@@ -116,7 +120,7 @@ function NavBar() {
 				</Typography>
 			</Grid>
 		</Grid>
-	);
+	) : <></>;
 }
 
 export default NavBar;

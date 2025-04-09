@@ -1,0 +1,15 @@
+This is a list of tasks I want to work on, some higher priority than others so I don't forget
+
+1. If you make 2 entries with Depot park, your nature counter will increase twice because it's counting number of occurences not different number of places. Do we want it to only count it as once or twice?
+    If we want it to count as once, I likely need to make a set of places they have visited already. 
+
+2. Do we plan on letting people delete their posts on the app? If we do, I need to work on decrementing the counters as well. 
+
+3. I need to delete the user entries for other team members since they do have the counter logic yet or will it update once they use my code? I'm unsure. 
+    Deleted all entries in the user database and entry database
+
+4. I think a counter object and a boolean object would be cleaner. Nested object in the json
+
+5. I need to add more place ids into the set. 
+    Added everything but the art 
+

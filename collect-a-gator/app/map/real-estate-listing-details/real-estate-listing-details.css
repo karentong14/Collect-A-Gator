@@ -1,0 +1,16 @@
+.details-container {
+    background-color: var(--background-color-primary);
+    height: 100%;
+    opacity: 0;
+    max-width: 0;
+    border-top-right-radius: inherit;
+    border-bottom-right-radius: inherit;
+    visibility: hidden;
+  }
+
+  
+.details .detail_item span,
+.details .detail_item svg {
+    font-size: 17px;
+    color: var(--estate-yellow);
+  }
