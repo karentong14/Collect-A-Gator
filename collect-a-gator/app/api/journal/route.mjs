@@ -67,7 +67,7 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.post('/:id', function (req, res) {
+router.put('/:id', function (req, res) {
   Entry.findByIdAndUpdate(req.body.id,
       { title: req.body.title, content: req.body.content, date: req.body.date, location: req.body.location}, function (err, data) {
           if (err) {

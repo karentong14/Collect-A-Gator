@@ -1,8 +1,112 @@
-import { Card } from '@mui/material';
-import React from 'react';
+'use client';
+import { JournalEntry } from '@/components/models/models';
+import { Box, Card, CardContent, CardHeader, Container, Grid, TextField, Typography } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs, { Dayjs } from 'dayjs';
+import { usePathname } from 'next/navigation';
+import React, { useEffect, useRef, useState } from 'react';
 
 export default function EditPage() : React.ReactNode {
-    return <Card>
-        
-    </Card>
+    const [entry, setEntry] = useState<JournalEntry | null>(null);
+    const [title, setTitle] = useState<string | null>(null);
+    const [content, setContent] = useState<string | null>(null);
+    const [date, setDate] = useState<Dayjs | null>(null);
+    const [trigger, setTrigger] = useState<number>(0);
+    const isFirstRender = useRef(true);
+    const pathname = usePathname();
+    const segments = pathname.split('/');
+    const entryId = segments[2];
+
+    const handleDateChange = (newDate: Dayjs | null) => {
+        if (newDate) setDate(newDate);
+    };
+
+    useEffect(() => {
+        const call = async () => await fetch(`http://localhost:5050/api/entries/${entryId}`)
+            .then(response => response.json())
+            .then(json => {
+                setEntry(json);
+                setTitle(json.title);
+                setContent(json.content);
+                setDate(dayjs(json.date));
+            })
+            .catch(error => console.error(error));
+        call();
+    }, []);
+
+    useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+        }
+        else {
+            const fetchData = async () => {
+                const response = await fetch(`http://localhost:5050/api/entries/${entryId}`, {
+                    method: "PUT",
+                    body: JSON.stringify({
+                        title: title,
+                        date: date,
+                        content: content
+                    }),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    }
+                })
+                .then(response => response.json())
+                .then(json => {
+                    setEntry(json);
+                    setTitle(json.title);
+                    setContent(json.content);
+                    setDate(dayjs(json.date));
+                })
+                .catch(error => console.error('error thing', error));
+            };
+            fetchData();
+        }
+    }, [trigger])
+
+    return entry ? <Container maxWidth="lg" sx={{
+        paddingTop: '10px'
+      }}>
+        <Grid container direction="column" spacing={2}>
+            <Card variant="outlined">
+                <Grid container direction="row" spacing={2}>
+                    <Grid item>
+                        <Typography>Title: </Typography>
+                    </Grid>
+                    {title ? <Grid item><TextField
+                        defaultValue={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                    >
+                    </TextField></Grid> : <></>}
+                </Grid>
+            </Card>
+            <Card variant="outlined">
+                <Grid container direction="row" spacing={2}>
+                    <Grid item>
+                        <Typography>Content: </Typography>
+                    </Grid>
+                    {content ? <Grid item><TextField
+                        multiline
+                        defaultValue={content}
+                        onChange={(e) => setContent(e.target.value)}
+                    >
+                    </TextField></Grid> : <></>}
+                </Grid>
+            </Card>
+            <Card variant="outlined">
+                <Grid container direction="row" spacing={2}>
+                    <Grid item>
+                        <Typography>Date: </Typography>
+                    </Grid>
+                    {date ? <Grid item><LocalizationProvider dateAdapter={AdapterDayjs}><DatePicker
+                        value={date}
+                        format="YYYY-MM-DD"
+                        onChange={handleDateChange}
+                        /></LocalizationProvider></Grid> : <></>}
+                </Grid>
+            </Card>
+        </Grid>
+    </Container> : <></>;
 }
