@@ -7,17 +7,17 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function EditPage() : React.ReactNode {
     const [entry, setEntry] = useState<JournalEntry | null>(null);
     const [title, setTitle] = useState<string | null>(null);
     const [content, setContent] = useState<string | null>(null);
     const [date, setDate] = useState<Dayjs | null>(null);
-    const [trigger, setTrigger] = useState<number>(0);
-    const isFirstRender = useRef(true);
     const pathname = usePathname();
     const segments = pathname.split('/');
     const entryId = segments[2];
+    const router = useRouter();
 
     const handleDateChange = (newDate: Dayjs | null) => {
         if (newDate) setDate(newDate);
@@ -59,6 +59,7 @@ export default function EditPage() : React.ReactNode {
             .catch(error => console.error('error thing', error));
         };
         fetchData();
+        router.push("/journal");
     };
 
     return entry ? <Container maxWidth="lg" sx={{
