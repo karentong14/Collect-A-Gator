@@ -1,6 +1,6 @@
 'use client';
 import { JournalEntry } from '@/components/models/models';
-import { Box, Button, Card, CardContent, CardHeader, Container, Grid, TextField, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, CardHeader, Container, Grid, Paper, TextField, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -64,46 +64,68 @@ export default function EditPage() : React.ReactNode {
 
     return entry ? <Container maxWidth="lg" sx={{
         paddingTop: '10px'
-      }}>
-        <Grid container direction="column" spacing={2}>
-            <Card variant="outlined">
-                <Grid container direction="row" spacing={2}>
-                    <Grid item>
-                        <Typography>Title: </Typography>
-                    </Grid>
-                    {title ? <Grid item><TextField
-                        defaultValue={title ? title : "Write content here"}
-                        onChange={(e) => setTitle(e.target.value)}
-                    >
-                    </TextField></Grid> : <></>}
-                </Grid>
-            </Card>
-            <Card variant="outlined">
-                <Grid container direction="row" spacing={2}>
-                    <Grid item>
-                        <Typography>Content: </Typography>
-                    </Grid>
-                    {content ? <Grid item><TextField
-                        multiline
-                        defaultValue={content ? content : "Write content here"}
-                        onChange={(e) => setContent(e.target.value)}
-                    >
-                    </TextField></Grid> : <></>}
-                </Grid>
-            </Card>
-            <Card variant="outlined">
-                <Grid container direction="row" spacing={2}>
-                    <Grid item>
-                        <Typography>Date: </Typography>
-                    </Grid>
-                    {date ? <Grid item><LocalizationProvider dateAdapter={AdapterDayjs}><DatePicker
-                        value={date}
-                        format="YYYY-MM-DD"
-                        onChange={handleDateChange}
-                        /></LocalizationProvider></Grid> : <></>}
-                </Grid>
-            </Card>
-            <Button onClick={updateData}>Update Data</Button>
-        </Grid>
-    </Container> : <></>;
-}
+    }}>
+        <Box
+            component="form"
+            onSubmit={(e) => {
+                e.preventDefault();
+                updateData();
+            }}
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 4,
+                padding: 4,
+                maxWidth: 700,
+                margin: "0 auto",
+            }}
+        >
+            <Paper elevation={3} sx={{ p: 3, width: "100%" }}>
+                <Typography variant="h6" gutterBottom>
+                    Title
+                </Typography>
+                <TextField
+                    required
+                    fullWidth
+                    variant="outlined"
+                    label="Title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                />
+            </Paper>
+            <Paper elevation={3} sx={{ p: 3, width: "100%" }}>
+                <Typography variant="h6" gutterBottom>
+                    Content
+                </Typography>
+                <TextField
+                    required
+                    fullWidth
+                    variant="outlined"
+                    multiline
+                    minRows={5}
+                    label="Content"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                />
+            </Paper>
+            <Paper elevation={3} sx={{ p: 3, width: "100%" }}>
+                <Typography variant="h6" gutterBottom>
+                    Date
+                </Typography>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                    value={date}
+                    onChange={handleDateChange}
+                    format="YYYY-MM-DD"
+                    slotProps={{
+                    textField: { fullWidth: true, required: true, label: "Entry Date" },
+                    }}
+                />
+                </LocalizationProvider>
+            </Paper>
+            <Button type="submit" variant="contained" size="large">
+                Submit Entry
+            </Button>
+        </Box>
+</Container> : <></>; }

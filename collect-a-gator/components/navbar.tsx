@@ -1,7 +1,6 @@
 'use client';
 import React from "react";
 import { Typography, Grid, IconButton } from "@mui/material";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -15,7 +14,9 @@ import {
 	Menu,
 	LibraryBooks,
 	Home,
-	Map
+	Map,
+	Workspaces,
+	AccountCircle
 } from "@mui/icons-material";
 
 function NavBar() {
@@ -85,13 +86,13 @@ function NavBar() {
 				</ListItemButton>
 				<ListItemButton href="../collectibles">
 					<ListItemIcon >
-						{<LibraryBooks />}
+						{<Workspaces />}
 					</ListItemIcon>
 					<ListItemText primary={"Collectibles"} />
 				</ListItemButton>
 				<ListItemButton href="../profile">
 					<ListItemIcon>
-						{<AccountCircleIcon />}
+						{<AccountCircle />}
 					</ListItemIcon>
 					<ListItemText primary={"Profile"} />
 				</ListItemButton>
@@ -104,7 +105,9 @@ function NavBar() {
 		<Grid container direction="row">
 			<Grid item>
 				<React.Fragment key={"left"}>
-					<IconButton onClick={toggleDrawer("left", true)}><Menu/></IconButton>
+					<IconButton onClick={toggleDrawer("left", true)}>
+						<Menu/>
+					</IconButton>
 					<Drawer
 						anchor={"left"}
 						open={state["left"]}
