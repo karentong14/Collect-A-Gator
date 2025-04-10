@@ -1,6 +1,6 @@
 'use client';
 import { JournalEntry } from '@/components/models/models';
-import { Box, Card, CardContent, CardHeader, Container, Grid, TextField, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, CardHeader, Container, Grid, TextField, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -36,35 +36,30 @@ export default function EditPage() : React.ReactNode {
         call();
     }, []);
 
-    useEffect(() => {
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
-        }
-        else {
-            const fetchData = async () => {
-                const response = await fetch(`http://localhost:5050/api/entries/${entryId}`, {
-                    method: "PUT",
-                    body: JSON.stringify({
-                        title: title,
-                        date: date,
-                        content: content
-                    }),
-                    headers: {
-                        "Content-type": "application/json; charset=UTF-8"
-                    }
-                })
-                .then(response => response.json())
-                .then(json => {
-                    setEntry(json);
-                    setTitle(json.title);
-                    setContent(json.content);
-                    setDate(dayjs(json.date));
-                })
-                .catch(error => console.error('error thing', error));
-            };
-            fetchData();
-        }
-    }, [trigger])
+    const updateData = async () => {
+        const fetchData = async () => {
+            const response = await fetch(`http://localhost:5050/api/entries/${entryId}`, {
+                method: "PUT",
+                body: JSON.stringify({
+                    title: title,
+                    date: date,
+                    content: content
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
+            .then(response => response.json())
+            .then(json => {
+                setEntry(json);
+                setTitle(json.title);
+                setContent(json.content);
+                setDate(dayjs(json.date));
+            })
+            .catch(error => console.error('error thing', error));
+        };
+        fetchData();
+    };
 
     return entry ? <Container maxWidth="lg" sx={{
         paddingTop: '10px'
@@ -76,7 +71,7 @@ export default function EditPage() : React.ReactNode {
                         <Typography>Title: </Typography>
                     </Grid>
                     {title ? <Grid item><TextField
-                        defaultValue={title}
+                        defaultValue={title ? title : "Write content here"}
                         onChange={(e) => setTitle(e.target.value)}
                     >
                     </TextField></Grid> : <></>}
@@ -89,7 +84,7 @@ export default function EditPage() : React.ReactNode {
                     </Grid>
                     {content ? <Grid item><TextField
                         multiline
-                        defaultValue={content}
+                        defaultValue={content ? content : "Write content here"}
                         onChange={(e) => setContent(e.target.value)}
                     >
                     </TextField></Grid> : <></>}
@@ -107,6 +102,7 @@ export default function EditPage() : React.ReactNode {
                         /></LocalizationProvider></Grid> : <></>}
                 </Grid>
             </Card>
+            <Button onClick={updateData}>Update Data</Button>
         </Grid>
     </Container> : <></>;
 }
