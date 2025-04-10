@@ -2,24 +2,12 @@ import React, {FunctionComponent, useState} from 'react';
 import {AdvancedMarker} from '@vis.gl/react-google-maps';
 import classNames from 'classnames';
 
-import {RealEstateListingDetails} from './real-estate-listing-details/real-estate-listing-details';
-import {RealEstateGallery} from './real-estate-gallery/real-estate-gallery';
-import {RealEstateIcon} from './real-estate-icon';
+import {PlaceOverviewExpanded} from '../place-overview/place-overview-expanded';
+import {GatorIcon} from './gator-icon';
 
-// import {RealEstateListing} from '../../types/types';
+import './custom-advanced-marker.css'
 
-import './custom-advanced-marker.css';
-import { devNull } from 'os';
-
-import marston_gator from "./../images/marston_gator.png"
-import dynamic from "next/dynamic";
-
-
-// interface Props {
-//   realEstateListing: RealEstateListing;
-// }
-
-
+import marston_gator from "./../../images/marston_gator.png"
 
 export const CustomAdvancedMarker = ({
 }) => {
@@ -30,8 +18,6 @@ export const CustomAdvancedMarker = ({
     lat: 29.64840833267358, 
     lng: -82.34354772086701
   };
-
-
 
 //  CUSTOM PIN !!!
   const renderCustomPin = () => {
@@ -57,12 +43,12 @@ export const CustomAdvancedMarker = ({
               />
 
             <span className="icon">
-              <RealEstateIcon />
+              <GatorIcon />
             </span>
 
           </div>            
 
-          <RealEstateListingDetails />
+          <PlaceOverviewExpanded />
         </div>
         
 

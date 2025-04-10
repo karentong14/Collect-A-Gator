@@ -23,7 +23,7 @@ import { OverlayLayout as TOverlayLayout } from '@googlemaps/extended-component-
 import { PlacePicker as TPlacePicker } from '@googlemaps/extended-component-library/place_picker.js';
 import { Button } from '@mui/material';
 
-import {CustomAdvancedMarker} from './custom-advanced-marker';
+import {CustomAdvancedMarker} from './custom-advanced-marker/custom-advanced-marker';
 
 //import all components from extended components library
 <script type="module" src="https://unpkg.com/@googlemaps/extended-component-library"></script>
@@ -102,30 +102,7 @@ const ClientApp = () => {
 
     const [selectedCategory, setSelectedCategory] = useState("all");
     const [selectedMarker, setSelectedMarker] = useState<{ lat: number; lng: number; image: any } | null>(null);
-    //below, for place panel overview
-    const pickerRef = useRef<TPlacePicker>(null);
-    const [place, setPlace] = useState<google.maps.places.Place | undefined>(undefined);
-    // const [formattedAddress, setFormattedAddress] = React.useState('');
-    // const handlePlaceChange = (e: any) => {
-    //   setFormattedAddress(e.target.value?.formattedAddress ?? '');
-    // };
-    const SplitLayout = dynamic(
-      () => import('@googlemaps/extended-component-library/react').then(mod => mod.SplitLayout),
-      { ssr: false }
-    );
 
-    const PlacePicker = dynamic(
-      () => import('@googlemaps/extended-component-library/react').then(mod => mod.PlacePicker),
-      { ssr: false }
-    );
-    const PlaceOverview = dynamic(
-      () => import('@googlemaps/extended-component-library/react').then(mod => mod.PlaceOverview),
-      { ssr: false }
-    );
-    const PlaceDirectionsButton = dynamic(
-      () => import('@googlemaps/extended-component-library/react').then(mod => mod.PlaceDirectionsButton),
-      { ssr: false }
-    );
     // see individual elements: https://configure.mapsplatform.google/place-picker
     
     const googleApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
@@ -136,41 +113,9 @@ const ClientApp = () => {
       <><SignedIn>
         <APIProvider apiKey={googleApiKey}>
 
-        {/* PLACE OVERVIEW PANEL to the right*/}
-        <SplitLayout rowReverse rowLayoutMinWidth={700}>
-          <div className="SlotDiv" slot="fixed">
-            
-            <div className="container">
-              <PlacePicker 
-              ref={pickerRef}
-              placeholder="Enter a place to see its address"  
-              onPlaceChange={() => {
-                if (!pickerRef.current?.value) {
-                  setPlace(undefined);
-                } else {
-                  setPlace(pickerRef.current?.value);
-                }
-              }}
-              />
-              <PlaceOverview
-                  size="large"
-                  place={place}
-                  googleLogoAlreadyDisplayed
-                >
-                  <div slot="action" className="SlotDiv">
-                    <PlaceDirectionsButton slot="action" variant="filled">
-                      Directions
-                    </PlaceDirectionsButton>
-                  </div>
-                </PlaceOverview>
-            </div> 
-          </div>
-
-
-          {/* actual map to the left */}
+          {/* MAP*/}
           <div slot="main" style={{ width: "100vw", height: "100vh" }}>
                 <Map defaultCenter={position} defaultZoom={15} mapId="5174ed5358f23a3c">
-                    {/*<PlacesSearch /> */}
                     {markers
             .filter(
               (marker) =>
@@ -201,8 +146,6 @@ const ClientApp = () => {
                 </Map>
                 
           </div>
-        </SplitLayout>
-
 
           <div
           style={{
