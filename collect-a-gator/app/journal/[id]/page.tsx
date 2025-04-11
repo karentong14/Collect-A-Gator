@@ -3,7 +3,7 @@
 import { JournalEntry } from "@/components/models/models";
 import { useEffect, useState } from "react";
 import { useParams } from 'next/navigation';
-import { Card, CardContent, CardHeader, CardMedia, Container, Typography, Grid, Button} from "@mui/material";
+import { Card, CardContent, CardHeader, CardMedia, Container, Typography, Grid, Button, Stack, Chip, Box} from "@mui/material";
 import { LocationOn, DateRange, Edit } from "@mui/icons-material";
 import { useRouter } from 'next/navigation';
 
@@ -35,155 +35,87 @@ export default function entryPage() {
 
     return (
         entry ? (
-            <Container maxWidth="lg" sx={{paddingTop: '10px'}}>
-                <Grid container rowSpacing={2} columnSpacing={2}>
-                    <Grid item xs={12}>
-                        <Card>
-                            <CardHeader
-                                title={<Grid container spacing={1}>
-                                    <Grid item>
-                                        <Typography variant="h1">{entry.title}</Typography>
-                                    </Grid>
-                                    <Grid item>
-                                        <Button onClick={() => {
-                                            router.push(`/journal/${entryId}/edit`);
-                                        }}>
-                                            <Edit/>
-                                        </Button>
-                                    </Grid>
-                                </Grid>}
-                                subheader={
-                                    <Grid container direction="row" spacing={1}>
-                                        <Grid item>
-                                            <Grid container direction="row"
-                                                sx={{
-                                                    padding: '5px 15px 5px 5px',
-                                                    backgroundColor: 'white',
-                                                    borderRadius: '20px',
-                                                    display: 'flex',
-                                                    flexDirection: 'row',
-                                                    width: 'fit-content',
-                                                    alignItems: 'center',
-                                                    border: '2px solid pink',
-                                                    marginTop: '10px'
-                                                }}
-                                            >
-                                                <Grid item>
-                                                    <Grid container direction="row" sx={{marginTop: '5px'}}>
-                                                        <Grid item>
-                                                            <LocationOn
-                                                                sx={{
-                                                                    marginRight: 0.5,
-                                                                    scale: 0.9,
-                                                                    color: 'red'
-                                                                }}
-                                                            />
-                                                        </Grid>
-                                                        <Grid item>
-                                                            <Typography variant="body2" sx={{
-                                                                marginTop: '2px'
-                                                            }}>{entry.location || "No location specified"}</Typography>
-                                                        </Grid>
-                                                    </Grid>
-                                                </Grid>
-                                            </Grid>
-                                        </Grid>
-                                        <Grid item>
-                                            <Grid container direction="row"
-                                                sx={{
-                                                    padding: '5px 15px 5px 5px',
-                                                    backgroundColor: 'white',
-                                                    borderRadius: '20px',
-                                                    display: 'flex',
-                                                    flexDirection: 'row',
-                                                    width: 'fit-content',
-                                                    alignItems: 'center',
-                                                    border: '2px solid lavender',
-                                                    marginTop: '10px'
-                                                }}
-                                            >
-                                                <Grid item>
-                                                    <Grid container direction="row" sx={{marginTop: '5px'}}>
-                                                        <Grid item>
-                                                            <DateRange
-                                                                sx={{
-                                                                    marginRight: 0.5,
-                                                                    scale: 0.9,
-                                                                    color: 'lightpurple'
-                                                                }}
-                                                            />
-                                                        </Grid>
-                                                        <Grid item>
-                                                            <Typography variant="body2" sx={{
-                                                                marginTop: '2px'
-                                                            }}>{reformatDate(entry.date)}</Typography>
-                                                        </Grid>
-                                                    </Grid>
-                                                </Grid>
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                }
-                            />
-                        </Card>
-                    </Grid>
-                    <Grid item>
-                        <Grid container spacing={2}>
-                            <Grid item>
-                                <Card sx={{
-                                    width: 'fit-content'
-                                }}>
-                                    <CardMedia
-                                        component="img"
-                                        height="200"
-                                        image={`https://maps.googleapis.com/maps/api/staticmap?center=${entry.latitude},${entry.longitude}&zoom=14&size=300x300&maptype=roadmap&markers=color:red%7C${entry.latitude},${entry.longitude}&key=${googleApiKey}`}
-                                        alt="Location Map"
-                                    />
-                                </Card>
-                            </Grid>
-                            <Grid item>
-                                <Card>
-                                    <CardHeader title={<Typography variant="h2">What You Wrote</Typography>}/>
-                                    <CardContent>
-                                        <Typography variant="body1">{entry.content}</Typography>
-                                    </CardContent>
-                                </Card>
-                            </Grid>
-                            <Grid item>
-                                <Card>
-                                    <CardHeader title={<Typography variant="h2">Sticker's from {entry.location}</Typography>}/>
-                                    <CardContent>
+            <Container maxWidth="lg" sx={{ pt: 4 }}>
+      <Grid container spacing={4}>
+        <Grid item xs={12}>
+          <Card elevation={3}>
+            <CardHeader
+              title={
+                <Box display="flex" justifyContent="space-between" alignItems="center">
+                  <Typography variant="h4" fontWeight="bold">
+                    {entry.title}
+                  </Typography>
+                  <Button
+                    onClick={() => router.push(`/journal/${entryId}/edit`)}
+                    startIcon={<Edit />}
+                    variant="outlined"
+                  >
+                    Edit Entry
+                  </Button>
+                </Box>
+              }
+              subheader={
+                <Stack direction="row" spacing={2} mt={1}>
+                  <Chip
+                    icon={<LocationOn sx={{ color: "red" }} />}
+                    label={entry.location || "No location"}
+                    variant="outlined"
+                    sx={{ borderColor: "pink", color: "black" }}
+                  />
+                  <Chip
+                    icon={<DateRange />}
+                    label={reformatDate(entry.date)}
+                    variant="outlined"
+                    sx={{ borderColor: "lavender", color: "black" }}
+                  />
+                </Stack>
+              }
+            />
+          </Card>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={4}>
+              <Card elevation={1}>
+                <CardMedia
+                  component="img"
+                  height="250"
+                  image={`https://maps.googleapis.com/maps/api/staticmap?center=${entry.latitude},${entry.longitude}&zoom=14&size=600x400&maptype=roadmap&markers=color:red%7C${entry.latitude},${entry.longitude}&key=${googleApiKey}`}
+                  alt="Location Map"
+                />
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={8}>
+              <Card elevation={1}>
+                <CardHeader title={<Typography variant="h6">What You Wrote</Typography>} />
+                <CardContent>
+                  <Typography variant="body1" sx={{ whiteSpace: "pre-line" }}>
+                    {entry.content}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12}>
+              <Card elevation={1}>
+                <CardHeader
+                  title={
+                    <Typography variant="h6">
+                      Stickers from {entry.location || "this place"}
+                    </Typography>
+                  }
+                />
+                <CardContent>
 
-                                    </CardContent>
-                                </Card>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </Grid>
-                {/*<Card>
-                    <CardHeader 
-                        title={entry.title} 
-                        subheader={
-                            <Chip 
-                                icon={<LocationOnIcon />} 
-                                label={entry.location || "No location specified"} 
-                                sx={{ backgroundColor: '#f44336', color: 'white' }} 
-                            />
-                        }
-                    />
-                    <CardContent>
-                        {entry.content}
-                    </CardContent>
-                </Card>
-                <Card>
-                    <CardHeader title={entry.date}/>
-                    <CardMedia 
-                        component="img"
-                        height="200"
-                        image="https://placehold.co/600x400/blue/white"
-                    />
-                </Card>*/}
-            </Container>
+                  <Typography variant="body2" color="text.secondary">
+                    (No stickers yet — maybe add some stickers here!)
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Container>
         ) : <></>
     );
 }

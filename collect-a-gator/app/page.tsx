@@ -1,9 +1,19 @@
 'use client';
 import { useUser, SignedOut } from '@clerk/nextjs';
-import { Card, CardContent, CardMedia, Grid, Paper, Typography } from "@mui/material";
-import {Map, AutoStories, Bookmark} from '@mui/icons-material';
+import { Button, Card, CardContent, CardHeader, CardMedia, Grid, IconButton, Paper, Typography, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import {
+	Menu,
+	LibraryBooks,
+	Home,
+	Map,
+	Workspaces,
+  AutoStories,
+  Bookmark,
+  AccountCircle,
+  ArrowForward
+} from "@mui/icons-material";
 import './globals.css';
 
 const SignInButton = dynamic(() => import('@clerk/nextjs').then(mod => mod.SignInButton), {
@@ -15,6 +25,7 @@ const SignUpButton = dynamic(() => import('@clerk/nextjs').then(mod => mod.SignU
 
 export default function RootLayout() {
   const {isLoaded, isSignedIn, user} = useUser(); 
+  const smallIcons = useMediaQuery("(min-width:450px)");
   const userId = user?.id
   
   const formatName = (name : string | null | undefined) => {
@@ -30,6 +41,20 @@ export default function RootLayout() {
     setHydrated(true);
   }, []);
 
+  type Action = {
+    label: string;
+    target: string;
+    icon: React.ReactNode;
+  };
+  
+  const actions: Action[] = [
+    { label: "Go to Journal", target: "/journal", icon: <LibraryBooks/> },
+    { label: "View Collectibles", target: "/collectibles", icon: <Workspaces/> },
+    { label: "Go to the Map", target: "/map", icon: <Map/> },
+    { label: "View your profile", target: "/profile", icon: <AccountCircle/> },
+  ];
+  
+
   return (
     <>
       {isLoaded && isSignedIn && hydrated ? <>
@@ -39,79 +64,33 @@ export default function RootLayout() {
               Welcome, {formatName(user?.firstName)}!
             </Typography>
           </Grid>
-          <Grid item xs={12} md={7}>
-            <Card sx={{
-              flexDirection: 'column',
-              backgroundColor: 'white',
-              borderRadius: '20px',
-              display: 'flex',
-              alignItems: 'center',
-            }}>
-              <CardContent>
-                <Typography variant='h2'>
-                  Gainesville SpotLight
-                </Typography>
-                <Typography variant='body1'>
-                  Everyday, we will post a hidden Gainesville gem you've probably never seen. Check it out!
-                </Typography>
-              </CardContent>
-              <CardMedia component="img"
-                image="https://placehold.co/50x50/orange/white"
-                sx={{
-                  maxHeight: '50px',
-                  maxWidth: '500px'
-                }}>
-              </CardMedia>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={5}>
-            <Card sx={{
-              flexDirection: 'row',
-              backgroundColor: 'white',
-              borderRadius: '20px',
-              display: 'flex',
-              alignItems: 'center',
-            }}>
-              <CardContent>
-                <Typography variant='h2'>
-                  Sticker Collection
-                </Typography>
-                <Typography variant='body1'>
-                  View all the adorable collectible friends you've made along the way.
-                </Typography>
-              </CardContent>
-              <CardMedia component="img"
-                image="https://placehold.co/50x50/orange/white"
-                sx={{
-                  maxHeight: '50px',
-                  maxWidth: '500px'
-                }}>
-              </CardMedia>
-            </Card>
-          </Grid>
           <Grid item xs={12}>
-            <Card sx={{
-              flexDirection: 'row',
-              backgroundColor: 'white',
-              borderRadius: '20px',
-              display: 'flex',
-              alignItems: 'center',
-            }}>
+            <Card elevation={3} sx={{ borderRadius: 3 }}>
+              <CardHeader title="Quick Actions" />
               <CardContent>
-                <Typography variant='h2'>
-                  Map
-                </Typography>
-                <Typography variant='body1'>
-                  What Gainesville would look like if Gator's had wings.
-                </Typography>
+                <Grid container spacing={2}>
+                  {actions.map((action) => (
+                    <Grid item xs={12} sm={3} key={action.label}>
+                      <Button
+                        fullWidth
+                        variant="contained"
+                        endIcon={<ArrowForward />}
+                        href={action.target}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          gap: 1,
+                          width: "100%",
+                        }}
+                      >
+                        {action.icon}
+                        {smallIcons ? action.label : null}
+                      </Button>
+                    </Grid>
+                  ))}
+                </Grid>
               </CardContent>
-              <CardMedia component="img"
-                image="https://placehold.co/50x50/orange/white"
-                sx={{
-                  maxHeight: '50px',
-                  maxWidth: '500px'
-                }}>
-              </CardMedia>
             </Card>
           </Grid>
         </Grid>
