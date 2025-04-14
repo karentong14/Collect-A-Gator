@@ -10,15 +10,19 @@ export interface JournalEntry {
 }
 
 export interface Collectibles{
-  restaurantCounter: number;
-  cafeCounter: number;
-  natureCounter: number;
-  artCounter: number;
-  ufCounter: number;
-  germainesBool: boolean;
-  depotParkBool: boolean;
-  karmaCreamBool: boolean;
-  butterflyGardenBool: boolean;
-  marstonBool: boolean;
+  counters: {
+    restaurant: number;
+    cafe: number;
+    nature: number;
+    art: number;
+    uf: number;
+  };
+  booleans: {
+    germaines: boolean;
+    depotPark: boolean;
+    karmaCream: boolean;
+    butterflyGarden: boolean;
+    marston: boolean;
+  }
 
 }

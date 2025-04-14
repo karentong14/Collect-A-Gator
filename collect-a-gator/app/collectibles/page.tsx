@@ -90,7 +90,7 @@ export default function CollectiblePage({
         <Grid item>
         <Grid container spacing={2}>
             
-            {data?.artCounter !== undefined && (
+            {data?.counters.art !== undefined && (
               <Grid item>
                 <Grid container direction="column" alignItems="center" justifyContent="center">
                 <img
@@ -99,23 +99,23 @@ export default function CollectiblePage({
                   width={100}
                   height={135}
                   style={{
-                    opacity: data.artCounter >= 3 ? 1 : 0.3,
-                    filter: data.artCounter >= 3 ? 'none' : 'grayscale(100%)',
+                    opacity: data.counters.art >= 3 ? 1 : 0.3,
+                    filter: data.counters.art >= 3 ? 'none' : 'grayscale(100%)',
                     alignItems: 'center',
                     justifyItems: 'center'
                   }}
                 />
-                {data?.artCounter < 3 ? 
+                {data?.counters.art < 3 ? 
                   <Grid container direction="column">
-                    <Typography variant="body2">{"visit " + (3 - data.artCounter) +" more culture locations"}</Typography>
+                    <Typography variant="body2">{"visit " + (3 - data.counters.art) +" more culture locations"}</Typography>
                   </Grid> :   
                   <Grid container direction="column">
-                    <Typography variant="body2">{"culture locations: " +  data.artCounter}</Typography>
+                    <Typography variant="body2">{"culture locations: " +  data.counters.art}</Typography>
                   </Grid>}
                   </Grid>
               </Grid>
             )}
-            {data?.natureCounter !== undefined && (
+            {data?.counters.nature !== undefined && (
               <Grid item>
                 <Grid container direction="column" alignItems="center" justifyContent="center">
                 <img
@@ -124,24 +124,24 @@ export default function CollectiblePage({
                   width={100}
                   height={135}
                   style={{
-                    opacity: data.natureCounter >= 3 ? 1 : 0.3,
-                    filter: data.natureCounter >= 3 ? 'none' : 'grayscale(100%)',
+                    opacity: data.counters.nature >= 3 ? 1 : 0.3,
+                    filter: data.counters.nature >= 3 ? 'none' : 'grayscale(100%)',
                     alignItems: 'center',
                     justifyItems: 'center'
                   }}
                 />
-                {data?.natureCounter < 3 ? 
+                {data?.counters.nature < 3 ? 
                   <Grid container direction="column">
-                    <Typography variant="body2">{"visit " + (3 - data.natureCounter) +" more nature locations"}</Typography>
+                    <Typography variant="body2">{"visit " + (3 - data.counters.nature) +" more nature locations"}</Typography>
                   </Grid> :   
                   <Grid container direction="column">
-                    <Typography variant="body2">{"nature locations: " +  data.natureCounter}</Typography>
+                    <Typography variant="body2">{"nature locations: " +  data.counters.nature}</Typography>
                   </Grid>}
                   </Grid>
               </Grid>
             )}
 
-            {data?.ufCounter !== undefined && (
+            {data?.counters.uf !== undefined && (
               <Grid item>
                 <Grid container direction="column" alignItems="center" justifyContent="center">
                 <img
@@ -150,23 +150,23 @@ export default function CollectiblePage({
                   width={100}
                   height={135}
                   style={{
-                    opacity: data.ufCounter >= 3 ? 1 : 0.3,
-                    filter: data.ufCounter >= 3 ? 'none' : 'grayscale(100%)',
+                    opacity: data.counters.uf >= 3 ? 1 : 0.3,
+                    filter: data.counters.uf >= 3 ? 'none' : 'grayscale(100%)',
                     alignItems: 'center',
                     justifyItems: 'center'
                   }}
                 />
-                {data?.ufCounter < 3 ? 
+                {data?.counters.uf < 3 ? 
                   <Grid container direction="column">
-                    <Typography variant="body2">{"visit " + (3 - data.ufCounter) +" more UF locations"}</Typography>
+                    <Typography variant="body2">{"visit " + (3 - data.counters.uf) +" more UF locations"}</Typography>
                   </Grid> :   
                   <Grid container direction="column">
-                    <Typography variant="body2">{"UF locations: " +  data.ufCounter}</Typography>
+                    <Typography variant="body2">{"UF locations: " +  data.counters.uf}</Typography>
                   </Grid>}
               </Grid>
               </Grid>
             )}
-            {data?.restaurantCounter !== undefined && (
+            {data?.counters.restaurant !== undefined && (
               <Grid item>
                 <Grid container direction="column" alignItems="center" justifyContent="center">
                 <img
@@ -175,24 +175,24 @@ export default function CollectiblePage({
                   width={100}
                   height={135}
                   style={{
-                    opacity: data.restaurantCounter >= 3 ? 1 : 0.3,
-                    filter: data.restaurantCounter >= 3 ? 'none' : 'grayscale(100%)',
+                    opacity: data.counters.restaurant >= 3 ? 1 : 0.3,
+                    filter: data.counters.restaurant >= 3 ? 'none' : 'grayscale(100%)',
                     alignItems: 'center',
                     justifyItems: 'center'
                   }}
                 />
-                {data?.restaurantCounter < 3 ? 
+                {data?.counters.restaurant < 3 ? 
                   <Grid container direction="column">
-                    <Typography variant="body2">{"visit " + (3 - data.restaurantCounter) +" more restaurant locations"}</Typography>
+                    <Typography variant="body2">{"visit " + (3 - data.counters.restaurant) +" more restaurant locations"}</Typography>
                   </Grid> :   
                   <Grid container direction="column">
-                    <Typography variant="body2">{"restaurant locations: " +  data.restaurantCounter}</Typography>
+                    <Typography variant="body2">{"restaurant locations: " +  data.counters.restaurant}</Typography>
                   </Grid>}
               </Grid>
               </Grid>
             )}
             
-            {data?.cafeCounter !== undefined && (
+            {data?.counters.cafe !== undefined && (
               <Grid item>
                 <Grid container direction="column" alignItems="center" justifyContent="center">
                 <img
@@ -201,24 +201,24 @@ export default function CollectiblePage({
                   width={100}
                   height={135}
                   style={{
-                    opacity: data.cafeCounter >= 3 ? 1 : 0.3,
-                    filter: data.cafeCounter >= 3 ? 'none' : 'grayscale(100%)',
+                    opacity: data.counters.cafe >= 3 ? 1 : 0.3,
+                    filter: data.counters.cafe >= 3 ? 'none' : 'grayscale(100%)',
                     alignItems: 'center',
                     justifyItems: 'center'
                   }}
                 />
-                {data?.cafeCounter < 3 ? 
+                {data?.counters.cafe < 3 ? 
                   <Grid container direction="column">
-                    <Typography variant="body2">{"visit " + (3 - data.cafeCounter) +" more cafe locations"}</Typography>
+                    <Typography variant="body2">{"visit " + (3 - data.counters.cafe) +" more cafe locations"}</Typography>
                   </Grid> :   
                   <Grid container direction="column">
-                    <Typography variant="body2">{"cafe locations: " +  data.cafeCounter}</Typography>
+                    <Typography variant="body2">{"cafe locations: " +  data.counters.cafe}</Typography>
                   </Grid>}
                   </Grid>
               </Grid>
             )}
 
-            {data?.germainesBool !== undefined && (
+            {data?.booleans.germaines !== undefined && (
             <Grid item>
               <Grid container direction="column" alignItems="center" justifyContent="center">
               <img
@@ -227,8 +227,8 @@ export default function CollectiblePage({
                 width={100}
                 height={135}
                 style={{ 
-                  opacity: data.germainesBool === true ? 1: 0.3,
-                  filter: data.germainesBool === true ? 'none' : 'grayscale(100%)',
+                  opacity: data.booleans.germaines === true ? 1: 0.3,
+                  filter: data.booleans.germaines === true ? 'none' : 'grayscale(100%)',
                   alignItems: 'center',
                   justifyItems: 'center'
                  }}
@@ -238,7 +238,7 @@ export default function CollectiblePage({
             </Grid>
             )}
 
-            {data?.depotParkBool !== undefined && (<Grid item>
+            {data?.booleans.depotPark !== undefined && (<Grid item>
               <Grid container direction="column" alignItems="center" justifyContent="center">
               <img
                 src={depot_gator.src}
@@ -246,8 +246,8 @@ export default function CollectiblePage({
                 width={100}
                 height={135}
                 style={{ 
-                  opacity: data.depotParkBool === true ? 1: 0.3,
-                  filter: data.depotParkBool === true ? 'none' : 'grayscale(100%)',
+                  opacity: data.booleans.depotPark === true ? 1: 0.3,
+                  filter: data.booleans.depotPark === true ? 'none' : 'grayscale(100%)',
                   alignItems: 'center',
                   justifyItems: 'center'
                  }}
@@ -256,7 +256,7 @@ export default function CollectiblePage({
                 </Grid>
             </Grid>)}
 
-            {data?.karmaCreamBool !== undefined && (<Grid item>
+            {data?.booleans.karmaCream !== undefined && (<Grid item>
               <Grid container direction="column" alignItems="center" justifyContent="center">
               <img
                 src={karmacream_gator.src}
@@ -264,8 +264,8 @@ export default function CollectiblePage({
                 width={100}
                 height={135}
                 style={{ 
-                  opacity: data.karmaCreamBool === true ? 1: 0.3,
-                  filter: data.karmaCreamBool === true ? 'none' : 'grayscale(100%)',
+                  opacity: data.booleans.karmaCream === true ? 1: 0.3,
+                  filter: data.booleans.karmaCream === true ? 'none' : 'grayscale(100%)',
                   alignItems: 'center',
                   justifyItems: 'center'
                  }}
@@ -274,7 +274,7 @@ export default function CollectiblePage({
                 </Grid>
             </Grid>)}
             
-            {data?.butterflyGardenBool !== undefined && (<Grid item>
+            {data?.booleans.butterflyGarden !== undefined && (<Grid item>
               <Grid container direction="column" alignItems="center" justifyContent="center">
               <img
                 src={butterfly_gator.src}
@@ -282,8 +282,8 @@ export default function CollectiblePage({
                 width={100}
                 height={135}
                 style={{ 
-                  opacity: data.butterflyGardenBool === true ? 1: 0.3,
-                  filter: data.butterflyGardenBool === true ? 'none' : 'grayscale(100%)',
+                  opacity: data.booleans.butterflyGarden === true ? 1: 0.3,
+                  filter: data.booleans.butterflyGarden === true ? 'none' : 'grayscale(100%)',
                   alignItems: 'center',
                   justifyItems: 'center'
                  }}
@@ -292,7 +292,7 @@ export default function CollectiblePage({
                 </Grid>
             </Grid>)}
 
-            {data?.marstonBool !== undefined && (<Grid item>
+            {data?.booleans.marston !== undefined && (<Grid item>
               <Grid container direction="column" alignItems="center" justifyContent="center">
               <img
                 src={marston_gator.src}
@@ -300,8 +300,8 @@ export default function CollectiblePage({
                 width={100}
                 height={135}
                 style={{ 
-                  opacity: data.marstonBool === true ? 1: 0.3,
-                  filter: data.marstonBool === true ? 'none' : 'grayscale(100%)',
+                  opacity: data.booleans.marston === true ? 1: 0.3,
+                  filter: data.booleans.marston === true ? 'none' : 'grayscale(100%)',
                   alignItems: 'center',
                   justifyItems: 'center'
                  }}
