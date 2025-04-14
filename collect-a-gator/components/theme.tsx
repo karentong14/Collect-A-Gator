@@ -103,11 +103,7 @@ export default function AppTheme({children} : {children : ReactNode}) {
                     textAlign: 'center',
                     display: 'inline-block',
                     textDecoration: 'none',
-                  },
-                  '& > *:hover': {
-                    transform: 'scale(1.03)',
-                    boxShadow: '0px 4px 10px rgba(208, 163, 240, 0.3)',
-                  },
+                  }
                 },
               },
             ],

@@ -6,7 +6,10 @@ import {
     CardHeader, 
     Grid,
     IconButton,
-    Button
+    Button,
+    Box,
+    CardContent,
+    Typography
 } from '@mui/material';
 
 import { TextField } from '@mui/material';
@@ -52,6 +55,16 @@ export default function EntryPage({
         if (title && content) {
             setTrigger(!trigger);
         }
+    };
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      if (!e.currentTarget.checkValidity()) {
+        e.stopPropagation();
+        return;
+      }
+      submitEntry();
+      goToEntry();
     };
 
     const isFirstRender = useRef(true);
@@ -213,46 +226,84 @@ export default function EntryPage({
                 justifyContent: 'center',
                 alignItems: 'center'
             }}>
-                <Grid item xs={12} sm={10} md={8}>
-                    <Card>
-                        <CardHeader title={"Enter your new journal entry!"}></CardHeader>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} sm={10} md={8}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker defaultValue={date} format="YYYY-MM-DD" onChange={handleDateChange}/>
-                    </LocalizationProvider>
-                </Grid>
-                <Grid item xs={12} sm={10} md={8}>
-                    <TextField placeholder="Enter a title name..." onChange={(e) => setTitle(e.target.value)}></TextField>
-                </Grid>
-                <Grid item xs={12} sm={10} md={8}>
-                    <TextField placeholder="Type anything…" onChange={(e) => setContent(e.target.value)}></TextField>
-                </Grid>
-                <Grid item xs={12} sm={10} md={8}>
-                    <Grid container spacing={2}>
-                        <Grid item>
-                            <Button variant="contained" onClick={() => {
-                              submitEntry();
-                              goToEntry();
-                            }}>Submit</Button>
-                        </Grid>
-                        <Grid item>
-                            <Button variant="contained" color="error">Remove</Button>
-                        </Grid>
+                <Box
+                  component="form"
+                  onSubmit={handleSubmit}
+                  sx={{ display: "flex", flexDirection: "column", alignItems: "center", p: 2 }}
+                >
+                  <Grid container spacing={4} justifyContent="center" maxWidth="md" paddingTop="10px">
+                    <Grid item xs={12}>
+                      <Typography variant="h2">Enter Your New Journal Entry!</Typography>
                     </Grid>
-                </Grid>
 
-                <APIProvider apiKey={googleApiKey}>
-                
-                          {/* //ADDED TEENY TINY SEARCH BAR */}
-                          {/* <MapControl position={ControlPosition.TOP}> */}
-                            <div style={{ fontSize: '30px', color: 'black' }} className="autocomplete-control">
-                              <PlaceAutocomplete onPlaceSelect={setSelectedPlace} />
-                            </div>
-                          {/* </MapControl> */}
-                
-                </APIProvider>
+                    <Grid item xs={12}>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                          label="Entry Date"
+                          defaultValue={date}
+                          format="YYYY-MM-DD"
+                          onChange={handleDateChange}
+                          slotProps={{ textField: { fullWidth: true } }}
+                        />
+                      </LocalizationProvider>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        fullWidth
+                        label="Title"
+                        placeholder="Enter a title..."
+                        onChange={(e) => setTitle(e.target.value)}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        fullWidth
+                        multiline
+                        minRows={5}
+                        label="Content"
+                        placeholder="Write your journal entry..."
+                        onChange={(e) => setContent(e.target.value)}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <APIProvider apiKey={googleApiKey}>
+                        <Box
+                          sx={{
+                            width: '100%',
+                            '& input': {
+                              width: '100%',
+                              padding: '16.5px 14px',
+                              borderRadius: '4px',
+                              border: '1px solid #ccc',
+                              fontSize: '1rem',
+                              fontFamily: 'Roboto, sans-serif',
+                            }
+                          }}
+                        >
+                          <PlaceAutocomplete onPlaceSelect={setSelectedPlace}/>
+                        </Box>
+                      </APIProvider>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Grid container spacing={2} justifyContent="center">
+                        <Grid item>
+                          <Button type="submit" variant="contained">
+                            Submit
+                          </Button>
+                        </Grid>
+                        <Grid item>
+                          <Button type="reset" variant="contained" color="info">
+                            Reset
+                          </Button>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Box>
             </Grid>
         </Card>
     );
